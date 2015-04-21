@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package java2;
-
 /**
  *
  * @author Agustin
@@ -15,8 +14,9 @@ public class Java2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       VentasInterface vi = new VentasInterface();
-       vi.main(null);
+       //VentasInterface vi = new VentasInterface();
+       //vi.main(null);
+       //System.out.println(System.getProperty("java.home"));
     }
     
 }
