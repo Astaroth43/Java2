@@ -7,40 +7,48 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class DataBaseSQL implements Connection {
-	private final String servidor="jdbc:mysql://localhost/JMasters";
-	private final String user="root";
-	private final String pass="usbw";
-	private final String driver="com.mysql.jdbc.Driver";
-	private Connection connection;
+    private final String servidor;
+    private final String user;
+    private final String pass;
+    private final String driver;
+    private Connection connection;
 
-	public DataBaseSQL(){
-		try{
-                    Class.forName(driver);
-                    connection = DriverManager.getConnection(servidor,user,pass);
-                    System.out.println("Conexion realizada con exito");
-		}catch(ClassNotFoundException | SQLException e){
-                    System.out.println("conexion fallada");
-		}
-	}
-
-	public static void main(String[] args)
-	{
-            
-	}
-
-	public static void free(String q){
-            DataBaseSQL con = new DataBaseSQL();
-            try {
-                Statement query = (Statement) con.getConnection().createStatement();
-                query.executeUpdate(q);
-		System.out.println("Exito");
-		query.close();
-		con.close();
-		  
-            } catch (SQLException e) {
-		System.out.println("FAIL");
+    public DataBaseSQL(){
+        this.driver = "com.mysql.jdbc.Driver";
+        this.pass = "usbw";
+        this.user = "root";
+        this.servidor = "jdbc:mysql://localhost/JMasters";
+            try{
+                Class.forName(driver);
+                connection = DriverManager.getConnection(servidor,user,pass);
+                System.out.println("Conexion realizada con exito");
+            }catch(ClassNotFoundException | SQLException e){
+                System.out.println("conexion fallada");
             }
-	}
+    }
+
+    public static void main(String[] args){
+
+    }
+
+    public void free(String q){
+        DataBaseSQL con = new DataBaseSQL();
+        try {
+            Statement query = (Statement) con.getConnection().createStatement();
+            query.executeUpdate(q);
+            System.out.println("Exito");
+            query.close();
+            con.close();
+
+        } catch (SQLException e) {
+            System.out.println("FAIL");
+        }
+    }
+    
+    public void insert(){
+        
+    }
+        
     
     public Connection getConnection(){
         return connection;
