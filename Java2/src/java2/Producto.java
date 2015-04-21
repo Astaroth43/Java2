@@ -56,7 +56,7 @@ public class Producto extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFocusTraversalPolicyProvider(true);
         setFocusableWindowState(false);
         setPreferredSize(new java.awt.Dimension(597, 432));
