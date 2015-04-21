@@ -15,7 +15,8 @@ public class Java2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       VentasInterface vi = new VentasInterface();
+       vi.main(null);
     }
     
 }
