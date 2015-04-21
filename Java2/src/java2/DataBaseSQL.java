@@ -7,9 +7,9 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class DataBaseSQL implements Connection {
-	private final String servidor="jdbc:mysql://localhost/intelirobot";
+	private final String servidor="jdbc:mysql://localhost/JMasters";
 	private final String user="root";
-	private final String pass="";
+	private final String pass="usbw";
 	private final String driver="com.mysql.jdbc.Driver";
 	private Connection connection;
 
