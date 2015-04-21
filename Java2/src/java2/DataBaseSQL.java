@@ -1,45 +1,48 @@
 package java2;
 
 import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import com.mysql.jdbc.Statement;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class DataBaseSQL implements Connection {
-    private final String servidor;
+    private final String server;
     private final String user;
     private final String pass;
     private final String driver;
     private Connection connection;
+    PreparedStatement pstmt;
 
     public DataBaseSQL(){
         this.driver = "com.mysql.jdbc.Driver";
-        this.pass = "usbw";
+        this.pass = "";
         this.user = "root";
-        this.servidor = "jdbc:mysql://localhost/JMasters";
+        this.server = "jdbc:mysql://localhost/jmasters";
             try{
                 Class.forName(driver);
-                connection = DriverManager.getConnection(servidor,user,pass);
+                connection = DriverManager.getConnection(server,user,pass);
                 System.out.println("Conexion realizada con exito");
             }catch(ClassNotFoundException | SQLException e){
-                System.out.println("conexion fallada");
+                System.out.println("Conexion NO realizada");
             }
     }
 
     public static void main(String[] args){
-
+        DataBaseSQL db = new DataBaseSQL();
+        db.free(null);
+        //db.free("insert into prueba values(null, \"Hola\")");
     }
 
     public void free(String q){
-        DataBaseSQL con = new DataBaseSQL();
         try {
-            Statement query = (Statement) con.getConnection().createStatement();
-            query.executeUpdate(q);
+            Statement query = (Statement) connection.createStatement();
+            query.executeUpdate("insert into prueba values(null, 'Hola')");
             System.out.println("Exito");
             query.close();
-            con.close();
-
         } catch (SQLException e) {
             System.out.println("FAIL");
         }
@@ -55,273 +58,344 @@ public class DataBaseSQL implements Connection {
     }
 
     @Override
-    public Statement createStatement() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
     }
 
     @Override
-    public PreparedStatement prepareStatement(String string) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
-    public CallableStatement prepareCall(String string) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void abort(Executor executor) throws SQLException {
+            // TODO Auto-generated method stub
 
-    @Override
-    public String nativeSQL(String string) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setAutoCommit(boolean bln) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean getAutoCommit() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void commit() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void rollback() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void close() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isClosed() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public DatabaseMetaData getMetaData() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setReadOnly(boolean bln) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isReadOnly() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setCatalog(String string) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getCatalog() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setTransactionIsolation(int i) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getTransactionIsolation() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public SQLWarning getWarnings() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void clearWarnings() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            // TODO Auto-generated method stub
+
     }
 
     @Override
-    public Statement createStatement(int i, int i1) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void close() throws SQLException {
+            // TODO Auto-generated method stub
+
     }
 
     @Override
-    public PreparedStatement prepareStatement(String string, int i, int i1) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void commit() throws SQLException {
+            // TODO Auto-generated method stub
+
     }
 
     @Override
-    public CallableStatement prepareCall(String string, int i, int i1) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Map<String, Class<?>> getTypeMap() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setHoldability(int i) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getHoldability() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Savepoint setSavepoint() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Savepoint setSavepoint(String string) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void rollback(Savepoint svpnt) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void releaseSavepoint(Savepoint svpnt) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Statement createStatement(int i, int i1, int i2) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public PreparedStatement prepareStatement(String string, int i, int i1, int i2) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public CallableStatement prepareCall(String string, int i, int i1, int i2) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public PreparedStatement prepareStatement(String string, int i) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public PreparedStatement prepareStatement(String string, int[] ints) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public PreparedStatement prepareStatement(String string, String[] strings) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Clob createClob() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Array createArrayOf(String typeName, Object[] elements)
+                    throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
     public Blob createBlob() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public Clob createClob() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
     public NClob createNClob() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
     public SQLXML createSQLXML() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
-    public boolean isValid(int i) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public java.sql.Statement createStatement() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
-    public void setClientInfo(String string, String string1) throws SQLClientInfoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public java.sql.Statement createStatement(int resultSetType,
+                    int resultSetConcurrency) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
-    public void setClientInfo(Properties prprts) throws SQLClientInfoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public java.sql.Statement createStatement(int resultSetType,
+                    int resultSetConcurrency, int resultSetHoldability)
+                    throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
-    public String getClientInfo(String string) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Struct createStruct(String typeName, Object[] attributes)
+                    throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public boolean getAutoCommit() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+    }
+
+    @Override
+    public String getCatalog() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
     public Properties getClientInfo() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
-    public Array createArrayOf(String string, Object[] os) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getClientInfo(String name) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
-    public Struct createStruct(String string, Object[] os) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getHoldability() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
     }
 
     @Override
-    public void setSchema(String string) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getSchema() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void abort(Executor exctr) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setNetworkTimeout(Executor exctr, int i) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public DatabaseMetaData getMetaData() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
     public int getNetworkTimeout() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            // TODO Auto-generated method stub
+            return 0;
     }
 
     @Override
-    public <T> T unwrap(Class<T> type) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getSchema() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
     }
 
     @Override
-    public boolean isWrapperFor(Class<?> type) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getTransactionIsolation() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+    }
+
+    @Override
+    public Map<String, Class<?>> getTypeMap() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public SQLWarning getWarnings() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public boolean isClosed() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+    }
+
+    @Override
+    public boolean isReadOnly() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+    }
+
+    @Override
+    public boolean isValid(int timeout) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+    }
+
+    @Override
+    public String nativeSQL(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public CallableStatement prepareCall(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public CallableStatement prepareCall(String sql, int resultSetType,
+                    int resultSetConcurrency) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public CallableStatement prepareCall(String sql, int resultSetType,
+                    int resultSetConcurrency, int resultSetHoldability)
+                    throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys)
+                    throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql, int[] columnIndexes)
+                    throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql, String[] columnNames)
+                    throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql, int resultSetType,
+                    int resultSetConcurrency) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql, int resultSetType,
+                    int resultSetConcurrency, int resultSetHoldability)
+                    throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public void releaseSavepoint(Savepoint savepoint) throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void rollback() throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void rollback(Savepoint savepoint) throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setAutoCommit(boolean autoCommit) throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setCatalog(String catalog) throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setClientInfo(Properties properties)
+                    throws SQLClientInfoException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setClientInfo(String name, String value)
+                    throws SQLClientInfoException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setHoldability(int holdability) throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setNetworkTimeout(Executor executor, int milliseconds)
+                    throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setReadOnly(boolean readOnly) throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public Savepoint setSavepoint() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public Savepoint setSavepoint(String name) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+    }
+
+    @Override
+    public void setSchema(String schema) throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setTransactionIsolation(int level) throws SQLException {
+            // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
+            // TODO Auto-generated method stub
+
     }
 
 }
