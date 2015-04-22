@@ -33,7 +33,7 @@ public class DataBaseSQL implements Connection {
 
     public static void main(String[] args){
         DataBaseSQL db = new DataBaseSQL();
-        db.select("empleado", 1);
+        //db.select("empleado", 1);
         //db.free("insert into prueba values(null, \"Hola\")");
     }
 
@@ -45,6 +45,55 @@ public class DataBaseSQL implements Connection {
             query.close();
         } catch (SQLException e) {
             System.out.println("FAIL");
+        }
+    }
+    
+    public String[] selectPersona(String tabla, int id){
+        try {
+            Statement query = (Statement) connection.createStatement();
+            ResultSet rs;
+            String q1;
+            q1 = "select * from " + tabla + " where id = " + id ;
+            System.out.println("-" + q1 + "-");
+            rs = query.executeQuery(q1);
+            if(rs.next()){
+                System.out.println("Exito select");
+                String[] result = new String[2];
+                result[0] = rs.getString("NOMBRE");
+                result[1] = rs.getString("APELLIDO");
+                return result;
+            }else
+                return null;
+        } catch (SQLException e) {
+             System.out.println("Error en el select");
+            return null;
+        } finally {
+            query.close();
+        }
+    }
+    
+    public String[] selectProducto(int id){
+        try {
+            Statement query = (Statement) connection.createStatement();
+            ResultSet rs;
+            String q1;
+            q1 = "select * from producto where id = " + id ;
+            System.out.println("-" + q1 + "-");
+            rs = query.executeQuery(q1);
+            if(rs.next()){
+                System.out.println("Exito select");
+                String[] result = new String[3];
+                result[0] = rs.getString("NOMBRE");
+                result[1] = rs.getString("PRECIO");
+                result[2] = rs.getString("CANTIDAD");
+                return result;
+            }else
+                return null;
+        } catch (SQLException e) {
+             System.out.println("Error en el select");
+            return null;
+        } finally {
+            query.close();
         }
     }
     
