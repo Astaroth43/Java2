@@ -27,12 +27,14 @@ import javax.swing.event.DocumentListener;
 public class VentasInterface extends javax.swing.JFrame {
     
     DataBaseSQL db;
+    boolean isSetClient, isSetEmpleado, isSetProducto;
     
     /**
      * Creates new form VentasInterface
      */
     public VentasInterface() {
         db = new DataBaseSQL();
+        isSetClient = isSetEmpleado = isSetProducto = false;
         initComponents();
     }
 
@@ -69,17 +71,17 @@ public class VentasInterface extends javax.swing.JFrame {
         cliNom = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        productoID = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
+        desP = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
+        precioP = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
+        stockP = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        cantP = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
+        totalP = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
@@ -159,28 +161,29 @@ public class VentasInterface extends javax.swing.JFrame {
                 actualiza();
             }
             public void removeUpdate(DocumentEvent e) {
-                // empID.setText("0");
+                isSetEmpleado = false;
+                empNom.setText("-");
+                empAp.setText("-");
+                //JOptionPane.showMessageDialog(null, "Introduce un id valido");
+
             }
             public void insertUpdate(DocumentEvent e) {
                 actualiza();
             }
             private void actualiza(){
-                if(empID.getText().equals(""))
-                    return;
+                int a = Integer.parseInt(empID.getText().trim());
+                String[] rs;
+                rs = db.selectPersona("empleado", a);
 
-                try{
-                    int a;
-                    a = Integer.parseInt(empID.getText().trim());
-                    String[] rs;
-                    if((rs = db.select("empleado", a)) != null){
-                            empNom.setText(rs.[0]);
-                            empAp.setText(rs.[1]);
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Introduce un id valido");
-                        empID.setText("");
-                    }
-                }catch(SQLException e){
-                    //System.out.println("Error al guardar los datos");
+                if(rs != null){
+                    isSetEmpleado = true;
+                    empNom.setText(rs[0]);
+                    empAp.setText(rs[1]);
+                }else{
+                    isSetEmpleado = false;
+                    empNom.setText("-");
+                    empAp.setText("-");
+                    JOptionPane.showMessageDialog(null, "Introduce un id valido");
                 }
             }
         });
@@ -189,7 +192,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel12.setText("Nombre(s)");
 
         empNom.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        empNom.setText("Nombre1 Nombre2");
+        empNom.setText("-");
         empNom.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         empNom.setFocusable(false);
         empNom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -198,7 +201,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel13.setText("Apellidos");
 
         empAp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        empAp.setText("Apellido1 Apellido2");
+        empAp.setText("-");
         empAp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         empAp.setFocusable(false);
         empAp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -207,7 +210,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel15.setText("Apellidos");
 
         cliAp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cliAp.setText("Apellido1 Apellido2");
+        cliAp.setText("No registrado");
         cliAp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         cliAp.setFocusable(false);
         cliAp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -225,12 +228,49 @@ public class VentasInterface extends javax.swing.JFrame {
                 cliIDActionPerformed(evt);
             }
         });
+        cliID.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                actualiza();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                isSetClient = false;
+                cliNom.setText("-");
+                cliAp.setText("-");
+                //JOptionPane.showMessageDialog(null, "Introduce un id valido");
+            }
+            public void insertUpdate(DocumentEvent e) {
+                actualiza();
+            }
+            private void actualiza(){
+                if(cliID.getText().equals("0")){
+                    isSetClient = true;
+                    cliNom.setText("No registrado");
+                    cliAp.setText("No registrado");
+                    return;
+                }
+
+                int a = Integer.parseInt(cliID.getText().trim());
+                String[] rs;
+                rs = db.selectPersona("cliente", a);
+
+                if(rs != null){
+                    isSetClient = true;
+                    cliNom.setText(rs[0]);
+                    cliAp.setText(rs[1]);
+                }else{
+                    isSetClient = false;
+                    cliNom.setText("-");
+                    cliAp.setText("-");
+                    JOptionPane.showMessageDialog(null, "Introduce un id valido");
+                }
+            }
+        });
 
         jLabel19.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel19.setText("Nombre(s)");
 
         cliNom.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cliNom.setText("Nombre1 Nombre2");
+        cliNom.setText("No registrado");
         cliNom.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         cliNom.setFocusable(false);
         cliNom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -241,60 +281,122 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel22.setText("ID");
 
-        jTextField3.setText("0");
-        jTextField3.setToolTipText("");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        productoID.setText("0");
+        productoID.setToolTipText("");
+        productoID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                productoIDActionPerformed(evt);
+            }
+        });
+        productoID.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                actualiza();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                desP.setText("-");
+                precioP.setText("0");
+                stockP.setText("-");
+                totalP.setText("-");
+                cantP.setText("-");
+                isSetProducto = false;
+                //JOptionPane.showMessageDialog(null, "Introduce un id valido");
+            }
+            public void insertUpdate(DocumentEvent e) {
+                actualiza();
+            }
+            private void actualiza(){
+                int a = Integer.parseInt(productoID.getText().trim());
+                String[] rs;
+                rs = db.selectProducto(a);
+
+                if(rs != null){
+                    isSetProducto = true;
+                    desP.setText(rs[0]);
+                    precioP.setText(rs[1]);
+                    stockP.setText(rs[2]);
+                    cantP.setText("1");
+                    totalP.setText("$" + Float.parseFloat(cantP.getText().trim()) * Float.parseFloat(rs[1]));
+                }else{
+                    desP.setText("-");
+                    precioP.setText("0");
+                    stockP.setText("-");
+                    totalP.setText("-");
+                    cantP.setText("-");
+                    isSetProducto = false;
+                    JOptionPane.showMessageDialog(null, "Introduce un id valido");
+                }
             }
         });
 
         jLabel23.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel23.setText("Descripción");
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel24.setText("Descripción del producto");
-        jLabel24.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel24.setFocusable(false);
-        jLabel24.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        desP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        desP.setText("-");
+        desP.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        desP.setFocusable(false);
+        desP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel25.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel25.setText("Precio");
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel26.setText("$500.00");
-        jLabel26.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel26.setFocusable(false);
-        jLabel26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        precioP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        precioP.setText("0");
+        precioP.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        precioP.setFocusable(false);
+        precioP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel27.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel27.setText("Stock");
 
-        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel28.setText("15");
-        jLabel28.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel28.setFocusable(false);
-        jLabel28.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        stockP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        stockP.setText("-");
+        stockP.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        stockP.setFocusable(false);
+        stockP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel29.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel29.setText("Cantidad");
 
-        jTextField4.setText("1");
-        jTextField4.setToolTipText("");
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        cantP.setText("1");
+        cantP.setToolTipText("");
+        cantP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                cantPActionPerformed(evt);
+            }
+        });
+        cantP.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                actualiza();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                // empID.setText("0");
+            }
+            public void insertUpdate(DocumentEvent e) {
+                actualiza();
+            }
+            private void actualiza(){
+                if(stockP.getText().equals("-"))
+                return;
+                if(Integer.parseInt(cantP.getText()) > Integer.parseInt(stockP.getText())){
+                    JOptionPane.showMessageDialog(null, "No hay tantos en existencia.");
+                    isSetProducto = false;
+                    return;
+                }
+                float a = Integer.parseInt(cantP.getText());
+                totalP.setText("$" + Float.parseFloat(precioP.getText().trim()) * a);
+                isSetProducto = true;
             }
         });
 
         jLabel30.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel30.setText("Total");
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel31.setText("$500.00");
-        jLabel31.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel31.setFocusable(false);
-        jLabel31.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        totalP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        totalP.setText("$0");
+        totalP.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        totalP.setFocusable(false);
+        totalP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/eliminar.png"))); // NOI18N
         jLabel33.setToolTipText("Quitar Producto");
@@ -449,16 +551,16 @@ public class VentasInterface extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(productoID, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel22))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(desP, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel23))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel25)
-                                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))
+                                    .addComponent(precioP, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel21)
@@ -481,17 +583,17 @@ public class VentasInterface extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel27)
-                                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(stockP, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cantP, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel30)
-                                            .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(totalP, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -618,14 +720,14 @@ public class VentasInterface extends javax.swing.JFrame {
                                         .addComponent(jLabel22)
                                         .addComponent(jLabel23)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(productoID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(43, 43, 43)
-                                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cantP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(1, 1, 1))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -638,14 +740,14 @@ public class VentasInterface extends javax.swing.JFrame {
                                             .addComponent(jLabel30))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel28)
-                                            .addComponent(jLabel31)))))))
+                                            .addComponent(stockP)
+                                            .addComponent(totalP)))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(273, 273, 273)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel26)
-                                .addComponent(jLabel24))
+                                .addComponent(precioP)
+                                .addComponent(desP))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel32)
                                 .addGap(44, 44, 44)))))
@@ -677,13 +779,13 @@ public class VentasInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cliIDActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void productoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productoIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_productoIDActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void cantPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_cantPActionPerformed
 
     private void jLabel35MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MouseClicked
         JOptionPane.showMessageDialog(null, "Clic Agregar");
@@ -753,9 +855,11 @@ public class VentasInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cantP;
     private javax.swing.JLabel cliAp;
     private javax.swing.JTextField cliID;
     private javax.swing.JLabel cliNom;
+    private javax.swing.JLabel desP;
     private javax.swing.JLabel empAp;
     private javax.swing.JTextField empID;
     private javax.swing.JLabel empNom;
@@ -772,15 +876,11 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
@@ -808,7 +908,9 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel precioP;
+    private javax.swing.JTextField productoID;
+    private javax.swing.JLabel stockP;
+    private javax.swing.JLabel totalP;
     // End of variables declaration//GEN-END:variables
 }

@@ -134,18 +134,18 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextField3" min="-2" pref="34" max="-2" attributes="0"/>
+                                  <Component id="productoID" min="-2" pref="34" max="-2" attributes="0"/>
                                   <Component id="jLabel22" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel24" alignment="0" min="-2" pref="225" max="-2" attributes="0"/>
+                                  <Component id="desP" alignment="0" min="-2" pref="225" max="-2" attributes="0"/>
                                   <Component id="jLabel23" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel26" pref="127" max="32767" attributes="0"/>
+                                  <Component id="precioP" pref="127" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -177,11 +177,11 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel28" min="-2" pref="61" max="-2" attributes="0"/>
+                                  <Component id="stockP" min="-2" pref="61" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextField4" min="-2" pref="95" max="-2" attributes="0"/>
+                                  <Component id="cantP" min="-2" pref="95" max="-2" attributes="0"/>
                                   <Component id="jLabel29" min="-2" pref="95" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -189,7 +189,7 @@
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel30" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel31" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
+                                          <Component id="totalP" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jLabel35" min="-2" pref="64" max="-2" attributes="0"/>
@@ -365,7 +365,7 @@
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextField3" min="-2" max="-2" attributes="0"/>
+                              <Component id="productoID" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace pref="21" max="32767" attributes="0"/>
@@ -373,7 +373,7 @@
                                   <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="43" pref="43" max="-2" attributes="0"/>
-                                          <Component id="jTextField4" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cantP" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
@@ -390,8 +390,8 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel28" alignment="3" max="-2" attributes="0"/>
-                                          <Component id="jLabel31" alignment="3" max="-2" attributes="0"/>
+                                          <Component id="stockP" alignment="3" max="-2" attributes="0"/>
+                                          <Component id="totalP" alignment="3" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -402,8 +402,8 @@
                       <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel26" alignment="3" max="-2" attributes="0"/>
-                              <Component id="jLabel24" alignment="3" max="-2" attributes="0"/>
+                              <Component id="precioP" alignment="3" max="-2" attributes="0"/>
+                              <Component id="desP" alignment="3" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
@@ -540,7 +540,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empIDActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="empID.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;      // empID.setText(&quot;0&quot;);&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if(empID.getText() == &quot;0&quot;)&#xa;            return;&#xa;&#xa;        try{&#xa;            int a;&#xa;            a = Integer.parseInt(empID.getText().trim());&#xa;            ResultSet rs;&#xa;            if((rs = db.select(&quot;empleado&quot;, a)) != null){&#xa;                while(rs.next()){                   &#xa;                    empNom.setText(rs.getString(&quot;NOMBRE&quot;));     &#xa;                    empAp.setText(rs.getString(&quot;APELLIDO&quot;));&#xa;                }&#xa;            }&#xa;        }catch(SQLException e){&#xa;            //System.out.println(&quot;Error al guardar los datos&quot;);&#xa;        }&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="empID.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        isSetEmpleado = false;&#xa;        empNom.setText(&quot;-&quot;);&#xa;        empAp.setText(&quot;-&quot;);&#xa;        //JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;        &#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        int a = Integer.parseInt(empID.getText().trim());&#xa;        String[] rs;&#xa;        rs = db.selectPersona(&quot;empleado&quot;, a);&#xa;        &#xa;        if(rs != null){&#xa;            isSetEmpleado = true;&#xa;            empNom.setText(rs[0]);&#xa;            empAp.setText(rs[1]);&#xa;        }else{&#xa;            isSetEmpleado = false;&#xa;            empNom.setText(&quot;-&quot;);&#xa;            empAp.setText(&quot;-&quot;);&#xa;            JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;        }&#xa;    }&#xa;});"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
@@ -556,7 +556,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Nombre1 Nombre2"/>
+        <Property name="text" type="java.lang.String" value="-"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>
@@ -579,7 +579,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Apellido1 Apellido2"/>
+        <Property name="text" type="java.lang.String" value="-"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>
@@ -602,7 +602,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Apellido1 Apellido2"/>
+        <Property name="text" type="java.lang.String" value="No registrado"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>
@@ -636,6 +636,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cliIDActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="cliID.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        isSetClient = false;&#xa;        cliNom.setText(&quot;-&quot;);&#xa;        cliAp.setText(&quot;-&quot;);&#xa;        //JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if(cliID.getText().equals(&quot;0&quot;)){&#xa;            isSetClient = true;&#xa;            cliNom.setText(&quot;No registrado&quot;);&#xa;            cliAp.setText(&quot;No registrado&quot;);&#xa;            return;&#xa;        }&#xa;&#xa;        int a = Integer.parseInt(cliID.getText().trim());&#xa;        String[] rs;&#xa;        rs = db.selectPersona(&quot;cliente&quot;, a);&#xa;        &#xa;        if(rs != null){&#xa;            isSetClient = true;&#xa;            cliNom.setText(rs[0]);&#xa;            cliAp.setText(rs[1]);&#xa;        }else{&#xa;            isSetClient = false;&#xa;            cliNom.setText(&quot;-&quot;);&#xa;            cliAp.setText(&quot;-&quot;);&#xa;            JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;        }&#xa;    }&#xa;});"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel19">
       <Properties>
@@ -650,7 +653,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Nombre1 Nombre2"/>
+        <Property name="text" type="java.lang.String" value="No registrado"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>
@@ -676,14 +679,17 @@
         <Property name="text" type="java.lang.String" value="ID"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField3">
+    <Component class="javax.swing.JTextField" name="productoID">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="productoIDActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="productoID.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        desP.setText(&quot;-&quot;);&#xa;        precioP.setText(&quot;0&quot;);&#xa;        stockP.setText(&quot;-&quot;);&#xa;        totalP.setText(&quot;-&quot;);&#xa;        cantP.setText(&quot;-&quot;);&#xa;        isSetProducto = false;&#xa;        //JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        int a = Integer.parseInt(productoID.getText().trim());&#xa;        String[] rs;&#xa;        rs = db.selectProducto(a);&#xa;        &#xa;        if(rs != null){&#xa;            isSetProducto = true;&#xa;            desP.setText(rs[0]);&#xa;            precioP.setText(rs[1]);&#xa;            stockP.setText(rs[2]);&#xa;            cantP.setText(&quot;1&quot;);&#xa;            totalP.setText(&quot;$&quot; + Float.parseFloat(cantP.getText().trim()) * Float.parseFloat(rs[1]));&#xa;        }else{&#xa;            desP.setText(&quot;-&quot;);&#xa;            precioP.setText(&quot;0&quot;);&#xa;            stockP.setText(&quot;-&quot;);&#xa;            totalP.setText(&quot;-&quot;);&#xa;            cantP.setText(&quot;-&quot;);&#xa;            isSetProducto = false;&#xa;            JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;        }&#xa;    }&#xa;});"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel23">
       <Properties>
@@ -693,12 +699,12 @@
         <Property name="text" type="java.lang.String" value="Descripci&#xf3;n"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel24">
+    <Component class="javax.swing.JLabel" name="desP">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Descripci&#xf3;n del producto"/>
+        <Property name="text" type="java.lang.String" value="-"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>
@@ -716,12 +722,12 @@
         <Property name="text" type="java.lang.String" value="Precio"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel26">
+    <Component class="javax.swing.JLabel" name="precioP">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="$500.00"/>
+        <Property name="text" type="java.lang.String" value="0"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>
@@ -739,12 +745,12 @@
         <Property name="text" type="java.lang.String" value="Stock"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel28">
+    <Component class="javax.swing.JLabel" name="stockP">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="15"/>
+        <Property name="text" type="java.lang.String" value="-"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>
@@ -762,14 +768,17 @@
         <Property name="text" type="java.lang.String" value="Cantidad"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField4">
+    <Component class="javax.swing.JTextField" name="cantP">
       <Properties>
         <Property name="text" type="java.lang.String" value="1"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cantPActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="cantP.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;      // empID.setText(&quot;0&quot;);&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if(stockP.getText().equals(&quot;-&quot;))&#xa;            return;&#xa;        if(Integer.parseInt(cantP.getText()) &gt; Integer.parseInt(stockP.getText())){&#xa;            JOptionPane.showMessageDialog(null, &quot;No hay tantos en existencia.&quot;);&#xa;            isSetProducto = false;&#xa;            return;&#xa;        }&#xa;        float a = Integer.parseInt(cantP.getText());&#xa;        totalP.setText(&quot;$&quot; + Float.parseFloat(precioP.getText().trim()) * a);&#xa;        isSetProducto = true;&#xa;    }&#xa;});"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel30">
       <Properties>
@@ -779,12 +788,12 @@
         <Property name="text" type="java.lang.String" value="Total"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel31">
+    <Component class="javax.swing.JLabel" name="totalP">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="$500.00"/>
+        <Property name="text" type="java.lang.String" value="$0"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>

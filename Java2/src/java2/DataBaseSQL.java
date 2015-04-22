@@ -33,7 +33,7 @@ public class DataBaseSQL implements Connection {
 
     public static void main(String[] args){
         DataBaseSQL db = new DataBaseSQL();
-        //db.select("empleado", 1);
+        db.selectProducto(1);
         //db.free("insert into prueba values(null, \"Hola\")");
     }
 
@@ -61,14 +61,18 @@ public class DataBaseSQL implements Connection {
                 String[] result = new String[2];
                 result[0] = rs.getString("NOMBRE");
                 result[1] = rs.getString("APELLIDO");
+                query.close();
                 return result;
-            }else
+            }else{
+                System.out.println("Sin datos");
+                query.close();
                 return null;
+            }
         } catch (SQLException e) {
-             System.out.println("Error en el select");
+            System.out.println("Error en el select");
             return null;
         } finally {
-            query.close();
+            
         }
     }
     
@@ -86,14 +90,17 @@ public class DataBaseSQL implements Connection {
                 result[0] = rs.getString("NOMBRE");
                 result[1] = rs.getString("PRECIO");
                 result[2] = rs.getString("CANTIDAD");
+                query.close();
                 return result;
-            }else
+            }else{
+                query.close();
                 return null;
+            }
         } catch (SQLException e) {
              System.out.println("Error en el select");
             return null;
         } finally {
-            query.close();
+            
         }
     }
     
