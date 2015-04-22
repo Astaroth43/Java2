@@ -17,6 +17,7 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
      * Creates new form Empleado
      */
     public Empleado() {
+        super("Empleado");
         initComponents();
         masculino.setSelected(true);
         matutino.setSelected(true);

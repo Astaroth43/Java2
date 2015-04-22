@@ -17,6 +17,7 @@ public class Producto extends javax.swing.JFrame implements java.awt.event.Actio
      * Creates new form Producto
      */
     public Producto() {
+        super("Producto");
         initComponents();
         enviar.addActionListener(this);
     }
@@ -64,8 +65,7 @@ public class Producto extends javax.swing.JFrame implements java.awt.event.Actio
         jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setFocusTraversalPolicyProvider(true);
-        setFocusableWindowState(false);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(597, 432));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N

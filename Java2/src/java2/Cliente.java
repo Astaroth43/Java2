@@ -17,6 +17,7 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
      * Creates new form Cliente
      */
     public Cliente() {
+        super("Cliente");
         initComponents();
         masculino.setSelected(true);
         enviar.addActionListener(this);
