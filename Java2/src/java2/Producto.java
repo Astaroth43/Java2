@@ -1,6 +1,17 @@
 package java2;
 
 import javax.swing.JOptionPane;
+
+import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import com.mysql.jdbc.Statement;
+import java.util.InputMismatchException;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Executor;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,12 +23,14 @@ import javax.swing.JOptionPane;
  * @author Familia
  */
 public class Producto extends javax.swing.JFrame implements java.awt.event.ActionListener{
-
+    
+    private DataBaseSQL db;
     /**
      * Creates new form Producto
      */
     public Producto() {
         super("Producto");
+        db = new DataBaseSQL();
         initComponents();
         enviar.addActionListener(this);
     }
@@ -353,8 +366,9 @@ public class Producto extends javax.swing.JFrame implements java.awt.event.Actio
                 JOptionPane.showMessageDialog(null, "Error, Ingrese porfavor un valor para " + mensajes[index]);
             else{
                 //******Codigo a ejecutar en la base de datos******
-                for(String x : cadenas)
-                    System.out.println(x);
+                db.insert("producto", cadenas);
+                /*for(String x : cadenas)
+                    System.out.println(x);*/
                 JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al usuario");
             }
         }
