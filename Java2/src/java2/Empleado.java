@@ -378,27 +378,26 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
     
     @Override
     public void actionPerformed(java.awt.event.ActionEvent evento){
-        String cadenas[] = new String[8];
-        String mensajes[] = {"Id", "Nombre", "Apellidos", "",  "Salario", "Direccion", "Telefono", "RFC"};
+        String cadenas[] = new String[7];
+        String mensajes[] = {"Nombre", "Apellidos", "",  "Salario", "Direccion", "Telefono", "RFC"};
         boolean error = false;
         int index = 0;
         
         if(evento.getSource() == enviar){
-            cadenas[0] = id.getText();
-            cadenas[1] = nombre.getText();
-            cadenas[2] = apellido.getText();
+            cadenas[0] = nombre.getText();
+            cadenas[1] = apellido.getText();
             
             if( masculino.isSelected() )
-                cadenas[3] = "1";
+                cadenas[2] = "1";
             else
-                cadenas[3] = "2";
+                cadenas[2] = "2";
             
-            cadenas[4] = salario.getText();
-            cadenas[5] = direccion.getText();
-            cadenas[6] = telefono.getText();
-            cadenas[7] = rfc.getText();
+            cadenas[3] = salario.getText();
+            cadenas[4] = direccion.getText();
+            cadenas[5] = telefono.getText();
+            cadenas[6] = rfc.getText();
             
-            for(index = 0; index < 9; index++)
+            for(index = 0; index < 7; index++)
                 if( cadenas[index].equals("") ){
                     error = true;
                     break;
@@ -411,7 +410,7 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
                 db.insert("empleado", cadenas);
                 /*for(String x : cadenas)
                     System.out.println(x);*/
-                JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al usuario");
+                JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al empleado");
             }
         }
     }

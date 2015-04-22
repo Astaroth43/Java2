@@ -357,26 +357,25 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
     
     @Override
     public void actionPerformed(java.awt.event.ActionEvent evento){
-        String cadenas[] = new String[7];
-        String mensajes[] = {"Id", "Nombre", "Apellidos", "", "Direccion", "Telefono", "RFC"};
+        String cadenas[] = new String[6];
+        String mensajes[] = {"Nombre", "Apellidos", "", "Direccion", "Telefono", "RFC"};
         boolean error = false;
         int index = 0;
         
         if(evento.getSource() == enviar){
-            cadenas[0] = id.getText();
-            cadenas[1] = nombre.getText();
-            cadenas[2] = apellido.getText();
+            cadenas[0] = nombre.getText();
+            cadenas[1] = apellido.getText();
             
             if( masculino.isSelected() )
-                cadenas[3] = "1";
+                cadenas[2] = "1";
             else
-                cadenas[3] = "2";
+                cadenas[2] = "2";
             
-            cadenas[4] = direccion.getText();
-            cadenas[5] = telefono.getText();
-            cadenas[6] = rfc.getText();
+            cadenas[3] = direccion.getText();
+            cadenas[4] = telefono.getText();
+            cadenas[5] = rfc.getText();
             
-            for(index = 0; index < 7; index++)
+            for(index = 0; index < 6; index++)
                 if( cadenas[index].equals("") ){
                     error = true;
                     break;
@@ -388,7 +387,7 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
                 db.insert("cliente", cadenas);
                 for(String x : cadenas)
                     System.out.println(x);
-                JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al usuario");
+                JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al cliente");
             }
         }
     }

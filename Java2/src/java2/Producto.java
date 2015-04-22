@@ -91,7 +91,7 @@ public class Producto extends javax.swing.JFrame implements java.awt.event.Actio
         jLabel3.setText("Tipo");
 
         tipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Computadoras", "Accesorios", "Consumibles", "Servicios" }));
 
         jLabel4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel4.setText("ID");
@@ -343,19 +343,18 @@ public class Producto extends javax.swing.JFrame implements java.awt.event.Actio
     
     @Override
     public void actionPerformed(java.awt.event.ActionEvent evento){
-        String cadenas[] = new String[6];
-        String mensajes[] = {"Id", "Tipo", "Nombre", "Precio", "Cantidad", "Descripcion"};
+        String cadenas[] = new String[5];
+        String mensajes[] = {"Tipo", "Nombre", "Precio", "Cantidad", "Descripcion"};
         boolean error = false;
         int index;
         
         if(evento.getSource() == enviar){
-            cadenas[0] = id.getText();
-            cadenas[1] = String.valueOf( tipo.getSelectedIndex() + 1 );
-            cadenas[2] = nombre.getText();       
+            cadenas[0] = String.valueOf( tipo.getSelectedIndex() + 1 );
+            cadenas[1] = nombre.getText();       
             
-            cadenas[3] = precio.getText();
-            cadenas[4] = cantidad.getText();
-            cadenas[5] = descripcion.getText();
+            cadenas[2] = precio.getText();
+            cadenas[3] = cantidad.getText();
+            cadenas[4] = descripcion.getText();
             
             for(index = 0; index < 5; index++)
                 if( cadenas[index].equals("") ){
@@ -370,7 +369,7 @@ public class Producto extends javax.swing.JFrame implements java.awt.event.Actio
                 db.insert("producto", cadenas);
                 /*for(String x : cadenas)
                     System.out.println(x);*/
-                JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al usuario");
+                JOptionPane.showMessageDialog(null, "Se ha registrado con éxito el producto");
             }
         }
     }
