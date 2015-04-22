@@ -7,17 +7,29 @@ package java2;
 
 import javax.swing.JOptionPane;
 
+import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import com.mysql.jdbc.Statement;
+import java.util.InputMismatchException;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Executor;
+
 /**
  *
  * @author Familia
  */
 public class Cliente extends javax.swing.JFrame implements java.awt.event.ActionListener{
-
+    
+    private DataBaseSQL db;
     /**
      * Creates new form Cliente
      */
     public Cliente() {
         super("Cliente");
+        db = new DataBaseSQL();
         initComponents();
         masculino.setSelected(true);
         enviar.addActionListener(this);
@@ -373,7 +385,7 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
             if( error )
                 JOptionPane.showMessageDialog(null, "Error, Ingrese porfavor un valor para " + mensajes[index]);
             else{
-                //******Codigo a ejecutar en la base de datos******
+                db.insert("cliente", cadenas);
                 for(String x : cadenas)
                     System.out.println(x);
                 JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al usuario");
