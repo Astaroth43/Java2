@@ -368,9 +368,9 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
             cadenas[2] = apellido.getText();
             
             if( masculino.isSelected() )
-                cadenas[3] = "Masculino";
+                cadenas[3] = "1";
             else
-                cadenas[3] = "Femenino";
+                cadenas[3] = "2";
             
             cadenas[4] = direccion.getText();
             cadenas[5] = telefono.getText();

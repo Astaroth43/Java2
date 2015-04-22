@@ -33,7 +33,6 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
         initComponents();
         db = new DataBaseSQL();
         masculino.setSelected(true);
-        matutino.setSelected(true);
         enviar.addActionListener(this);
     }
 
@@ -67,13 +66,10 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         rfc = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        matutino = new javax.swing.JRadioButton();
-        vespertino = new javax.swing.JRadioButton();
-        puesto = new javax.swing.JComboBox();
-        jLabel15 = new javax.swing.JLabel();
         id = new javax.swing.JLabel();
         enviar = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        salario = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -129,28 +125,6 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
         jLabel13.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel13.setText("RFC");
 
-        jLabel14.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel14.setText("Turno");
-
-        buttonGroup2.add(matutino);
-        matutino.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        matutino.setText("Matutino");
-
-        buttonGroup2.add(vespertino);
-        vespertino.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        vespertino.setText("Vespertino");
-
-        puesto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        puesto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        puesto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                puestoActionPerformed(evt);
-            }
-        });
-
-        jLabel15.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel15.setText("Puesto");
-
         id.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         id.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         id.setText("1");
@@ -158,6 +132,9 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
 
         enviar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         enviar.setText("Enviar");
+
+        jLabel14.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel14.setText("Salario");
 
         jMenu1.setText("Archivo");
 
@@ -261,27 +238,21 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addComponent(masculino)
-                                                        .addGap(38, 38, 38)
-                                                        .addComponent(jLabel14))
-                                                    .addComponent(femenino))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(vespertino)
-                                                    .addComponent(matutino))))
+                                                        .addGap(47, 47, 47)
+                                                        .addComponent(jLabel14)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(salario, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(femenino))))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(26, 26, 26)
                                         .addComponent(jLabel13))
                                     .addComponent(rfc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGap(19, 19, 19)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(puesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel15))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(enviar)))))
                         .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
@@ -324,17 +295,9 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
                             .addComponent(masculino)
                             .addComponent(jLabel10)
                             .addComponent(jLabel14)
-                            .addComponent(matutino)
-                            .addComponent(jLabel15))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(femenino)
-                                    .addComponent(vespertino)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(puesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(salario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
+                        .addComponent(femenino))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(enviar)))
@@ -357,10 +320,6 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void puestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puestoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_puestoActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
@@ -419,8 +378,8 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
     
     @Override
     public void actionPerformed(java.awt.event.ActionEvent evento){
-        String cadenas[] = new String[9];
-        String mensajes[] = {"Id", "Nombre", "Apellidos", "", "", "Puesto", "Direccion", "Telefono", "RFC"};
+        String cadenas[] = new String[8];
+        String mensajes[] = {"Id", "Nombre", "Apellidos", "",  "Salario", "Direccion", "Telefono", "RFC"};
         boolean error = false;
         int index = 0;
         
@@ -430,19 +389,14 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
             cadenas[2] = apellido.getText();
             
             if( masculino.isSelected() )
-                cadenas[3] = "Masculino";
+                cadenas[3] = "1";
             else
-                cadenas[3] = "Femenino";
+                cadenas[3] = "2";
             
-            if( matutino.isSelected() )
-                cadenas[4] = "Matutino";
-            else
-                cadenas[4] = "Vespertino";
-            
-            cadenas[5] = (String) puesto.getSelectedItem();
-            cadenas[6] = direccion.getText();
-            cadenas[7] = telefono.getText();
-            cadenas[8] = rfc.getText();
+            cadenas[4] = salario.getText();
+            cadenas[5] = direccion.getText();
+            cadenas[6] = telefono.getText();
+            cadenas[7] = rfc.getText();
             
             for(index = 0; index < 9; index++)
                 if( cadenas[index].equals("") ){
@@ -476,7 +430,6 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -498,11 +451,9 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JRadioButton masculino;
-    private javax.swing.JRadioButton matutino;
     private javax.swing.JTextField nombre;
-    private javax.swing.JComboBox puesto;
     private javax.swing.JTextField rfc;
+    private javax.swing.JTextField salario;
     private javax.swing.JTextField telefono;
-    private javax.swing.JRadioButton vespertino;
     // End of variables declaration//GEN-END:variables
 }
