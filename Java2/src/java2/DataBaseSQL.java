@@ -33,7 +33,7 @@ public class DataBaseSQL implements Connection {
 
     public static void main(String[] args){
         DataBaseSQL db = new DataBaseSQL();
-        db.free(null);
+        db.select("empleado", 1);
         //db.free("insert into prueba values(null, \"Hola\")");
     }
 
@@ -48,8 +48,60 @@ public class DataBaseSQL implements Connection {
         }
     }
     
-    public void insert(){
-        
+    public void insert(String tabla, String[] values){
+        try {
+            Statement query = (Statement) connection.createStatement();
+            String q1;
+            q1 = "insert into " + tabla + " values( null, ";
+            for(String txt : values){
+                q1 += "'" + txt + "', ";
+            }
+            q1 = q1.substring(0, q1.length()-2);
+            q1 += ")";
+            System.out.println(q1);
+            query.executeUpdate(q1);
+            System.out.println("Exito");
+            query.close();
+        } catch (SQLException e) {
+           // System.out.println("FAIL \n error: " + e.getCause() + "\ncause " + e.getCause() + "\nin" + e.getClass());
+        }
+    }
+    
+    public ResultSet select(String tabla, int id){
+        try {
+            Statement query = (Statement) connection.createStatement();
+            ResultSet rs;
+            String q1;
+            q1 = "select * from " + tabla + " where id = " + id ;
+            System.out.println("-" + q1 + "-");
+            rs = query.executeQuery(q1);
+            System.out.println("Exito select");
+            query.close();
+            return rs;
+        } catch (SQLException e) {
+             System.out.println("Error en el select");
+            return null;
+        }  
+    }
+    
+    public ResultSet select(String tabla){
+        try {
+            Statement query = (Statement) connection.createStatement();
+            ResultSet rs;
+            String q1;
+            q1 = "select * from " + tabla;
+            System.out.println(q1);
+            rs = query.executeQuery(q1);
+            System.out.println("Exito");
+            
+            
+            
+            query.close();
+            return rs;
+        } catch (SQLException e) {
+            System.out.println("FAIL");
+            return null;
+        }  
     }
         
     
