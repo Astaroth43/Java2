@@ -165,18 +165,19 @@ public class VentasInterface extends javax.swing.JFrame {
                 actualiza();
             }
             private void actualiza(){
-                if(empID.getText() == "0")
-                return;
+                if(empID.getText().equals(""))
+                    return;
 
                 try{
                     int a;
                     a = Integer.parseInt(empID.getText().trim());
-                    ResultSet rs;
+                    String[] rs;
                     if((rs = db.select("empleado", a)) != null){
-                        while(rs.next()){
-                            empNom.setText(rs.getString("NOMBRE"));
-                            empAp.setText(rs.getString("APELLIDO"));
-                        }
+                            empNom.setText(rs.[0]);
+                            empAp.setText(rs.[1]);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Introduce un id valido");
+                        empID.setText("");
                     }
                 }catch(SQLException e){
                     //System.out.println("Error al guardar los datos");
