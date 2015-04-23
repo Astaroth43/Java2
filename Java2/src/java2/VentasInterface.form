@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.6" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
@@ -840,10 +840,10 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="6">
                 <Column editable="false" title="ID" type="java.lang.Integer"/>
-                <Column editable="true" title="Articulo" type="java.lang.String"/>
+                <Column editable="false" title="Articulo" type="java.lang.String"/>
                 <Column editable="false" title="Precio" type="java.lang.String"/>
                 <Column editable="false" title="Cantidad" type="java.lang.Integer"/>
-                <Column editable="true" title="Total" type="java.lang.String"/>
+                <Column editable="false" title="Total" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -878,6 +878,9 @@
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Cursor Por defecto"/>
             </Property>
+            <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
+              <JTableSelectionModel selectionMode="0"/>
+            </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
@@ -906,7 +909,6 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Images/cobrar.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="jLabel33"/>
         <Property name="toolTipText" type="java.lang.String" value="Generar Venta"/>
       </Properties>
       <Events>
@@ -918,7 +920,6 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Images/borrar.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="jLabel33"/>
         <Property name="toolTipText" type="java.lang.String" value="Borrar Todo"/>
       </Properties>
       <Events>

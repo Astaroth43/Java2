@@ -21,11 +21,13 @@ import javax.swing.event.DocumentListener;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.util.*;
 
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.SwingUtilities;
+import javax.swing.table.TableModel;
 
 
 /**
@@ -35,16 +37,18 @@ import javax.swing.SwingUtilities;
 public class VentasInterface extends javax.swing.JFrame {
     
     private DataBaseSQL db;
-    private boolean isSetClient, isSetEmpleado, isSetProducto;
+    private boolean isSetClient, isSetEmpleado, isSetProducto, areProducts;
     private DateFormat dateFormat;
     private Date date;
+    List<String[]> dataP;
     
     /**
      * Creates new form VentasInterface
      */
     public VentasInterface() {
         db = new DataBaseSQL();
-        isSetClient = isSetEmpleado = isSetProducto = false;
+        dataP = new ArrayList<String[]>();
+        isSetClient = isSetEmpleado = isSetProducto = areProducts = false;
         initComponents();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         date = new Date();
@@ -451,7 +455,7 @@ public class VentasInterface extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -463,6 +467,7 @@ public class VentasInterface extends javax.swing.JFrame {
             }
         });
         jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jTable2);
 
         jLabel34.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -472,7 +477,6 @@ public class VentasInterface extends javax.swing.JFrame {
         total.setText("0");
 
         jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cobrar.png"))); // NOI18N
-        jLabel37.setText("jLabel33");
         jLabel37.setToolTipText("Generar Venta");
         jLabel37.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -481,7 +485,6 @@ public class VentasInterface extends javax.swing.JFrame {
         });
 
         jLabel38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/borrar.png"))); // NOI18N
-        jLabel38.setText("jLabel33");
         jLabel38.setToolTipText("Borrar Todo");
         jLabel38.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -809,16 +812,23 @@ public class VentasInterface extends javax.swing.JFrame {
     private void jLabel35MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MouseClicked
         if(!isSetProducto)
             return;
-        jTable2.setValueAt(productoID.getText(), 0, 0);
-        jTable2.setValueAt(desP.getText(), 0, 1);
-        jTable2.setValueAt(precioP.getText(), 0, 2);
-        jTable2.setValueAt(cantP.getText(), 0, 3);
-        jTable2.setValueAt(totalP.getText(), 0, 4);
-        total.setText(String.valueOf(Float.parseFloat(total.getText()) + Float.parseFloat(totalP.getText())));
+        dataP.add(new String[] {
+            productoID.getText(), 
+            desP.getText(),
+            precioP.getText(),
+            cantP.getText(),
+            totalP.getText()
+        });
+        actualizaTabla(dataP);
+        
     }//GEN-LAST:event_jLabel35MouseClicked
 
     private void jLabel33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel33MouseClicked
-        JOptionPane.showMessageDialog(null, "Clic Quitar");
+        if(jTable2.getSelectedRow() < 0)
+            return;
+        
+        dataP.remove(jTable2.getSelectedRow());
+        actualizaTabla(dataP);
     }//GEN-LAST:event_jLabel33MouseClicked
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -834,11 +844,29 @@ public class VentasInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jLabel37MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MouseClicked
-        // TODO add your handling code here:
+        if(!(isSetClient && isSetEmpleado && areProducts)){
+            JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos");
+            return;
+        }
+        
+        String q;
+        q = "insert into venta values(null, ";
+        q += cliID.getText() + ", ";
+        q += empID.getText() + ", ";
+        q += fecha.getText() + ", ";
+        q += hora.getText() + ", ";
+        q += total.getText() + ", ";
+        
+        /*for(int i = 0; i < dataP.size(); i++){
+            q += dataP.get(i)[0]
+        }*/
+        
     }//GEN-LAST:event_jLabel37MouseClicked
 
     private void jLabel38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel38MouseClicked
-        // TODO add your handling code here:
+        setVisible(false);
+        VentasInterface.main(null);
+        dispose();
     }//GEN-LAST:event_jLabel38MouseClicked
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -858,6 +886,58 @@ public class VentasInterface extends javax.swing.JFrame {
         }).start();
     }
     
+    private void actualizaTabla(List<String[]> data){
+        int row = 0;
+        int cant = data.size();
+        int totalP = 0;
+        String dat[][] = new String[cant][5];
+        
+        if(cant <= 0){
+            areProducts = false;
+            return;
+        }
+        
+        areProducts = true;
+        for(int i = 0; i < cant; i++){
+            for(int j = 0; j < 5; j++){
+                dat[i][j] = data.get(i)[j];
+            }
+        }
+        
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            /*new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            }*/ dat,
+            new String [] {
+                "ID", "Articulo", "Precio", "Cantidad", "Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        for(int i = 0; i < data.size(); i++, row++){
+           totalP += Float.parseFloat(data.get(i)[4]);
+        }
+        total.setText(String.valueOf(totalP));
+        jScrollPane2.setViewportView(jTable2);
+    }
     
     
     /**
