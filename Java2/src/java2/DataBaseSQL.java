@@ -122,42 +122,25 @@ public class DataBaseSQL implements Connection {
            // System.out.println("FAIL \n error: " + e.getCause() + "\ncause " + e.getCause() + "\nin" + e.getClass());
         }
     }
-    
-    public ResultSet select(String tabla, int id){
-        try {
+       
+    public int selectID(String tabla){
+        int numberRow = 0;
+
+        try{
+
             Statement query = (Statement) connection.createStatement();
             ResultSet rs;
             String q1;
-            q1 = "select * from " + tabla + " where id = " + id ;
+            q1 = "select count(*) from " + tabla;
             System.out.println("-" + q1 + "-");
             rs = query.executeQuery(q1);
-            System.out.println("Exito select");
-            query.close();
-            return rs;
-        } catch (SQLException e) {
-             System.out.println("Error en el select");
-            return null;
-        }  
-    }
-    
-    public ResultSet select(String tabla){
-        try {
-            Statement query = (Statement) connection.createStatement();
-            ResultSet rs;
-            String q1;
-            q1 = "select * from " + tabla;
-            System.out.println(q1);
-            rs = query.executeQuery(q1);
-            System.out.println("Exito");
-            
-            
-            
-            query.close();
-            return rs;
-        } catch (SQLException e) {
-            System.out.println("FAIL");
-            return null;
-        }  
+            while(rs.next()){
+                numberRow = rs.getInt("count(*)");
+            }
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return numberRow;
     }
         
     

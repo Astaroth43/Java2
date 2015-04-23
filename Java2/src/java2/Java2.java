@@ -14,8 +14,7 @@ public class Java2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       VentasInterface vi = new VentasInterface();
-       vi.main(null);
+       VentasInterface.main(null);
        //System.out.println(System.getProperty("java.home"));
     }
     

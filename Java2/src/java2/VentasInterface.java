@@ -19,6 +19,14 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import javax.swing.SwingUtilities;
+
 
 /**
  *
@@ -26,8 +34,10 @@ import javax.swing.event.DocumentListener;
  */
 public class VentasInterface extends javax.swing.JFrame {
     
-    DataBaseSQL db;
-    boolean isSetClient, isSetEmpleado, isSetProducto;
+    private DataBaseSQL db;
+    private boolean isSetClient, isSetEmpleado, isSetProducto;
+    private DateFormat dateFormat;
+    private Date date;
     
     /**
      * Creates new form VentasInterface
@@ -36,6 +46,15 @@ public class VentasInterface extends javax.swing.JFrame {
         db = new DataBaseSQL();
         isSetClient = isSetEmpleado = isSetProducto = false;
         initComponents();
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        date = new Date();
+        fecha.setText(dateFormat.format(date));
+        
+        dateFormat = new SimpleDateFormat("HH:mm:ss");
+        date = new Date();
+        hora.setText(dateFormat.format(date));
+        folio.setText(String.valueOf(db.selectID("venta") + 1));
+        changeHour();
     }
 
     /**
@@ -49,11 +68,11 @@ public class VentasInterface extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        folio = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        fecha = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        hora = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -88,7 +107,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel34 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
+        total = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -116,29 +135,29 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
         jLabel2.setText("Nueva Venta");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("1");
-        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel3.setFocusable(false);
-        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        folio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        folio.setText("1");
+        folio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        folio.setFocusable(false);
+        folio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel4.setText("Folio");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("11/11/11");
-        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel5.setFocusable(false);
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        fecha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        fecha.setText("11/11/11");
+        fecha.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        fecha.setFocusable(false);
+        fecha.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel6.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel6.setText("Fecha");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("11:11:11");
-        jLabel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel7.setFocusable(false);
-        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        hora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        hora.setText("11:11:11");
+        hora.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        hora.setFocusable(false);
+        hora.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel8.setText("Hora");
@@ -315,7 +334,7 @@ public class VentasInterface extends javax.swing.JFrame {
                     precioP.setText(rs[1]);
                     stockP.setText(rs[2]);
                     cantP.setText("1");
-                    totalP.setText("$" + Float.parseFloat(cantP.getText().trim()) * Float.parseFloat(rs[1]));
+                    totalP.setText(String.valueOf(Float.parseFloat(cantP.getText().trim()) * Float.parseFloat(rs[1])));
                 }else{
                     desP.setText("-");
                     precioP.setText("0");
@@ -384,7 +403,7 @@ public class VentasInterface extends javax.swing.JFrame {
                     return;
                 }
                 float a = Integer.parseInt(cantP.getText());
-                totalP.setText("$" + Float.parseFloat(precioP.getText().trim()) * a);
+                totalP.setText(String.valueOf(Float.parseFloat(precioP.getText().trim()) * a));
                 isSetProducto = true;
             }
         });
@@ -393,7 +412,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel30.setText("Total");
 
         totalP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        totalP.setText("$0");
+        totalP.setText("0");
         totalP.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         totalP.setFocusable(false);
         totalP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -449,8 +468,8 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel34.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         jLabel34.setText("TOTAL:  $");
 
-        jLabel36.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        jLabel36.setText("999999.00");
+        total.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        total.setText("0");
 
         jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cobrar.png"))); // NOI18N
         jLabel37.setText("jLabel33");
@@ -605,19 +624,19 @@ public class VentasInterface extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(11, 11, 11)
                                                 .addComponent(jLabel4))
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(folio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(11, 11, 11)
                                                 .addComponent(jLabel6))
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(11, 11, 11)
                                                 .addComponent(jLabel8))
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(hora, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel17)
@@ -647,7 +666,7 @@ public class VentasInterface extends javax.swing.JFrame {
                                 .addGap(40, 40, 40)
                                 .addComponent(jLabel34)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel36)
+                                .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(7, 7, 7)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -666,15 +685,15 @@ public class VentasInterface extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel5))
+                                        .addComponent(fecha))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel7))
+                                        .addComponent(hora))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel3))
+                                        .addComponent(folio))
                                     .addComponent(jLabel2))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -757,7 +776,7 @@ public class VentasInterface extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel34)
-                        .addComponent(jLabel36))
+                        .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -788,7 +807,14 @@ public class VentasInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_cantPActionPerformed
 
     private void jLabel35MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MouseClicked
-        JOptionPane.showMessageDialog(null, "Clic Agregar");
+        if(!isSetProducto)
+            return;
+        jTable2.setValueAt(productoID.getText(), 0, 0);
+        jTable2.setValueAt(desP.getText(), 0, 1);
+        jTable2.setValueAt(precioP.getText(), 0, 2);
+        jTable2.setValueAt(cantP.getText(), 0, 3);
+        jTable2.setValueAt(totalP.getText(), 0, 4);
+        total.setText(String.valueOf(Float.parseFloat(total.getText()) + Float.parseFloat(totalP.getText())));
     }//GEN-LAST:event_jLabel35MouseClicked
 
     private void jLabel33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel33MouseClicked
@@ -819,6 +845,21 @@ public class VentasInterface extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void changeHour(){
+        new Thread(() -> {
+            while (true){
+                SwingUtilities.invokeLater(() -> {
+                    dateFormat = new SimpleDateFormat("HH:mm:ss");
+                    date = new Date();
+                    hora.setText(dateFormat.format(date));
+                });
+                try { Thread.sleep(1000); } catch(Exception e) {}
+            }
+        }).start();
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -863,6 +904,9 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel empAp;
     private javax.swing.JTextField empID;
     private javax.swing.JLabel empNom;
+    private javax.swing.JLabel fecha;
+    private javax.swing.JLabel folio;
+    private javax.swing.JLabel hora;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -879,19 +923,15 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -911,6 +951,7 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel precioP;
     private javax.swing.JTextField productoID;
     private javax.swing.JLabel stockP;
+    private javax.swing.JLabel total;
     private javax.swing.JLabel totalP;
     // End of variables declaration//GEN-END:variables
 }
