@@ -21,7 +21,7 @@ import java.util.concurrent.Executor;
  *
  * @author Familia
  */
-public class Cliente extends javax.swing.JFrame implements java.awt.event.ActionListener{
+public class Cliente extends javax.swing.JFrame{
     
     private DataBaseSQL db;
     /**
@@ -32,7 +32,6 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
         db = new DataBaseSQL();
         initComponents();
         masculino.setSelected(true);
-        enviar.addActionListener(this);
     }
 
     /**
@@ -129,6 +128,11 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
 
         enviar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         enviar.setText("Enviar");
+        enviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enviarActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Archivo");
 
@@ -320,49 +324,13 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Cliente().setVisible(true);
-            }
-        });
-    }
-    
-    @Override
-    public void actionPerformed(java.awt.event.ActionEvent evento){
+    private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
         String cadenas[] = new String[6];
         String mensajes[] = {"Nombre", "Apellidos", "", "Direccion", "Telefono", "RFC"};
         boolean errorEmpty = false, errorType = false;
         int indexEmpty= 0, indexType = 0;
         
-        if(evento.getSource() == enviar){
+        if(evt.getSource() == enviar){
             cadenas[0] = nombre.getText();
             cadenas[1] = apellido.getText();
             
@@ -416,6 +384,41 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
                 JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al cliente");
             }
         }
+    }//GEN-LAST:event_enviarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Cliente().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
