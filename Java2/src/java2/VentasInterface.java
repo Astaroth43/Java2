@@ -140,6 +140,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel2.setText("Nueva Venta");
 
         folio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        folio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         folio.setText("1");
         folio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         folio.setFocusable(false);
@@ -149,6 +150,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel4.setText("Folio");
 
         fecha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        fecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         fecha.setText("11/11/11");
         fecha.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         fecha.setFocusable(false);
@@ -158,6 +160,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel6.setText("Fecha");
 
         hora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        hora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         hora.setText("11:11:11");
         hora.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         hora.setFocusable(false);
@@ -812,6 +815,12 @@ public class VentasInterface extends javax.swing.JFrame {
     private void jLabel35MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MouseClicked
         if(!isSetProducto)
             return;
+        
+        if( !cantP.getText().matches("[0-9]*") ){
+            JOptionPane.showMessageDialog(null, "Error, Ingrese un número entero y positivo para Cantidad");
+            return;
+        }
+        
         dataP.add(new String[] {
             productoID.getText(), 
             desP.getText(),
