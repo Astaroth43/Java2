@@ -37,7 +37,7 @@ import javax.swing.table.TableModel;
 public class VentasInterface extends javax.swing.JFrame {
     
     private DataBaseSQL db;
-    private boolean isSetClient, isSetEmpleado, isSetProducto, areProducts;
+    private boolean isSetClient, isSetEmpleado, isSetProducto, areProducts, isSetTipoPago;
     private DateFormat dateFormat;
     private Date date;
     List<String[]> dataP;
@@ -49,6 +49,7 @@ public class VentasInterface extends javax.swing.JFrame {
         db = new DataBaseSQL();
         dataP = new ArrayList<String[]>();
         isSetClient = isSetEmpleado = isSetProducto = areProducts = false;
+        isSetTipoPago = true;
         initComponents();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         date = new Date();
@@ -114,6 +115,10 @@ public class VentasInterface extends javax.swing.JFrame {
         total = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
+        tipoPago = new javax.swing.JComboBox();
+        otroPago = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        otroPagoLbl = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -197,6 +202,11 @@ public class VentasInterface extends javax.swing.JFrame {
                 actualiza();
             }
             private void actualiza(){
+                if( !empID.getText().matches( "[0-9]*" ) ){
+                    isSetEmpleado = false;
+                    JOptionPane.showMessageDialog(null, "Error, El id debe ser un número entero y positivo");
+                    return;
+                }
                 int a = Integer.parseInt(empID.getText().trim());
                 String[] rs;
                 rs = db.selectPersona("empleado", a);
@@ -268,6 +278,11 @@ public class VentasInterface extends javax.swing.JFrame {
                 actualiza();
             }
             private void actualiza(){
+                if( !cliID.getText().matches( "[0-9]*" ) ){
+                    isSetClient = false;
+                    JOptionPane.showMessageDialog(null, "Error, El id debe ser un número entero y positivo");
+                    return;
+                }
                 if(cliID.getText().equals("0")){
                     isSetClient = true;
                     cliNom.setText("No registrado");
@@ -331,6 +346,12 @@ public class VentasInterface extends javax.swing.JFrame {
                 actualiza();
             }
             private void actualiza(){
+                if( !productoID.getText().matches( "[0-9]*" ) ){
+                    isSetProducto = false;
+                    JOptionPane.showMessageDialog(null, "Error, El id debe ser un número entero y positivo");
+                    return;
+                }
+
                 int a = Integer.parseInt(productoID.getText().trim());
                 String[] rs;
                 rs = db.selectProducto(a);
@@ -349,6 +370,7 @@ public class VentasInterface extends javax.swing.JFrame {
                     totalP.setText("-");
                     cantP.setText("-");
                     isSetProducto = false;
+                    if(!productoID.getText().equals("0"))
                     JOptionPane.showMessageDialog(null, "Introduce un id valido");
                 }
             }
@@ -402,10 +424,21 @@ public class VentasInterface extends javax.swing.JFrame {
                 actualiza();
             }
             private void actualiza(){
-                if(stockP.getText().equals("-"))
-                return;
+                if(stockP.getText().equals("-")){
+                    isSetProducto = false;
+                    totalP.setText("0");
+                    return;
+                }
+                if( !cantP.getText().matches("[0-9]*") ){
+                    isSetProducto = false;
+                    totalP.setText("0");
+                    JOptionPane.showMessageDialog(null, "Error, Ingrese un número entero y positivo para Cantidad");
+                    return;
+                }
+
                 if(Integer.parseInt(cantP.getText()) > Integer.parseInt(stockP.getText())){
                     JOptionPane.showMessageDialog(null, "No hay tantos en existencia.");
+                    totalP.setText("0");
                     isSetProducto = false;
                     return;
                 }
@@ -494,6 +527,55 @@ public class VentasInterface extends javax.swing.JFrame {
                 jLabel38MouseClicked(evt);
             }
         });
+
+        tipoPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tipoPago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Tarjeta", "Anticipo (50%)", "30 dias", "Otro" }));
+        tipoPago.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                tipoPagoItemStateChanged(evt);
+            }
+        });
+        tipoPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipoPagoActionPerformed(evt);
+            }
+        });
+
+        otroPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        otroPago.setVisible(false);
+        otroPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                otroPagoActionPerformed(evt);
+            }
+        });
+        otroPago.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                actualiza();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                isSetTipoPago = false;
+                //JOptionPane.showMessageDialog(null, "Introduce un id valido");
+
+            }
+            public void insertUpdate(DocumentEvent e) {
+                actualiza();
+            }
+            private void actualiza(){
+                if( otroPago.getText().matches( "-" ) ){
+                    isSetTipoPago = false;
+                    //JOptionPane.showMessageDialog(null, "Especifica un tipo de pago");
+                    return;
+                }
+                isSetTipoPago = true;
+            }
+        });
+
+        jLabel24.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel24.setText("Tipo de Pago");
+
+        otroPagoLbl.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        otroPagoLbl.setText("Especifica");
+        otroPagoLbl.setVisible(false);
 
         jMenu1.setText("Archivo");
 
@@ -663,9 +745,18 @@ public class VentasInterface extends javax.swing.JFrame {
                                             .addComponent(cliAp, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(321, 321, 321))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 854, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel24))
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(otroPagoLbl)
+                                    .addComponent(otroPago, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(53, 53, 53)
                                 .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -778,15 +869,23 @@ public class VentasInterface extends javax.swing.JFrame {
                                 .addGap(44, 44, 44)))))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel34)
                         .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(111, Short.MAX_VALUE))
+                        .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel24)
+                            .addComponent(otroPagoLbl))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(otroPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         pack();
@@ -816,11 +915,6 @@ public class VentasInterface extends javax.swing.JFrame {
         if(!isSetProducto)
             return;
         
-        if( !cantP.getText().matches("[0-9]*") ){
-            JOptionPane.showMessageDialog(null, "Error, Ingrese un número entero y positivo para Cantidad");
-            return;
-        }
-        
         dataP.add(new String[] {
             productoID.getText(), 
             desP.getText(),
@@ -828,6 +922,12 @@ public class VentasInterface extends javax.swing.JFrame {
             cantP.getText(),
             totalP.getText()
         });
+        String a[];
+        a = db.selectProducto(Integer.parseInt(productoID.getText()));
+        int aux = Integer.parseInt(a[2]) - Integer.parseInt(cantP.getText());
+        db.free("update producto set CANTIDAD = " + String.valueOf(aux) + " where id = " + productoID.getText());
+        stockP.setText(String.valueOf(aux));
+        productoID.setText("0");
         actualizaTabla(dataP);
         
     }//GEN-LAST:event_jLabel35MouseClicked
@@ -836,7 +936,13 @@ public class VentasInterface extends javax.swing.JFrame {
         if(jTable2.getSelectedRow() < 0)
             return;
         
+        String a[];
+        a = db.selectProducto(Integer.parseInt(dataP.get(jTable2.getSelectedRow())[0]));
+        int aux = Integer.parseInt(a[2]) + Integer.parseInt(dataP.get(jTable2.getSelectedRow())[3]);
+        db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(jTable2.getSelectedRow())[0]);
+        stockP.setText(String.valueOf(aux));
         dataP.remove(jTable2.getSelectedRow());
+        productoID.setText("0");
         actualizaTabla(dataP);
     }//GEN-LAST:event_jLabel33MouseClicked
 
@@ -853,22 +959,32 @@ public class VentasInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jLabel37MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MouseClicked
-        if(!(isSetClient && isSetEmpleado && areProducts)){
+        if(!(isSetClient && isSetEmpleado && areProducts && isSetTipoPago)){
             JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos");
             return;
         }
         
         String q;
-        q = "insert into venta values(null, ";
-        q += cliID.getText() + ", ";
-        q += empID.getText() + ", ";
-        q += fecha.getText() + ", ";
-        q += hora.getText() + ", ";
-        q += total.getText() + ", ";
+        q = "insert into venta values(null, '";
+        q += cliID.getText() + "', '";
+        q += empID.getText() + "', '";
+        q += fecha.getText() + "', '";
+        q += hora.getText() + "', '";
+        q += total.getText() + "', ";
+        q += String.valueOf(tipoPago.getSelectedIndex() + 1 ) + ", '";
+        q += otroPago.getText();
+        q+= "')";
         
-        /*for(int i = 0; i < dataP.size(); i++){
-            q += dataP.get(i)[0]
-        }*/
+        
+        //System.out.println(q);
+        db.free(q);
+        String q2;
+        
+        for(int i = 0; i < dataP.size(); i++){
+            q2 = "insert into desc_venta values(" + folio.getText() + ", " +  dataP.get(i)[0] + ", " + dataP.get(i)[3] + ")";
+            //System.out.println(q2);
+            db.free(q2);
+        }
         
     }//GEN-LAST:event_jLabel37MouseClicked
 
@@ -881,6 +997,28 @@ public class VentasInterface extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void tipoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoPagoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tipoPagoActionPerformed
+
+    private void otroPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_otroPagoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_otroPagoActionPerformed
+
+    private void tipoPagoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoPagoItemStateChanged
+        if(!String.valueOf(tipoPago.getSelectedItem()).equals("Otro")){
+            isSetTipoPago = true;
+            otroPago.setText("NULL");
+            otroPagoLbl.setVisible(false);
+            otroPago.setVisible(false);
+        }else{
+            isSetTipoPago = false;
+            otroPago.setText("-");
+            otroPagoLbl.setVisible(true);
+            otroPago.setVisible(true);
+        }
+    }//GEN-LAST:event_tipoPagoItemStateChanged
 
     private void changeHour(){
         new Thread(() -> {
@@ -898,12 +1036,12 @@ public class VentasInterface extends javax.swing.JFrame {
     private void actualizaTabla(List<String[]> data){
         int row = 0;
         int cant = data.size();
-        int totalP = 0;
+        float totalP = 0;
         String dat[][] = new String[cant][5];
         
         if(cant <= 0){
             areProducts = false;
-            return;
+           // return;
         }
         
         areProducts = true;
@@ -1009,6 +1147,7 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
@@ -1037,9 +1176,12 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTextField otroPago;
+    private javax.swing.JLabel otroPagoLbl;
     private javax.swing.JLabel precioP;
     private javax.swing.JTextField productoID;
     private javax.swing.JLabel stockP;
+    private javax.swing.JComboBox tipoPago;
     private javax.swing.JLabel total;
     private javax.swing.JLabel totalP;
     // End of variables declaration//GEN-END:variables

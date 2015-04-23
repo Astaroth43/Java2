@@ -40,7 +40,8 @@ public class DataBaseSQL implements Connection {
     public void free(String q){
         try {
             Statement query = (Statement) connection.createStatement();
-            query.executeUpdate("insert into prueba values(null, 'Hola')");
+            System.out.println(q);
+            query.executeUpdate(q);
             System.out.println("Exito");
             query.close();
         } catch (SQLException e) {
