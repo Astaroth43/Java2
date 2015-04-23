@@ -33,6 +33,7 @@ public class Empleado extends javax.swing.JFrame{
         initComponents();
         db = new DataBaseSQL();
         masculino.setSelected(true);
+        id.setText( String.valueOf( db.selectID("empleado") + 1 ) );
     }
 
     /**

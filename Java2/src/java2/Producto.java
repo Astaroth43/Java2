@@ -30,8 +30,9 @@ public class Producto extends javax.swing.JFrame{
      */
     public Producto() {
         super("Producto");
-        db = new DataBaseSQL();
         initComponents();
+        db = new DataBaseSQL();
+        id.setText( String.valueOf( db.selectID("producto") + 1 ) );
     }
 
     /**
@@ -112,8 +113,10 @@ public class Producto extends javax.swing.JFrame{
         jLabel8.setText("Cantidad");
 
         id.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        id.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         id.setText("1");
         id.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        id.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         enviar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         enviar.setText("Enviar");

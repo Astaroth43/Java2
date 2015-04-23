@@ -32,6 +32,7 @@ public class Cliente extends javax.swing.JFrame{
         db = new DataBaseSQL();
         initComponents();
         masculino.setSelected(true);
+        id.setText( String.valueOf( db.selectID("cliente") + 1 ) );
     }
 
     /**
@@ -123,6 +124,7 @@ public class Cliente extends javax.swing.JFrame{
         jLabel13.setText("RFC");
 
         id.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        id.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         id.setText("1");
         id.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
