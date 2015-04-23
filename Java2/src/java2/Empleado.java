@@ -100,7 +100,7 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
         nombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 11)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel6.setText("Nombres");
+        jLabel6.setText("Nombre(s)");
 
         jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel5.setText("ID");
@@ -250,10 +250,11 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(26, 26, 26)
                                         .addComponent(jLabel13))
-                                    .addComponent(rfc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(19, 19, 19)
-                                        .addComponent(enviar)))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(rfc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(enviar, javax.swing.GroupLayout.Alignment.TRAILING))))))
                         .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -380,8 +381,8 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
     public void actionPerformed(java.awt.event.ActionEvent evento){
         String cadenas[] = new String[7];
         String mensajes[] = {"Nombre", "Apellidos", "",  "Salario", "Direccion", "Telefono", "RFC"};
-        boolean error = false;
-        int index = 0;
+        boolean errorEmpty = false, errorType = false;
+        int indexEmpty = 0, indexType = 0;
         
         if(evento.getSource() == enviar){
             cadenas[0] = nombre.getText();
@@ -397,14 +398,50 @@ public class Empleado extends javax.swing.JFrame implements java.awt.event.Actio
             cadenas[5] = telefono.getText();
             cadenas[6] = rfc.getText();
             
-            for(index = 0; index < 7; index++)
-                if( cadenas[index].equals("") ){
-                    error = true;
+            for(int i = 0; i < 7; i++){
+                if( cadenas[i].equals("") ){
+                    indexEmpty = i;
+                    errorEmpty = true;
                     break;
                 }
+                
+                if(i == 0 || i == 1){
+                    if( !cadenas[i].matches("[a-zA-Z]*") ){
+                        errorType = true;
+                        indexType = i;
+                        break;
+                    }
+                }
+                
+                if(i == 3){
+                    if( !cadenas[i].matches("[0-9]*\\.?[0-9]*") ){
+                        errorType = true;
+                        indexType = i;
+                        break;
+                    }
+                }
+                
+                if(i == 5){
+                    if( !cadenas[i].matches("[0-9]*") || !( cadenas[i].length() == 8 || cadenas[i].length() == 10 ) ){
+                        errorType = true;
+                        indexType = i;
+                        break;
+                    }   
+                }
+            }             
             
-            if( error )
-                JOptionPane.showMessageDialog(null, "Error, Ingrese porfavor un valor para " + mensajes[index]);
+            if( errorEmpty || errorType){
+                if( errorEmpty )
+                    JOptionPane.showMessageDialog(null, "Error, Ingrese porfavor un valor para " + mensajes[indexEmpty]);
+                else{
+                     if( indexType == 0 || indexType == 1)
+                         JOptionPane.showMessageDialog(null, "Error, Los campos Nombre(s) y Apellido deben llenarse y solo con letras y/o espacios");
+                     if( indexType == 3)
+                         JOptionPane.showMessageDialog(null, "Error, Salario debe ser un numero real y positivo");
+                     if( indexType == 5)
+                         JOptionPane.showMessageDialog(null, "Error, Telefono debe ser un numero entero de 8 o 10 digitos");
+                }       
+            } 
             else{
                 //******Codigo a ejecutar en la base de datos******
                 db.insert("empleado", cadenas);

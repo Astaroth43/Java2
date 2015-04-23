@@ -345,10 +345,10 @@ public class Producto extends javax.swing.JFrame implements java.awt.event.Actio
     public void actionPerformed(java.awt.event.ActionEvent evento){
         String cadenas[] = new String[5];
         String mensajes[] = {"Tipo", "Nombre", "Precio", "Cantidad", "Descripcion"};
-        boolean error = false;
-        int index;
+        boolean errorEmpty = false, errorType = false;
+        int indexEmpty = 0, indexType = 0;
         
-        if(evento.getSource() == enviar){
+        if(evento.getSource() == enviar){            
             cadenas[0] = String.valueOf( tipo.getSelectedIndex() + 1 );
             cadenas[1] = nombre.getText();       
             
@@ -356,14 +356,40 @@ public class Producto extends javax.swing.JFrame implements java.awt.event.Actio
             cadenas[3] = cantidad.getText();
             cadenas[4] = descripcion.getText();
             
-            for(index = 0; index < 5; index++)
-                if( cadenas[index].equals("") ){
-                    error = true;
+            for(int i = 0; i < 5; i++){
+                if( cadenas[i].equals("") ){
+                    errorEmpty = true;
+                    indexEmpty = i;
                     break;
                 }
+                
+                if(i == 2){
+                    if( !cadenas[i].matches("[0-9]*\\.?[0-9]*") ){
+                            errorType = true;
+                            indexType = i;
+                            break;
+                    }
+                }
+                
+                if(i == 3){
+                    if( !cadenas[i].matches("[0-9]*") ){
+                        errorType = true;
+                        indexType = i;
+                        break;
+                    }   
+                }
+            }
             
-            if( error )
-                JOptionPane.showMessageDialog(null, "Error, Ingrese porfavor un valor para " + mensajes[index]);
+            if( errorEmpty || errorType){
+                if( errorEmpty )
+                    JOptionPane.showMessageDialog(null, "Error, Ingrese porfavor un valor para " + mensajes[indexEmpty]);
+                else{
+                     if( indexType == 2)
+                         JOptionPane.showMessageDialog(null, "Error, Precio debe ser un numero real y positivo");
+                     else
+                         JOptionPane.showMessageDialog(null, "Error, Cantidad debe ser un numero entero y positivo");
+                }       
+            }  
             else{
                 //******Codigo a ejecutar en la base de datos******
                 db.insert("producto", cadenas);

@@ -359,8 +359,8 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
     public void actionPerformed(java.awt.event.ActionEvent evento){
         String cadenas[] = new String[6];
         String mensajes[] = {"Nombre", "Apellidos", "", "Direccion", "Telefono", "RFC"};
-        boolean error = false;
-        int index = 0;
+        boolean errorEmpty = false, errorType = false;
+        int indexEmpty= 0, indexType = 0;
         
         if(evento.getSource() == enviar){
             cadenas[0] = nombre.getText();
@@ -375,14 +375,40 @@ public class Cliente extends javax.swing.JFrame implements java.awt.event.Action
             cadenas[4] = telefono.getText();
             cadenas[5] = rfc.getText();
             
-            for(index = 0; index < 6; index++)
-                if( cadenas[index].equals("") ){
-                    error = true;
+            for(int i = 0; i < 6; i++){
+                if( cadenas[i].equals("") ){
+                    errorEmpty = true;
+                    indexEmpty = i;
                     break;
                 }
+                
+                if(i == 0 || i == 1){
+                    if( !cadenas[i].matches("[a-zA-Z]*") ){
+                        errorType = true;
+                        indexType = i;
+                        break;
+                    }
+                }
+                
+                if(i == 4){
+                    if( !cadenas[i].matches("[0-9]*") || !( cadenas[i].length() == 8 || cadenas[i].length() == 10 ) ){
+                        errorType = true;
+                        indexType = i;
+                        break;
+                    }   
+                }
+            }   
             
-            if( error )
-                JOptionPane.showMessageDialog(null, "Error, Ingrese porfavor un valor para " + mensajes[index]);
+            if( errorEmpty || errorType){
+                if( errorEmpty )
+                    JOptionPane.showMessageDialog(null, "Error, Ingrese porfavor un valor para " + mensajes[indexEmpty]);
+                else{
+                     if( indexType == 0 || indexType == 1)
+                         JOptionPane.showMessageDialog(null, "Error, Los campos Nombre(s) y Apellido deben llenarse y solo con letras y/o espacios");
+                     if( indexType == 4)
+                         JOptionPane.showMessageDialog(null, "Error, Telefono debe ser un numero entero de 8 o 10 digitos");
+                }       
+            }
             else{
                 db.insert("cliente", cadenas);
                 for(String x : cadenas)
