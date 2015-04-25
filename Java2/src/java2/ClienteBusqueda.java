@@ -308,6 +308,7 @@ public class ClienteBusqueda extends javax.swing.JFrame{
             telefono.setText( "----------" );
             rfc.setText( "----------" );
             JOptionPane.showMessageDialog(null, "No existe un cliente registrado con ese nombre");
+            return;
         }
  
         try{

@@ -298,6 +298,7 @@ public class ProductoBusqueda extends javax.swing.JFrame {
             cantidad.setText( "----------" );
             descripcion.setText( "----------" );
             JOptionPane.showMessageDialog(null, "No existe un empleado registrado con ese nombre");
+            return;
         }
  
         try{

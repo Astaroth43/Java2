@@ -332,6 +332,7 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
             telefono.setText( "----------" );
             rfc.setText( "----------" );
             JOptionPane.showMessageDialog(null, "No existe un empleado registrado con ese nombre");
+            return;
         }
  
         try{
