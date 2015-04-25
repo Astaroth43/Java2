@@ -483,6 +483,9 @@
         <Property name="focusable" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
@@ -507,6 +510,9 @@
         <Property name="focusable" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -531,6 +537,9 @@
         <Property name="focusable" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
@@ -566,6 +575,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="empID.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        isSetEmpleado = false;&#xa;        empNom.setText(&quot;-&quot;);&#xa;        empAp.setText(&quot;-&quot;);&#xa;        //JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;        &#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if( !empID.getText().matches( &quot;[0-9]*&quot; ) ){&#xa;            isSetEmpleado = false;&#xa;            JOptionPane.showMessageDialog(null, &quot;Error, El id debe ser un n&#xfa;mero entero y positivo&quot;);&#xa;            return;&#x9;&#xa;        }&#xa;        int a = Integer.parseInt(empID.getText().trim());&#xa;        String[] rs;&#xa;        rs = db.selectPersona(&quot;empleado&quot;, a);&#xa;        &#xa;        if(rs != null){&#xa;            isSetEmpleado = true;&#xa;            empNom.setText(rs[0]);&#xa;            empAp.setText(rs[1]);&#xa;        }else{&#xa;            isSetEmpleado = false;&#xa;            empNom.setText(&quot;-&quot;);&#xa;            empAp.setText(&quot;-&quot;);&#xa;            JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;        }&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
@@ -663,6 +673,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="cliID.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        isSetClient = false;&#xa;        cliNom.setText(&quot;-&quot;);&#xa;        cliAp.setText(&quot;-&quot;);&#xa;        //JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if( !cliID.getText().matches( &quot;[0-9]*&quot; ) ){&#xa;            isSetClient = false;&#xa;            JOptionPane.showMessageDialog(null, &quot;Error, El id debe ser un n&#xfa;mero entero y positivo&quot;);&#xa;            return;&#x9;&#xa;        }&#xa;        if(cliID.getText().equals(&quot;0&quot;)){&#xa;            isSetClient = true;&#xa;            cliNom.setText(&quot;No registrado&quot;);&#xa;            cliAp.setText(&quot;No registrado&quot;);&#xa;            return;&#xa;        }&#xa;&#xa;        int a = Integer.parseInt(cliID.getText().trim());&#xa;        String[] rs;&#xa;        rs = db.selectPersona(&quot;cliente&quot;, a);&#xa;        &#xa;        if(rs != null){&#xa;            isSetClient = true;&#xa;            cliNom.setText(rs[0]);&#xa;            cliAp.setText(rs[1]);&#xa;        }else{&#xa;            isSetClient = false;&#xa;            cliNom.setText(&quot;-&quot;);&#xa;            cliAp.setText(&quot;-&quot;);&#xa;            JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;        }&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel19">
@@ -714,6 +725,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="productoID.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        desP.setText(&quot;-&quot;);&#xa;        precioP.setText(&quot;0&quot;);&#xa;        stockP.setText(&quot;-&quot;);&#xa;        totalP.setText(&quot;-&quot;);&#xa;        cantP.setText(&quot;-&quot;);&#xa;        isSetProducto = false;&#xa;        //JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if( !productoID.getText().matches( &quot;[0-9]*&quot; ) ){&#xa;            isSetProducto = false;&#xa;            JOptionPane.showMessageDialog(null, &quot;Error, El id debe ser un n&#xfa;mero entero y positivo&quot;);&#xa;            return;&#x9;&#xa;        }&#xa;        &#xa;        int a = Integer.parseInt(productoID.getText().trim());&#xa;        String[] rs;&#xa;        rs = db.selectProducto(a);&#xa;        &#xa;        if(rs != null){&#xa;            isSetProducto = true;&#xa;            desP.setText(rs[0]);&#xa;            precioP.setText(rs[1]);&#xa;            stockP.setText(rs[2]);&#xa;            cantP.setText(&quot;1&quot;);&#xa;            totalP.setText(String.valueOf(Float.parseFloat(cantP.getText().trim()) * Float.parseFloat(rs[1])));&#xa;        }else{&#xa;            desP.setText(&quot;-&quot;);&#xa;            precioP.setText(&quot;0&quot;);&#xa;            stockP.setText(&quot;-&quot;);&#xa;            totalP.setText(&quot;-&quot;);&#xa;            cantP.setText(&quot;-&quot;);&#xa;            isSetProducto = false;&#xa;            if(!productoID.getText().equals(&quot;0&quot;))&#xa;                JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;        }&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel23">
@@ -795,7 +807,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="cantP">
       <Properties>
-        <Property name="text" type="java.lang.String" value="1"/>
+        <Property name="text" type="java.lang.String" value="0"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
@@ -803,6 +815,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="cantP.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;      // empID.setText(&quot;0&quot;);&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if(stockP.getText().equals(&quot;-&quot;)){&#xa;            isSetProducto = false;&#xa;            totalP.setText(&quot;0&quot;);&#xa;            return;&#xa;        }        &#xa;        if( !cantP.getText().matches(&quot;[0-9]*&quot;) ){&#xa;            isSetProducto = false;&#xa;            totalP.setText(&quot;0&quot;);&#xa;            JOptionPane.showMessageDialog(null, &quot;Error, Ingrese un n&#xfa;mero entero y positivo para Cantidad&quot;);&#xa;            return;&#xa;        }&#xa;&#xa;        if(Integer.parseInt(cantP.getText()) &gt; Integer.parseInt(stockP.getText())){&#xa;            JOptionPane.showMessageDialog(null, &quot;No hay tantos en existencia.&quot;);&#xa;            totalP.setText(&quot;0&quot;);&#xa;            isSetProducto = false;&#xa;            return;&#xa;        }&#xa;        float a = Float.parseFloat(cantP.getText());&#xa;        totalP.setText(String.valueOf(Float.parseFloat(precioP.getText().trim()) * a));&#xa;        isSetProducto = true;&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel30">
@@ -840,6 +853,9 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEliminaMouseClicked"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="btnAgrega">
       <Properties>
@@ -852,6 +868,9 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgregaMouseClicked"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+      </AuxValues>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
@@ -939,6 +958,9 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnGenerarVentaMouseClicked"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="btnBorrarTodo">
       <Properties>
@@ -950,6 +972,9 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnBorrarTodoMouseClicked"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JComboBox" name="tipoPago">
       <Properties>
@@ -970,6 +995,9 @@
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="tipoPagoItemStateChanged"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tipoPagoActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="otroPago">
       <Properties>
@@ -983,6 +1011,7 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="otroPago.setVisible(false);"/>
         <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="otroPago.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        isSetTipoPago = false;&#xa;        //JOptionPane.showMessageDialog(null, &quot;Introduce un id valido&quot;);&#xa;        &#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if( otroPago.getText().matches( &quot;-&quot; ) ){&#xa;            isSetTipoPago = false;&#xa;            //JOptionPane.showMessageDialog(null, &quot;Especifica un tipo de pago&quot;);&#xa;            return;&#x9;&#xa;        }&#xa;        isSetTipoPago = true;&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel24">

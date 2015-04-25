@@ -57,6 +57,7 @@ public class DataBaseSQL implements Connection {
             q1 = "select * from " + tabla + " where id = " + id ;
             System.out.println("-" + q1 + "-");
             rs = query.executeQuery(q1);
+            
             if(rs.next()){
                 System.out.println("Exito select");
                 String[] result = new String[2];
