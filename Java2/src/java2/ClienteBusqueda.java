@@ -67,7 +67,7 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel2.setText("Buscar Nombre");
+        jLabel2.setText("Buscar Nombre de Cliente");
 
         jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel3.setText("ID");
