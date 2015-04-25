@@ -314,14 +314,11 @@ public class Producto extends javax.swing.JFrame{
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
-        java.util.HashMap<String, String> mapa = db.fetchArray("producto", 2);
+        java.util.HashMap<String, String> mapa = db.fetchArray("producto", 1);
         
         try{
             System.out.println( mapa.get("ID") );
             System.out.println( mapa.get("NOMBRE") );
-            
-            System.out.println( mapa2.get("DIRECCION") );
-            System.out.println( mapa2.get("NOMBRE") );
         }catch(Exception e){
             System.out.println(e);
         }
