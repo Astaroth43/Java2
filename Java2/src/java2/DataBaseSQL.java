@@ -162,18 +162,24 @@ public class DataBaseSQL implements Connection {
         
         try{
             Statement query = (Statement) connection.createStatement();
-            String comando1 = "select * from " + table + ".TABLES"; 
-            String comando2 = "select * from " + table + " where id = " + "'" + index + "'";
-            
-            ResultSet key = query.executeQuery(comando1);
-            ResultSet name = query.executeQuery(comando2);
+            String comando = "SELECT * FROM " + table + " WHERE ID = " + index;
 
+            ResultSet rs = query.executeQuery(comando);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            rs.first();
+            String valor, key;
+ 
+            int cant = rsmd.getColumnCount();
             
-            while( key.next() ){
-                mapa.put( key.getString( key.getRow() ), name.getString( key.getRow() ) );
-            }
+            for(int i = 1; i <= cant; i++){
+                key = rsmd.getColumnName(i);
+                valor = rs.getString(key);
+                //System.out.println(key + "-->" + valor);
+                mapa.put(key, valor);
+            }  
+            
         }catch(Exception e){
-            System.out.print(e);
+            System.out.print("Error " + e);
             return null;
         }
         return mapa;
