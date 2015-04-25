@@ -105,11 +105,21 @@ public class DataBaseSQL implements Connection {
         }
     }
     
-    public void insert(String tabla, String[] values){
+    public boolean insert(String tabla, String[] values){
+        
         try {
             Statement query = (Statement) connection.createStatement();
             String q1;
+            
+            if( tabla.equals("producto") ){
+                q1 = "select * from producto where NOMBRE = '"+ values[1] +"'";
+                ResultSet rs = query.executeQuery(q1);
+                if( !rs.next() )  
+                    return false;
+            }
+            
             q1 = "insert into " + tabla + " values( null, ";
+            
             for(String txt : values){
                 q1 += "'" + txt + "', ";
             }
@@ -122,6 +132,7 @@ public class DataBaseSQL implements Connection {
         } catch (SQLException e) {
            // System.out.println("FAIL \n error: " + e.getCause() + "\ncause " + e.getCause() + "\nin" + e.getClass());
         }
+        return true;
     }
        
     public int selectID(String tabla){

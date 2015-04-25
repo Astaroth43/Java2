@@ -363,10 +363,13 @@ public class Producto extends javax.swing.JFrame{
             }  
             else{
                 //******Codigo a ejecutar en la base de datos******
-                db.insert("producto", cadenas);
+                if( db.insert("producto", cadenas) )
+                    javax.swing.JOptionPane.showMessageDialog(null, "Se ha registrado con éxito el producto");
+                else
+                    javax.swing.JOptionPane.showMessageDialog(null, "Ya existe un producto registrado con ese nombre. Porfavor escoga otro");
                 /*for(String x : cadenas)
                     System.out.println(x);*/
-                JOptionPane.showMessageDialog(null, "Se ha registrado con éxito el producto");
+                
             }
         }
     }//GEN-LAST:event_enviarActionPerformed
