@@ -8,6 +8,7 @@ import com.mysql.jdbc.Statement;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
+import java.util.HashMap;
 
 public class DataBaseSQL implements Connection {
     private final String server;
@@ -115,7 +116,7 @@ public class DataBaseSQL implements Connection {
             if( tabla.equals("producto") ){
                 q1 = "select * from producto where NOMBRE = '"+ values[1] +"'";
                 ResultSet rs = query.executeQuery(q1);
-                if( !rs.next() )  
+                if( rs.next() )  
                     return false;
             }
             
@@ -154,6 +155,28 @@ public class DataBaseSQL implements Connection {
             System.out.println(ex.getMessage());
         }
         return numberRow;
+    }
+    
+    public HashMap<String, String>fetchArray(String table, int index){
+        HashMap<String, String> mapa = new HashMap();
+        
+        try{
+            Statement query = (Statement) connection.createStatement();
+            String comando1 = "select * from " + table + ".TABLES"; 
+            String comando2 = "select * from " + table + " where id = " + "'" + index + "'";
+            
+            ResultSet key = query.executeQuery(comando1);
+            ResultSet name = query.executeQuery(comando2);
+
+            
+            while( key.next() ){
+                mapa.put( key.getString( key.getRow() ), name.getString( key.getRow() ) );
+            }
+        }catch(Exception e){
+            System.out.print(e);
+            return null;
+        }
+        return mapa;
     }
         
     
