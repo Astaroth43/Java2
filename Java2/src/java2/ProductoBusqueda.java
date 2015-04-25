@@ -5,18 +5,20 @@
  */
 package java2;
 
-/**
- *
- * @author Familia
- */
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+
 public class ProductoBusqueda extends javax.swing.JFrame {
 
     /**
      * Creates new form ProductoBusqueda
      */
+    private DataBaseSQL db;
+    
     public ProductoBusqueda() {
         super("Búsqueda de Productos");
         initComponents();
+        db = new DataBaseSQL();
     }
 
     /**
@@ -28,6 +30,7 @@ public class ProductoBusqueda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         busqueda = new javax.swing.JTextField();
@@ -43,6 +46,7 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         cantidad = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         descripcion = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -56,6 +60,8 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,9 +103,16 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel4.setText("Descripción");
 
-        descripcion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        descripcion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         descripcion.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         descripcion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Archivo");
 
@@ -172,13 +185,6 @@ public class ProductoBusqueda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -205,7 +211,17 @@ public class ProductoBusqueda extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
@@ -219,7 +235,9 @@ public class ProductoBusqueda extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -268,6 +286,33 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String key = busqueda.getText();
+        
+        int indice = db.getIndexOf("producto", "NOMBRE", key);
+        if(indice == 0){
+            id.setText( "----------" );
+            tipo.setText( "----------" );
+            nombre.setText( "----------" );
+            precio.setText( "----------" );
+            cantidad.setText( "----------" );
+            descripcion.setText( "----------" );
+            JOptionPane.showMessageDialog(null, "No existe un empleado registrado con ese nombre");
+        }
+ 
+        try{
+            HashMap<String, String> mapa = db.fetchArray("producto", indice);
+            id.setText( String.valueOf(indice) );
+            tipo.setText( mapa.get("TIPO") );
+            nombre.setText( mapa.get("NOMBRE") );
+            precio.setText( mapa.get("PRECIO") );
+            cantidad.setText( mapa.get("CANTIDAD") );
+            descripcion.setText( mapa.get("DESCRIPCION") );
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -308,6 +353,8 @@ public class ProductoBusqueda extends javax.swing.JFrame {
     private javax.swing.JLabel cantidad;
     private javax.swing.JLabel descripcion;
     private javax.swing.JLabel id;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

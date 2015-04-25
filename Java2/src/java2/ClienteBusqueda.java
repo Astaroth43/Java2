@@ -5,18 +5,20 @@
  */
 package java2;
 
-/**
- *
- * @author Familia
- */
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+
 public class ClienteBusqueda extends javax.swing.JFrame{
 
     /**
      * Creates new form ClienteBusqueda
      */
+    private DataBaseSQL db;
+    
     public ClienteBusqueda() {
         super("Busqueda de Clientes");
         initComponents();
+        db = new DataBaseSQL();
     }
 
     /**
@@ -45,6 +47,7 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         telefono = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         direccion = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -107,6 +110,13 @@ public class ClienteBusqueda extends javax.swing.JFrame{
 
         direccion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         direccion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Archivo");
 
@@ -209,12 +219,14 @@ public class ClienteBusqueda extends javax.swing.JFrame{
                                     .addComponent(jLabel7)
                                     .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(163, 163, 163))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(29, 29, 29)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +239,9 @@ public class ClienteBusqueda extends javax.swing.JFrame{
                         .addGap(52, 52, 52)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)
+                        .addComponent(jButton1)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -281,6 +295,36 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String key = busqueda.getText();
+        
+        int indice = db.getIndexOf("cliente", "NOMBRE", key);
+        if(indice == 0){
+            id.setText( "----------" );
+            nombre.setText( "----------" );
+            apellido.setText( "----------" );
+            sexo.setText( "----------" );
+            direccion.setText( "----------" );
+            telefono.setText( "----------" );
+            rfc.setText( "----------" );
+            JOptionPane.showMessageDialog(null, "No existe un cliente registrado con ese nombre");
+        }
+ 
+        try{
+            HashMap<String, String> mapa = db.fetchArray("cliente", indice);
+            id.setText( String.valueOf(indice) );
+            nombre.setText( mapa.get("NOMBRE") );
+            apellido.setText( mapa.get("APELLIDO") );
+            sexo.setText( mapa.get("SEXO") );
+            direccion.setText( mapa.get("DIRECCION") );
+            telefono.setText( mapa.get("TELEFONO") );
+            rfc.setText( mapa.get("RFC") );
+            
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -321,6 +365,7 @@ public class ClienteBusqueda extends javax.swing.JFrame{
     private javax.swing.JTextField busqueda;
     private javax.swing.JLabel direccion;
     private javax.swing.JLabel id;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

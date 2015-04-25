@@ -184,6 +184,29 @@ public class DataBaseSQL implements Connection {
         }
         return mapa;
     }
+    
+    public int getIndexOf(String table, String column, String value){
+        try{
+            Statement query = (Statement) connection.createStatement();
+            String comando = "SELECT ID FROM " + table + " WHERE " + column + " = '" + value + "'";
+
+            ResultSet rs = query.executeQuery(comando);
+            rs.beforeFirst();
+            String cadena;
+            int indice;
+            
+            if( rs.next() ){
+                cadena = rs.getString(1);
+                indice = Integer.valueOf(cadena);
+                return indice;
+            }
+            else
+                return 0;
+        }catch(Exception e){
+            System.out.println(e);
+            return 0;
+        }
+    }
         
     
     public Connection getConnection(){

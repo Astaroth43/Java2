@@ -5,18 +5,20 @@
  */
 package java2;
 
-/**
- *
- * @author Familia
- */
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+
 public class EmpleadoBusqueda extends javax.swing.JFrame {
 
     /**
      * Creates new form EmpleadoBusqueda
      */
+    private DataBaseSQL db;
+    
     public EmpleadoBusqueda() {
         super("Busqueda de Empleados");
         initComponents();
+        db = new DataBaseSQL();
     }
 
     /**
@@ -47,6 +49,7 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
         telefono = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         rfc = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -116,6 +119,13 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
 
         rfc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rfc.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Archivo");
 
@@ -233,7 +243,10 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(54, 54, 54)
-                                .addComponent(rfc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(rfc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1)))
                 .addContainerGap(168, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -247,7 +260,9 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
                         .addGap(48, 48, 48)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(jButton1)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
@@ -303,6 +318,38 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String key = busqueda.getText();
+        
+        int indice = db.getIndexOf("empleado", "NOMBRE", key);
+        if(indice == 0){
+            id.setText( "----------" );
+            nombre.setText( "----------" );
+            apellido.setText( "----------" );
+            sexo.setText( "----------" );
+            salario.setText( "----------" );
+            direccion.setText( "----------" );
+            telefono.setText( "----------" );
+            rfc.setText( "----------" );
+            JOptionPane.showMessageDialog(null, "No existe un empleado registrado con ese nombre");
+        }
+ 
+        try{
+            HashMap<String, String> mapa = db.fetchArray("empleado", indice);
+            id.setText( String.valueOf(indice) );
+            nombre.setText( mapa.get("NOMBRE") );
+            apellido.setText( mapa.get("APELLIDO") );
+            sexo.setText( mapa.get("SEXO") );
+            salario.setText( mapa.get(("SALARIO")) );
+            direccion.setText( mapa.get("DIRECCION") );
+            telefono.setText( mapa.get("TELEFONO") );
+            rfc.setText( mapa.get("RFC") );
+            
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -343,6 +390,7 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
     private javax.swing.JTextField busqueda;
     private javax.swing.JLabel direccion;
     private javax.swing.JLabel id;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
