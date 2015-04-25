@@ -192,9 +192,9 @@
                                           <Component id="totalP" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jLabel35" min="-2" pref="64" max="-2" attributes="0"/>
+                                      <Component id="btnAgrega" min="-2" pref="64" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jLabel33" min="-2" pref="64" max="-2" attributes="0"/>
+                                      <Component id="btnElimina" min="-2" pref="64" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="275" max="-2" attributes="0"/>
                                       <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -269,9 +269,9 @@
                                   <Component id="otroPago" min="-2" pref="213" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jLabel37" min="-2" pref="64" max="-2" attributes="0"/>
+                              <Component id="btnGenerarVenta" min="-2" pref="64" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                              <Component id="jLabel38" min="-2" pref="64" max="-2" attributes="0"/>
+                              <Component id="btnBorrarTodo" min="-2" pref="64" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -388,8 +388,8 @@
                                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel35" min="-2" pref="64" max="-2" attributes="0"/>
-                                          <Component id="jLabel33" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
+                                          <Component id="btnAgrega" min="-2" pref="64" max="-2" attributes="0"/>
+                                          <Component id="btnElimina" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -432,8 +432,8 @@
                       <Component id="total" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="jLabel37" alignment="3" min="-2" pref="64" max="-2" attributes="0"/>
-                      <Component id="jLabel38" alignment="3" min="-2" pref="64" max="-2" attributes="0"/>
+                      <Component id="btnGenerarVenta" alignment="3" min="-2" pref="64" max="-2" attributes="0"/>
+                      <Component id="btnBorrarTodo" alignment="3" min="-2" pref="64" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -802,7 +802,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cantPActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="cantP.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;      // empID.setText(&quot;0&quot;);&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if(stockP.getText().equals(&quot;-&quot;)){&#xa;            isSetProducto = false;&#xa;            totalP.setText(&quot;0&quot;);&#xa;            return;&#xa;        }        &#xa;        if( !cantP.getText().matches(&quot;[0-9]*&quot;) ){&#xa;            isSetProducto = false;&#xa;            totalP.setText(&quot;0&quot;);&#xa;            JOptionPane.showMessageDialog(null, &quot;Error, Ingrese un n&#xfa;mero entero y positivo para Cantidad&quot;);&#xa;            return;&#xa;        }&#xa;&#xa;        if(Integer.parseInt(cantP.getText()) &gt; Integer.parseInt(stockP.getText())){&#xa;            JOptionPane.showMessageDialog(null, &quot;No hay tantos en existencia.&quot;);&#xa;            totalP.setText(&quot;0&quot;);&#xa;            isSetProducto = false;&#xa;            return;&#xa;        }&#xa;        float a = Integer.parseInt(cantP.getText());&#xa;        totalP.setText(String.valueOf(Float.parseFloat(precioP.getText().trim()) * a));&#xa;        isSetProducto = true;&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="cantP.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;      // empID.setText(&quot;0&quot;);&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    private void actualiza(){&#xa;        if(stockP.getText().equals(&quot;-&quot;)){&#xa;            isSetProducto = false;&#xa;            totalP.setText(&quot;0&quot;);&#xa;            return;&#xa;        }        &#xa;        if( !cantP.getText().matches(&quot;[0-9]*&quot;) ){&#xa;            isSetProducto = false;&#xa;            totalP.setText(&quot;0&quot;);&#xa;            JOptionPane.showMessageDialog(null, &quot;Error, Ingrese un n&#xfa;mero entero y positivo para Cantidad&quot;);&#xa;            return;&#xa;        }&#xa;&#xa;        if(Integer.parseInt(cantP.getText()) &gt; Integer.parseInt(stockP.getText())){&#xa;            JOptionPane.showMessageDialog(null, &quot;No hay tantos en existencia.&quot;);&#xa;            totalP.setText(&quot;0&quot;);&#xa;            isSetProducto = false;&#xa;            return;&#xa;        }&#xa;        float a = Float.parseFloat(cantP.getText());&#xa;        totalP.setText(String.valueOf(Float.parseFloat(precioP.getText().trim()) * a));&#xa;        isSetProducto = true;&#xa;    }&#xa;});"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel30">
@@ -830,7 +830,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel32">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel33">
+    <Component class="javax.swing.JLabel" name="btnElimina">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Images/eliminar.png"/>
@@ -838,10 +838,10 @@
         <Property name="toolTipText" type="java.lang.String" value="Quitar Producto"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel33MouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEliminaMouseClicked"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel35">
+    <Component class="javax.swing.JLabel" name="btnAgrega">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Images/agregar.png"/>
@@ -850,7 +850,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Agregar Producto"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel35MouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgregaMouseClicked"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -929,7 +929,7 @@
         <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel37">
+    <Component class="javax.swing.JLabel" name="btnGenerarVenta">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Images/cobrar.png"/>
@@ -937,10 +937,10 @@
         <Property name="toolTipText" type="java.lang.String" value="Generar Venta"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel37MouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnGenerarVentaMouseClicked"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel38">
+    <Component class="javax.swing.JLabel" name="btnBorrarTodo">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Images/borrar.png"/>
@@ -948,7 +948,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Borrar Todo"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel38MouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnBorrarTodoMouseClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="tipoPago">

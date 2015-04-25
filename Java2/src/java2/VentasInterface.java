@@ -107,14 +107,14 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         totalP = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
+        btnElimina = new javax.swing.JLabel();
+        btnAgrega = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel34 = new javax.swing.JLabel();
         total = new javax.swing.JLabel();
-        jLabel37 = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
+        btnGenerarVenta = new javax.swing.JLabel();
+        btnBorrarTodo = new javax.swing.JLabel();
         tipoPago = new javax.swing.JComboBox();
         otroPago = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
@@ -442,7 +442,7 @@ public class VentasInterface extends javax.swing.JFrame {
                     isSetProducto = false;
                     return;
                 }
-                float a = Integer.parseInt(cantP.getText());
+                float a = Float.parseFloat(cantP.getText());
                 totalP.setText(String.valueOf(Float.parseFloat(precioP.getText().trim()) * a));
                 isSetProducto = true;
             }
@@ -457,20 +457,20 @@ public class VentasInterface extends javax.swing.JFrame {
         totalP.setFocusable(false);
         totalP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/eliminar.png"))); // NOI18N
-        jLabel33.setToolTipText("Quitar Producto");
-        jLabel33.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnElimina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/eliminar.png"))); // NOI18N
+        btnElimina.setToolTipText("Quitar Producto");
+        btnElimina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel33MouseClicked(evt);
+                btnEliminaMouseClicked(evt);
             }
         });
 
-        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar.png"))); // NOI18N
-        jLabel35.setText("jLabel33");
-        jLabel35.setToolTipText("Agregar Producto");
-        jLabel35.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgrega.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar.png"))); // NOI18N
+        btnAgrega.setText("jLabel33");
+        btnAgrega.setToolTipText("Agregar Producto");
+        btnAgrega.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel35MouseClicked(evt);
+                btnAgregaMouseClicked(evt);
             }
         });
 
@@ -512,19 +512,19 @@ public class VentasInterface extends javax.swing.JFrame {
         total.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         total.setText("0");
 
-        jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cobrar.png"))); // NOI18N
-        jLabel37.setToolTipText("Generar Venta");
-        jLabel37.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnGenerarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cobrar.png"))); // NOI18N
+        btnGenerarVenta.setToolTipText("Generar Venta");
+        btnGenerarVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel37MouseClicked(evt);
+                btnGenerarVentaMouseClicked(evt);
             }
         });
 
-        jLabel38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/borrar.png"))); // NOI18N
-        jLabel38.setToolTipText("Borrar Todo");
-        jLabel38.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBorrarTodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/borrar.png"))); // NOI18N
+        btnBorrarTodo.setToolTipText("Borrar Todo");
+        btnBorrarTodo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel38MouseClicked(evt);
+                btnBorrarTodoMouseClicked(evt);
             }
         });
 
@@ -702,9 +702,9 @@ public class VentasInterface extends javax.swing.JFrame {
                                             .addComponent(jLabel30)
                                             .addComponent(totalP, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnAgrega, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnElimina, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(275, 275, 275)
                                         .addComponent(jLabel32))
                                     .addGroup(layout.createSequentialGroup()
@@ -757,9 +757,9 @@ public class VentasInterface extends javax.swing.JFrame {
                                     .addComponent(otroPagoLbl)
                                     .addComponent(otroPago, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnGenerarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(53, 53, 53)
-                                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBorrarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(40, 40, 40)
                                 .addComponent(jLabel34)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -846,8 +846,8 @@ public class VentasInterface extends javax.swing.JFrame {
                                             .addComponent(cantP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(1, 1, 1))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(btnAgrega, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnElimina, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(20, 20, 20)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -875,8 +875,8 @@ public class VentasInterface extends javax.swing.JFrame {
                         .addComponent(jLabel34)
                         .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnGenerarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBorrarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel24)
@@ -911,7 +911,7 @@ public class VentasInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cantPActionPerformed
 
-    private void jLabel35MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MouseClicked
+    private void btnAgregaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregaMouseClicked
         if(!isSetProducto)
             return;
         
@@ -930,9 +930,9 @@ public class VentasInterface extends javax.swing.JFrame {
         productoID.setText("0");
         actualizaTabla(dataP);
         
-    }//GEN-LAST:event_jLabel35MouseClicked
+    }//GEN-LAST:event_btnAgregaMouseClicked
 
-    private void jLabel33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel33MouseClicked
+    private void btnEliminaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminaMouseClicked
         if(jTable2.getSelectedRow() < 0)
             return;
         
@@ -944,7 +944,7 @@ public class VentasInterface extends javax.swing.JFrame {
         dataP.remove(jTable2.getSelectedRow());
         productoID.setText("0");
         actualizaTabla(dataP);
-    }//GEN-LAST:event_jLabel33MouseClicked
+    }//GEN-LAST:event_btnEliminaMouseClicked
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         Cliente.main(null);
@@ -958,7 +958,7 @@ public class VentasInterface extends javax.swing.JFrame {
         Producto.main(null);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jLabel37MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MouseClicked
+    private void btnGenerarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarVentaMouseClicked
         if(!(isSetClient && isSetEmpleado && areProducts && isSetTipoPago)){
             JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos");
             return;
@@ -986,15 +986,17 @@ public class VentasInterface extends javax.swing.JFrame {
             db.free(q2);
         }
         
-    }//GEN-LAST:event_jLabel37MouseClicked
+    }//GEN-LAST:event_btnGenerarVentaMouseClicked
 
-    private void jLabel38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel38MouseClicked
+    private void btnBorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarTodoMouseClicked
+        eliminaTabla();
         setVisible(false);
         VentasInterface.main(null);
         dispose();
-    }//GEN-LAST:event_jLabel38MouseClicked
+    }//GEN-LAST:event_btnBorrarTodoMouseClicked
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        eliminaTabla();
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -1086,6 +1088,19 @@ public class VentasInterface extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
     }
     
+    public void eliminaTabla(){
+        while(!dataP.isEmpty()){
+            String a[];
+            a = db.selectProducto(Integer.parseInt(dataP.get(0)[0]));
+            int aux = Integer.parseInt(a[2]) + Integer.parseInt(dataP.get(0)[3]);
+            db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(0)[0]);
+            stockP.setText(String.valueOf(aux));
+            dataP.remove(0);
+            productoID.setText("0");
+            actualizaTabla(dataP);
+        }
+    }
+    
     
     /**
      * @param args the command line arguments
@@ -1123,6 +1138,10 @@ public class VentasInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnAgrega;
+    private javax.swing.JLabel btnBorrarTodo;
+    private javax.swing.JLabel btnElimina;
+    private javax.swing.JLabel btnGenerarVenta;
     private javax.swing.JTextField cantP;
     private javax.swing.JLabel cliAp;
     private javax.swing.JTextField cliID;
@@ -1153,11 +1172,7 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
