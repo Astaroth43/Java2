@@ -32,6 +32,7 @@ public final class TicketVenta extends VentasInterface {
         disableThings();
         setIDs();
         addDataP();
+        super.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
