@@ -9,7 +9,6 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import javax.swing.event.*;
-import javax.swing.text.*;
 import javax.swing.*;
 
 public class ProductoBusqueda extends javax.swing.JFrame {
@@ -27,29 +26,60 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         
         busqueda.getDocument().addDocumentListener(
                 new DocumentListener(){
+                    
                     @Override
                     public void changedUpdate(DocumentEvent e) {
-                        int tam = db.selectID("producto");
-                        String valor;
-                        
-                        for(int i = 1; i <= tam; i++){
-                            valor = db.getValueOf("producto", "NOMBRE", i);
-                        }
-                        
-                        //String nuevo = db.getValueOf("producto", "nombre", WIDTH)
-                        lista.add(id);
                     }
 
                     @Override
                     public void insertUpdate(DocumentEvent e) {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        int tam = db.selectID("producto");
+                        String valor;
+                        DefaultListModel model = new DefaultListModel();
+                        
+                        for(int i = 1; i <= tam; i++){
+                            valor = db.getValueOf("producto", "NOMBRE", i);
+                            if( valor.startsWith( busqueda.getText() ) )
+                                model.addElement(valor);      
+                        }
+                        lista.setModel(model);
                     }
 
                     @Override
                     public void removeUpdate(DocumentEvent e) {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        if( busqueda.getText().matches("") ){
+                            DefaultListModel model = new DefaultListModel();
+                            model.removeAllElements();
+                            lista.setModel(model);
+                        }
+                        
+                        int tam = db.selectID("producto");
+                        String valor;
+                        DefaultListModel model = new DefaultListModel();
+                        
+                        for(int i = 1; i <= tam; i++){
+                            valor = db.getValueOf("producto", "NOMBRE", i);
+                            if( valor.startsWith( busqueda.getText() ) )
+                                model.addElement(valor);      
+                        }
+                        lista.setModel(model);
                     }
-                });
+        });
+        //////Nuevos elementos
+        
+        lista.addListSelectionListener(new ListSelectionListener() {
+            
+            public void valueChanged(ListSelectionEvent evt) {
+                try{
+                    int indice = lista.getSelectedIndex();;
+                    String cadena = (String) lista.getModel().getElementAt(indice);
+                    busqueda.setText(cadena);
+                }catch(Exception e){
+                    
+                }
+            }
+            
+        });
     }
 
     /**
@@ -271,7 +301,7 @@ public class ProductoBusqueda extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(busqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addGap(18, 18, 18)
+                .addGap(40, 40, 40)
                 .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -280,7 +310,7 @@ public class ProductoBusqueda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -290,8 +320,8 @@ public class ProductoBusqueda extends javax.swing.JFrame {
                             .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel5)

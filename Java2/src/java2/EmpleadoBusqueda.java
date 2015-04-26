@@ -8,6 +8,9 @@ package java2;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
+import javax.swing.event.*;
+import javax.swing.*;
+
 public class EmpleadoBusqueda extends javax.swing.JFrame {
 
     /**
@@ -19,6 +22,65 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
         super("Busqueda de Empleados");
         initComponents();
         db = new DataBaseSQL();
+        
+        lista.setVisibleRowCount(3);
+        
+        busqueda.getDocument().addDocumentListener(
+                new DocumentListener(){
+                    
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                    }
+
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        int tam = db.selectID("empleado");
+                        String valor;
+                        DefaultListModel model = new DefaultListModel();
+                        
+                        for(int i = 1; i <= tam; i++){
+                            valor = db.getValueOf("empleado", "NOMBRE", i);
+                            if( valor.startsWith( busqueda.getText() ) )
+                                model.addElement(valor);      
+                        }
+                        lista.setModel(model);
+                    }
+
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        if( busqueda.getText().matches("") ){
+                            DefaultListModel model = new DefaultListModel();
+                            model.removeAllElements();
+                            lista.setModel(model);
+                        }
+                        
+                        int tam = db.selectID("empleado");
+                        String valor;
+                        DefaultListModel model = new DefaultListModel();
+                        
+                        for(int i = 1; i <= tam; i++){
+                            valor = db.getValueOf("empleado", "NOMBRE", i);
+                            if( valor.startsWith( busqueda.getText() ) )
+                                model.addElement(valor);      
+                        }
+                        lista.setModel(model);
+                    }
+        });
+        //////Nuevos elementos
+        
+        lista.addListSelectionListener(new ListSelectionListener() {
+            
+            public void valueChanged(ListSelectionEvent evt) {
+                try{
+                    int indice = lista.getSelectedIndex();;
+                    String cadena = (String) lista.getModel().getElementAt(indice);
+                    busqueda.setText(cadena);
+                }catch(Exception e){
+                    
+                }
+            }
+            
+        });
     }
 
     /**
@@ -50,6 +112,8 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         rfc = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lista = new javax.swing.JList();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -127,6 +191,8 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane1.setViewportView(lista);
+
         jMenu1.setText("Archivo");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
@@ -200,10 +266,16 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(busqueda)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addComponent(jButton1)))
+                        .addGap(42, 42, 42))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,26 +315,23 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(54, 54, 54)
-                                .addComponent(rfc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)))
-                .addContainerGap(156, Short.MAX_VALUE))
+                                .addComponent(rfc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
                         .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(jButton1)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
@@ -413,8 +482,10 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JList lista;
     private javax.swing.JLabel nombre;
     private javax.swing.JLabel rfc;
     private javax.swing.JLabel salario;

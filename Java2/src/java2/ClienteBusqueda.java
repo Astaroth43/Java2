@@ -8,6 +8,9 @@ package java2;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
+import javax.swing.event.*;
+import javax.swing.*;
+
 public class ClienteBusqueda extends javax.swing.JFrame{
 
     /**
@@ -19,6 +22,65 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         super("Busqueda de Clientes");
         initComponents();
         db = new DataBaseSQL();
+        
+        lista.setVisibleRowCount(3);
+        
+        busqueda.getDocument().addDocumentListener(
+                new DocumentListener(){
+                    
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                    }
+
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        int tam = db.selectID("cliente");
+                        String valor;
+                        DefaultListModel model = new DefaultListModel();
+                        
+                        for(int i = 1; i <= tam; i++){
+                            valor = db.getValueOf("cliente", "NOMBRE", i);
+                            if( valor.startsWith( busqueda.getText() ) )
+                                model.addElement(valor);      
+                        }
+                        lista.setModel(model);
+                    }
+
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        if( busqueda.getText().matches("") ){
+                            DefaultListModel model = new DefaultListModel();
+                            model.removeAllElements();
+                            lista.setModel(model);
+                        }
+                        
+                        int tam = db.selectID("cliente");
+                        String valor;
+                        DefaultListModel model = new DefaultListModel();
+                        
+                        for(int i = 1; i <= tam; i++){
+                            valor = db.getValueOf("cliente", "NOMBRE", i);
+                            if( valor.startsWith( busqueda.getText() ) )
+                                model.addElement(valor);      
+                        }
+                        lista.setModel(model);
+                    }
+        });
+        //////Nuevos elementos
+        
+        lista.addListSelectionListener(new ListSelectionListener() {
+            
+            public void valueChanged(ListSelectionEvent evt) {
+                try{
+                    int indice = lista.getSelectedIndex();;
+                    String cadena = (String) lista.getModel().getElementAt(indice);
+                    busqueda.setText(cadena);
+                }catch(Exception e){
+                    
+                }
+            }
+            
+        });
     }
 
     /**
@@ -30,6 +92,8 @@ public class ClienteBusqueda extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         busqueda = new javax.swing.JTextField();
@@ -48,6 +112,8 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         jLabel10 = new javax.swing.JLabel();
         direccion = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lista = new javax.swing.JList();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -61,6 +127,13 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,6 +190,8 @@ public class ClienteBusqueda extends javax.swing.JFrame{
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jScrollPane2.setViewportView(lista);
 
         jMenu1.setText("Archivo");
 
@@ -199,11 +274,8 @@ public class ClienteBusqueda extends javax.swing.JFrame{
                                     .addComponent(telefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel10)
-                                            .addComponent(jLabel8))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel8)
                                     .addComponent(direccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(rfc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -219,29 +291,33 @@ public class ClienteBusqueda extends javax.swing.JFrame{
                                     .addComponent(jLabel7)
                                     .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(163, 163, 163))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(29, 29, 29)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(busqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+                                .addGap(34, 34, 34)
+                                .addComponent(jButton1)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton1)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
+                        .addGap(9, 9, 9)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -376,6 +452,7 @@ public class ClienteBusqueda extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -387,8 +464,11 @@ public class ClienteBusqueda extends javax.swing.JFrame{
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JList lista;
     private javax.swing.JLabel nombre;
     private javax.swing.JLabel rfc;
     private javax.swing.JLabel sexo;
