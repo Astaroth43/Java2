@@ -26,8 +26,8 @@ public class Presupuesto extends javax.swing.JFrame {
         db = new DataBaseSQL();
         dataP = new ArrayList<>();
         isSetProducto = false;
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
