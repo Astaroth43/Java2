@@ -63,19 +63,6 @@ public class Producto extends javax.swing.JFrame{
         jSeparator4 = new javax.swing.JSeparator();
         id = new javax.swing.JLabel();
         enviar = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -125,70 +112,6 @@ public class Producto extends javax.swing.JFrame{
                 enviarActionPerformed(evt);
             }
         });
-
-        jMenu1.setText("Archivo");
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Venta");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Nuevo Presupuesto");
-        jMenu1.add(jMenuItem2);
-        jMenu1.add(jSeparator5);
-
-        jMenuItem6.setText("Agregar Cliente");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem6);
-
-        jMenuItem7.setText("Agregar Empleado");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem7);
-
-        jMenuItem8.setText("Agregar Producto");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem8);
-        jMenu1.add(jSeparator1);
-
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem3.setText("Salir");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem3);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Ayuda");
-
-        jMenuItem4.setText("Ayuda");
-        jMenu2.add(jMenuItem4);
-
-        jMenuItem5.setText("Acerca de...");
-        jMenu2.add(jMenuItem5);
-
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -287,31 +210,11 @@ public class Producto extends javax.swing.JFrame{
                             .addComponent(jLabel8)
                             .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addContainerGap(193, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        Cliente.main(null);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        Empleado.main(null);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        Producto.main(null);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
         String cadenas[] = new String[5];
@@ -363,8 +266,11 @@ public class Producto extends javax.swing.JFrame{
             }  
             else{
                 //******Codigo a ejecutar en la base de datos******
-                if( db.insert("producto", cadenas) )
+                if( db.insert("producto", cadenas) ){
                     javax.swing.JOptionPane.showMessageDialog(null, "Se ha registrado con éxito el producto");
+                    dispose();
+                    Producto.main(null);
+                }  
                 else
                     javax.swing.JOptionPane.showMessageDialog(null, "Ya existe un producto registrado con ese nombre. Porfavor escoga otro");
                 /*for(String x : cadenas)
@@ -423,23 +329,10 @@ public class Producto extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField precio;
     private javax.swing.JComboBox tipo;
