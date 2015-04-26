@@ -17,7 +17,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.SwingUtilities;
 
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 /**
  *
  * @author Agustin
@@ -49,6 +50,14 @@ public class VentasInterface extends javax.swing.JFrame {
         folio.setText(String.valueOf(db.selectID("venta") + 1));
 
         if("class java2.VentasInterface".equals(this.getClass().toString())) changeHour();
+        
+        addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                eliminaTabla();
+                dispose();
+            }
+        });
+        
     }
 
     /**
