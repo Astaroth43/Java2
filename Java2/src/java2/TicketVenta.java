@@ -60,6 +60,7 @@ public final class TicketVenta extends VentasInterface {
     }// </editor-fold>//GEN-END:initComponents
 
     public void disableThings(){
+        jMenuBar1.setVisible(false);
         empID.setEnabled(false);
         cliID.setEnabled(false);
         productoID.setVisible(false);
