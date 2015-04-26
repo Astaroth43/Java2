@@ -61,7 +61,7 @@ public class VentasInterface extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        titulo = new javax.swing.JLabel();
         folio = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         fecha = new javax.swing.JLabel();
@@ -134,8 +134,8 @@ public class VentasInterface extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
-        jLabel2.setText("Nueva Venta");
+        titulo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
+        titulo.setText("Nueva Venta");
 
         folio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         folio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -670,7 +670,7 @@ public class VentasInterface extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
@@ -688,7 +688,7 @@ public class VentasInterface extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel25)
-                                    .addComponent(precioP, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))
+                                    .addComponent(precioP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel21)
@@ -812,7 +812,7 @@ public class VentasInterface extends javax.swing.JFrame {
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(folio))
-                                    .addComponent(jLabel2))))
+                                    .addComponent(titulo))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -1006,7 +1006,7 @@ public class VentasInterface extends javax.swing.JFrame {
             //System.out.println(q2);
             db.free(q2);
         }
-        
+        TicketVenta.main(Integer.parseInt(folio.getText()));
     }//GEN-LAST:event_btnGenerarVentaMouseClicked
 
     private void btnBorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarTodoMouseClicked
@@ -1193,7 +1193,6 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     protected javax.swing.JLabel jLabel21;
     protected javax.swing.JLabel jLabel22;
     protected javax.swing.JLabel jLabel23;
@@ -1232,6 +1231,7 @@ public class VentasInterface extends javax.swing.JFrame {
     protected javax.swing.JTextField productoID;
     protected javax.swing.JLabel stockP;
     protected javax.swing.JComboBox tipoPago;
+    protected javax.swing.JLabel titulo;
     protected javax.swing.JLabel total;
     protected javax.swing.JLabel totalP;
     // End of variables declaration//GEN-END:variables

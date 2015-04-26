@@ -28,6 +28,7 @@ public final class TicketVenta extends VentasInterface {
         db = new DataBaseSQL();
         folioV = String.valueOf(idF);
         datos = db.fetchArray("venta", Integer.parseInt(folioV));
+        titulo.setText("Ticket de Venta");
         disableThings();
         setIDs();
         addDataP();
@@ -59,39 +60,38 @@ public final class TicketVenta extends VentasInterface {
     }// </editor-fold>//GEN-END:initComponents
 
     public void disableThings(){
-        super.empID.setEnabled(false);
-        super.cliID.setEnabled(false);
-        super.productoID.setVisible(false);
-        super.cantP.setVisible(false);
-        super.otroPago.setEnabled(false);
-        super.tipoPago.setEnabled(false);
-        super.jLabel21.setVisible(false);
-        super.jLabel22.setVisible(false);
-        super.jLabel23.setVisible(false);
-        super.jLabel25.setVisible(false);
-        super.jLabel27.setVisible(false);
-        super.jLabel29.setVisible(false);
-        super.jLabel30.setVisible(false);
-        super.desP.setVisible(false);
-        super.stockP.setVisible(false);
-        super.precioP.setVisible(false);
-        super.totalP.setVisible(false);
-        super.btnAgrega.setVisible(false);
-        super.btnBorrarTodo.setVisible(false);
-        super.btnElimina.setVisible(false);
-        super.btnGenerarVenta.setVisible(false);
-    }
-    
+        empID.setEnabled(false);
+        cliID.setEnabled(false);
+        productoID.setVisible(false);
+        cantP.setVisible(false);
+        otroPago.setEnabled(false);
+        tipoPago.setEnabled(false);
+        jLabel21.setVisible(false);
+        jLabel22.setVisible(false);
+        jLabel23.setVisible(false);
+        jLabel25.setVisible(false);
+        jLabel27.setVisible(false);
+        jLabel29.setVisible(false);
+        jLabel30.setVisible(false);
+        desP.setVisible(false);
+        stockP.setVisible(false);
+        precioP.setVisible(false);
+        totalP.setVisible(false);
+        btnAgrega.setVisible(false);
+        btnBorrarTodo.setVisible(false);
+        btnElimina.setVisible(false);
+        btnGenerarVenta.setVisible(false);
+    }    
     public void setIDs(){
-        super.folio.setText(String.valueOf(folioV));
-        super.cliID.setText(datos.get("ID_CLIENTE"));
-        super.empID.setText(datos.get("ID_EMPLEADO"));
-        super.fecha.setText(datos.get("FECHA"));
+        folio.setText(String.valueOf(folioV));
+        cliID.setText(datos.get("ID_CLIENTE"));
+        empID.setText(datos.get("ID_EMPLEADO"));
+        fecha.setText(datos.get("FECHA"));
         
-        super.hora.setText(datos.get("HORA"));
-       // super.total.setText(datos.get("TOTAL"));
-        super.tipoPago.setSelectedItem(datos.get("TIPO_PAGO"));
-        super.otroPago.setText(datos.get("DESC_PAGO"));
+        hora.setText(datos.get("HORA"));
+       // total.setText(datos.get("TOTAL"));
+        tipoPago.setSelectedItem(datos.get("TIPO_PAGO"));
+        otroPago.setText(datos.get("DESC_PAGO"));
         
     }
     
@@ -101,10 +101,10 @@ public final class TicketVenta extends VentasInterface {
         
         for (String[] datosAux1 : datosAux) {
             datos2 = db.fetchArray("producto", Integer.parseInt(datosAux1[0]));
-            super.dataP.add(new String[]{datosAux1[0], datos2.get("NOMBRE"), datos2.get("PRECIO"), datosAux1[1], String.valueOf(Float.parseFloat(datosAux1[1]) * Float.parseFloat(datos2.get("PRECIO")))});
+            dataP.add(new String[]{datosAux1[0], datos2.get("NOMBRE"), datos2.get("PRECIO"), datosAux1[1], String.valueOf(Float.parseFloat(datosAux1[1]) * Float.parseFloat(datos2.get("PRECIO")))});
         }
         
-        super.actualizaTabla();
+        actualizaTabla();
     }
     
     /**
