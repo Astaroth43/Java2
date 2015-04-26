@@ -5,10 +5,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import com.mysql.jdbc.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class DataBaseSQL implements Connection {
     private final String server;
@@ -221,6 +226,28 @@ public class DataBaseSQL implements Connection {
             System.out.println(e);
             return null;
         }     
+    }
+    
+    public List<String[]> getProductos(String  idV){
+        List<String[]> data = new ArrayList<String[]>();
+        try{
+            Statement query = (Statement) connection.createStatement();
+            ResultSet rs;
+            String q1;
+            q1 = "select * from desc_venta where id_venta = " + idV ;
+            System.out.println("-" + q1 + "-");
+            rs = query.executeQuery(q1);
+            while(rs.next()){
+                String[] a = new String[2];
+                a[0] = rs.getString("ID_PRODUCTO");
+                a[1] = rs.getString("CANTIDAD");
+                data.add(a);
+            }
+            return data;
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return null;
+        }
     }
         
     

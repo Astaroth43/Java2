@@ -5,29 +5,17 @@
  */
 package java2;
 
-import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import com.mysql.jdbc.Statement;
-import java.util.InputMismatchException;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.Executor;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import java.util.*;
 
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.SwingUtilities;
-import javax.swing.table.TableModel;
 
 
 /**
@@ -47,7 +35,7 @@ public class VentasInterface extends javax.swing.JFrame {
      */
     public VentasInterface() {
         db = new DataBaseSQL();
-        dataP = new ArrayList<String[]>();
+        dataP = new ArrayList<>();
         isSetClient = isSetEmpleado = isSetProducto = areProducts = false;
         isSetTipoPago = true;
         initComponents();
@@ -59,7 +47,8 @@ public class VentasInterface extends javax.swing.JFrame {
         date = new Date();
         hora.setText(dateFormat.format(date));
         folio.setText(String.valueOf(db.selectID("venta") + 1));
-        changeHour();
+
+        if("class java2.VentasInterface".equals(this.getClass().toString())) changeHour();
     }
 
     /**
@@ -129,6 +118,10 @@ public class VentasInterface extends javax.swing.JFrame {
         jMenuItem8 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -629,6 +622,34 @@ public class VentasInterface extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu3.setText("Busqueda");
+
+        jMenuItem9.setText("Producto");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem9);
+
+        jMenuItem10.setText("Empleado");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem10);
+
+        jMenuItem11.setText("Cliente");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem11);
+
+        jMenuBar1.add(jMenu3);
+
         jMenu2.setText("Ayuda");
 
         jMenuItem4.setText("Ayuda");
@@ -980,8 +1001,8 @@ public class VentasInterface extends javax.swing.JFrame {
         db.free(q);
         String q2;
         
-        for(int i = 0; i < dataP.size(); i++){
-            q2 = "insert into desc_venta values(" + folio.getText() + ", " +  dataP.get(i)[0] + ", " + dataP.get(i)[3] + ")";
+        for (String[] dataP1 : dataP) {
+            q2 = "insert into desc_venta values(" + folio.getText() + ", " + dataP1[0] + ", " + dataP1[3] + ")";
             //System.out.println(q2);
             db.free(q2);
         }
@@ -1022,23 +1043,37 @@ public class VentasInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tipoPagoItemStateChanged
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        ProductoBusqueda.main(null);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        EmpleadoBusqueda.main(null);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        ClienteBusqueda.main(null);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     private void changeHour(){
-        new Thread(() -> {
-            while (true){
-                SwingUtilities.invokeLater(() -> {
-                    dateFormat = new SimpleDateFormat("HH:mm:ss");
-                    date = new Date();
-                    hora.setText(dateFormat.format(date));
-                });
-                try { Thread.sleep(1000); } catch(Exception e) {}
-            }
-        }).start();
+       
+            new Thread(() -> {
+                while (true){
+                    SwingUtilities.invokeLater(() -> {
+                        dateFormat = new SimpleDateFormat("HH:mm:ss");
+                        date = new Date();
+                        hora.setText(dateFormat.format(date));
+                    });
+                    try { Thread.sleep(1000); } catch(Exception e) {}
+                }
+            }).start();
+        
     }
     
     protected void actualizaTabla(){
         int row = 0;
         int cant = dataP.size();
-        float totalP = 0;
+        float totalAux = 0;
         String dat[][] = new String[cant][5];
         
         if(cant <= 0){
@@ -1073,18 +1108,20 @@ public class VentasInterface extends javax.swing.JFrame {
                 false, false, false, false, false
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         for(int i = 0; i < dataP.size(); i++, row++){
-           totalP += Float.parseFloat(dataP.get(i)[4]);
+           totalAux += Float.parseFloat(dataP.get(i)[4]);
         }
-        total.setText(String.valueOf(totalP));
+        total.setText(String.valueOf(totalAux));
         jScrollPane2.setViewportView(jTable2);
     }
     
@@ -1118,22 +1155,16 @@ public class VentasInterface extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentasInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentasInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentasInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VentasInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentasInterface().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new VentasInterface().setVisible(true);
         });
     }
 
@@ -1146,7 +1177,7 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel cliAp;
     protected javax.swing.JTextField cliID;
     private javax.swing.JLabel cliNom;
-    private javax.swing.JLabel desP;
+    protected javax.swing.JLabel desP;
     private javax.swing.JLabel empAp;
     protected javax.swing.JTextField empID;
     private javax.swing.JLabel empNom;
@@ -1163,14 +1194,14 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
+    protected javax.swing.JLabel jLabel21;
+    protected javax.swing.JLabel jLabel22;
+    protected javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel30;
+    protected javax.swing.JLabel jLabel25;
+    protected javax.swing.JLabel jLabel27;
+    protected javax.swing.JLabel jLabel29;
+    protected javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
@@ -1178,8 +1209,11 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -1187,17 +1221,18 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTable jTable2;
     protected javax.swing.JTextField otroPago;
     private javax.swing.JLabel otroPagoLbl;
-    private javax.swing.JLabel precioP;
+    protected javax.swing.JLabel precioP;
     protected javax.swing.JTextField productoID;
-    private javax.swing.JLabel stockP;
+    protected javax.swing.JLabel stockP;
     protected javax.swing.JComboBox tipoPago;
-    private javax.swing.JLabel total;
-    private javax.swing.JLabel totalP;
+    protected javax.swing.JLabel total;
+    protected javax.swing.JLabel totalP;
     // End of variables declaration//GEN-END:variables
 }
