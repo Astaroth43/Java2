@@ -49,15 +49,20 @@ public class VentasInterface extends javax.swing.JFrame {
         hora.setText(dateFormat.format(date));
         folio.setText(String.valueOf(db.selectID("venta") + 1));
 
-        if("class java2.VentasInterface".equals(this.getClass().toString())) changeHour();
-        
-        addWindowListener(new WindowAdapter(){
+        if("class java2.VentasInterface".equals(this.getClass().toString())){
+            otroPagoLbl.setVisible(false);
+            otroPago.setVisible(false);
+            changeHour();
+            addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e){
                 eliminaTabla();
                 dispose();
             }
-        });
+            });
+        }
+        
+        
         setLocationRelativeTo(null);
     }
 
@@ -550,7 +555,6 @@ public class VentasInterface extends javax.swing.JFrame {
         });
 
         otroPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        otroPago.setVisible(false);
         otroPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 otroPagoActionPerformed(evt);
@@ -583,7 +587,6 @@ public class VentasInterface extends javax.swing.JFrame {
 
         otroPagoLbl.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         otroPagoLbl.setText("Especifica");
-        otroPagoLbl.setVisible(false);
 
         jMenu1.setText("Archivo");
 

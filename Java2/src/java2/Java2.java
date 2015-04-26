@@ -15,7 +15,7 @@ public class Java2 {
      */
     public static void main(String[] args) {
        //VentasInterface.main(null);
-       TicketVenta.main(4);
+       TicketVenta.main(2);
        //System.out.println(System.getProperty("java.home"));
     }
     
