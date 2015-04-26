@@ -6,6 +6,7 @@
 package java2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -104,16 +105,17 @@ public class Presupuesto extends javax.swing.JFrame {
                 }
 
                 int a = Integer.parseInt(productoID.getText().trim());
-                String[] rs;
-                rs = db.selectProducto(a);
+                //String[] rs;
+                HashMap<String, String> rs;
+                rs = db.fetchArray("producto", a);
 
                 if(rs != null){
                     isSetProducto = true;
-                    desP.setText(rs[0]);
-                    precioP.setText(rs[1]);
-                    stockP.setText(rs[2]);
+                    desP.setText(rs.get("NOMBRE"));
+                    precioP.setText(rs.get("PRECIO"));
+                    stockP.setText(rs.get("CANTIDAD"));
                     cantP.setText("1");
-                    totalP.setText(String.valueOf(Float.parseFloat(cantP.getText().trim()) * Float.parseFloat(rs[1])));
+                    totalP.setText(String.valueOf(Float.parseFloat(cantP.getText().trim()) * Float.parseFloat(rs.get("PRECIO"))));
                 }else{
                     desP.setText("-");
                     precioP.setText("0");
@@ -384,12 +386,13 @@ public class Presupuesto extends javax.swing.JFrame {
 
     private void btnEliminaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminaMouseClicked
         if(jTable2.getSelectedRow() < 0)
-        return;
+            return;
 
-        String a[];
-        a = db.selectProducto(Integer.parseInt(dataP.get(jTable2.getSelectedRow())[0]));
-        int aux = Integer.parseInt(a[2]) + Integer.parseInt(dataP.get(jTable2.getSelectedRow())[3]);
-        db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(jTable2.getSelectedRow())[0]);
+        //String a[];
+        HashMap<String, String> a;
+        a = db.fetchArray("producto", Integer.parseInt(dataP.get(jTable2.getSelectedRow())[0]));
+        int aux = Integer.parseInt(a.get("CANTIDAD")) + Integer.parseInt(dataP.get(jTable2.getSelectedRow())[3]);
+        //db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(jTable2.getSelectedRow())[0]);
         stockP.setText(String.valueOf(aux));
         dataP.remove(jTable2.getSelectedRow());
         productoID.setText("0");
@@ -398,7 +401,7 @@ public class Presupuesto extends javax.swing.JFrame {
 
     private void btnAgregaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregaMouseClicked
         if(!isSetProducto)
-        return;
+            return;
 
         dataP.add(new String[] {
             productoID.getText(),
@@ -407,9 +410,10 @@ public class Presupuesto extends javax.swing.JFrame {
             cantP.getText(),
             totalP.getText()
         });
-        String a[];
-        a = db.selectProducto(Integer.parseInt(productoID.getText()));
-        int aux = Integer.parseInt(a[2]) - Integer.parseInt(cantP.getText());
+        //String a[];
+        HashMap<String, String> a;
+        a = db.fetchArray("producto", Integer.parseInt(productoID.getText()));
+        int aux = Integer.parseInt(a.get("CANTIDAD")) - Integer.parseInt(cantP.getText());
         //db.free("update producto set CANTIDAD = " + String.valueOf(aux) + " where id = " + productoID.getText());
         stockP.setText(String.valueOf(aux));
         productoID.setText("0");

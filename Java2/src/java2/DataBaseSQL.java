@@ -56,7 +56,7 @@ public class DataBaseSQL implements Connection {
         }
     }
     
-    public String[] selectPersona(String tabla, int id){
+    /*public String[] selectPersona(String tabla, int id){
         try {
             Statement query = (Statement) connection.createStatement();
             ResultSet rs;
@@ -83,9 +83,9 @@ public class DataBaseSQL implements Connection {
         } finally {
             
         }
-    }
+    }*/
     
-    public String[] selectProducto(int id){
+    /*public String[] selectProducto(int id){
         try {
             Statement query = (Statement) connection.createStatement();
             ResultSet rs;
@@ -111,7 +111,7 @@ public class DataBaseSQL implements Connection {
         } finally {
             
         }
-    }
+    }*/
     
     public boolean insert(String tabla, String[] values){
         

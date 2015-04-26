@@ -52,6 +52,7 @@ public class VentasInterface extends javax.swing.JFrame {
         if("class java2.VentasInterface".equals(this.getClass().toString())) changeHour();
         
         addWindowListener(new WindowAdapter(){
+            @Override
             public void windowClosing(WindowEvent e){
                 eliminaTabla();
                 dispose();
@@ -211,13 +212,14 @@ public class VentasInterface extends javax.swing.JFrame {
                     return;
                 }
                 int a = Integer.parseInt(empID.getText().trim());
-                String[] rs;
-                rs = db.selectPersona("empleado", a);
+                //String[] rs;
+                HashMap<String, String> rs;
+                rs = db.fetchArray("empleado", a);
 
                 if(rs != null){
                     isSetEmpleado = true;
-                    empNom.setText(rs[0]);
-                    empAp.setText(rs[1]);
+                    empNom.setText(rs.get("NOMBRE"));
+                    empAp.setText(rs.get("APELLIDO"));
                 }else{
                     isSetEmpleado = false;
                     empNom.setText("-");
@@ -294,13 +296,14 @@ public class VentasInterface extends javax.swing.JFrame {
                 }
 
                 int a = Integer.parseInt(cliID.getText().trim());
-                String[] rs;
-                rs = db.selectPersona("cliente", a);
+                //String[] rs;
+                HashMap<String, String> rs;
+                rs = db.fetchArray("cliente", a);
 
                 if(rs != null){
                     isSetClient = true;
-                    cliNom.setText(rs[0]);
-                    cliAp.setText(rs[1]);
+                    cliNom.setText(rs.get("NOMBRE"));
+                    cliAp.setText(rs.get("APELLIDO"));
                 }else{
                     isSetClient = false;
                     cliNom.setText("-");
@@ -356,16 +359,17 @@ public class VentasInterface extends javax.swing.JFrame {
                 }
 
                 int a = Integer.parseInt(productoID.getText().trim());
-                String[] rs;
-                rs = db.selectProducto(a);
+                //String[] rs;
+                HashMap<String, String> rs;
+                rs = db.fetchArray("producto", a);
 
                 if(rs != null){
                     isSetProducto = true;
-                    desP.setText(rs[0]);
-                    precioP.setText(rs[1]);
-                    stockP.setText(rs[2]);
+                    desP.setText(rs.get("NOMBRE"));
+                    precioP.setText(rs.get("PRECIO"));
+                    stockP.setText(rs.get("CANTIDAD"));
                     cantP.setText("1");
-                    totalP.setText(String.valueOf(Float.parseFloat(cantP.getText().trim()) * Float.parseFloat(rs[1])));
+                    totalP.setText(String.valueOf(Float.parseFloat(cantP.getText().trim()) * Float.parseFloat(rs.get("PRECIO"))));
                 }else{
                     desP.setText("-");
                     precioP.setText("0");
@@ -970,9 +974,10 @@ public class VentasInterface extends javax.swing.JFrame {
             cantP.getText(),
             totalP.getText()
         });
-        String a[];
-        a = db.selectProducto(Integer.parseInt(productoID.getText()));
-        int aux = Integer.parseInt(a[2]) - Integer.parseInt(cantP.getText());
+        //String a[];
+        HashMap<String, String> a;
+        a = db.fetchArray("producto", Integer.parseInt(productoID.getText()));
+        int aux = Integer.parseInt(a.get("CANTIDAD")) - Integer.parseInt(cantP.getText());
         db.free("update producto set CANTIDAD = " + String.valueOf(aux) + " where id = " + productoID.getText());
         stockP.setText(String.valueOf(aux));
         productoID.setText("0");
@@ -984,9 +989,10 @@ public class VentasInterface extends javax.swing.JFrame {
         if(jTable2.getSelectedRow() < 0)
             return;
         
-        String a[];
-        a = db.selectProducto(Integer.parseInt(dataP.get(jTable2.getSelectedRow())[0]));
-        int aux = Integer.parseInt(a[2]) + Integer.parseInt(dataP.get(jTable2.getSelectedRow())[3]);
+        //String a[];
+        HashMap<String, String> a;
+        a = db.fetchArray("producto", Integer.parseInt(dataP.get(jTable2.getSelectedRow())[0]));
+        int aux = Integer.parseInt(a.get("CANTIDAD")) + Integer.parseInt(dataP.get(jTable2.getSelectedRow())[3]);
         db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(jTable2.getSelectedRow())[0]);
         stockP.setText(String.valueOf(aux));
         dataP.remove(jTable2.getSelectedRow());
@@ -1162,9 +1168,10 @@ public class VentasInterface extends javax.swing.JFrame {
     
     public void eliminaTabla(){
         while(!dataP.isEmpty()){
-            String a[];
-            a = db.selectProducto(Integer.parseInt(dataP.get(0)[0]));
-            int aux = Integer.parseInt(a[2]) + Integer.parseInt(dataP.get(0)[3]);
+            //String a[];
+            HashMap<String, String> a;
+            a = db.fetchArray("producto", Integer.parseInt(dataP.get(0)[0]));
+            int aux = Integer.parseInt(a.get("CANTIDAD")) + Integer.parseInt(dataP.get(0)[3]);
             db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(0)[0]);
             stockP.setText(String.valueOf(aux));
             dataP.remove(0);
