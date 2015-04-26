@@ -39,8 +39,9 @@ public class DataBaseSQL implements Connection {
 
     public static void main(String[] args){
         DataBaseSQL db = new DataBaseSQL();
-        db.selectProducto(1);
+        //db.selectProducto(1);
         //db.free("insert into prueba values(null, \"Hola\")");
+     //   System.out.println("a1bC zxY23s-.".toUpperCase());
     }
 
     public void free(String q){
@@ -119,7 +120,7 @@ public class DataBaseSQL implements Connection {
             String q1;
             
             if( tabla.equals("producto") ){
-                q1 = "select * from producto where NOMBRE = '"+ values[1] +"'";
+                q1 = "select * from producto where NOMBRE = '"+ values[1].toUpperCase() +"'";
                 ResultSet rs = query.executeQuery(q1);
                 if( rs.next() )  
                     return false;
@@ -128,7 +129,7 @@ public class DataBaseSQL implements Connection {
             q1 = "insert into " + tabla + " values( null, ";
             
             for(String txt : values){
-                q1 += "'" + txt + "', ";
+                q1 += "'" + txt.toUpperCase() + "', ";
             }
             q1 = q1.substring(0, q1.length()-2);
             q1 += ")";
