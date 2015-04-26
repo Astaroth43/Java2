@@ -22,6 +22,7 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
         super("Busqueda de Empleados");
         initComponents();
         db = new DataBaseSQL();
+        setLocationRelativeTo(null);
         
         lista.setVisibleRowCount(3);
         

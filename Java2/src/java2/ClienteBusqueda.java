@@ -22,6 +22,7 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         super("Busqueda de Clientes");
         initComponents();
         db = new DataBaseSQL();
+        setLocationRelativeTo(null);
         
         lista.setVisibleRowCount(3);
         

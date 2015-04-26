@@ -57,7 +57,7 @@ public class VentasInterface extends javax.swing.JFrame {
                 dispose();
             }
         });
-        
+        setLocationRelativeTo(null);
     }
 
     /**

@@ -33,6 +33,7 @@ public class Cliente extends javax.swing.JFrame{
         initComponents();
         masculino.setSelected(true);
         id.setText( String.valueOf( db.selectID("cliente") + 1 ) );
+        setLocationRelativeTo(null);
     }
 
     /**

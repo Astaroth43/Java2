@@ -33,6 +33,7 @@ public class Producto extends javax.swing.JFrame{
         initComponents();
         db = new DataBaseSQL();
         id.setText( String.valueOf( db.selectID("producto") + 1 ) );
+        setLocationRelativeTo(null);
     }
 
     /**

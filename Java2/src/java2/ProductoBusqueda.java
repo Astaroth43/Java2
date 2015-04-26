@@ -23,6 +23,7 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         initComponents();
         db = new DataBaseSQL();
         lista.setVisibleRowCount(5);
+        setLocationRelativeTo(null);
         
         busqueda.getDocument().addDocumentListener(
                 new DocumentListener(){

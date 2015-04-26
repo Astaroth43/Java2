@@ -22,6 +22,7 @@ public class VentaBusqueda extends javax.swing.JFrame {
     public VentaBusqueda() {
         db = new DataBaseSQL();
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -108,6 +109,11 @@ public class VentaBusqueda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if( !id.getText().matches("[0-9]*") ){
+            JOptionPane.showMessageDialog(null, "Error, El id debe ser un numero entero y positivo");
+            return;
+        }
+        
         datos = db.fetchArray("venta", Integer.parseInt(id.getText()));
         if( datos == null)
             JOptionPane.showMessageDialog(null, "Error, Ingrese un ID de venta valido");
