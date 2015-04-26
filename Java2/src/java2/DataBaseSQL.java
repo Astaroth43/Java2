@@ -47,7 +47,7 @@ public class DataBaseSQL implements Connection {
     public void free(String q){
         try {
             Statement query = (Statement) connection.createStatement();
-            System.out.println(q);
+            System.out.println("free: " + q);
             query.executeUpdate(q);
             System.out.println("Exito");
             query.close();
@@ -133,7 +133,7 @@ public class DataBaseSQL implements Connection {
             }
             q1 = q1.substring(0, q1.length()-2);
             q1 += ")";
-            System.out.println(q1);
+            System.out.println("insert: " + q1);
             query.executeUpdate(q1);
             System.out.println("Exito");
             query.close();
@@ -169,7 +169,7 @@ public class DataBaseSQL implements Connection {
         try{
             Statement query = (Statement) connection.createStatement();
             String comando = "SELECT * FROM " + table + " WHERE ID = " + index;
-
+            System.out.println("fetchArray: " + comando);
             ResultSet rs = query.executeQuery(comando);
             
             if( !rs.next() ){
@@ -223,7 +223,7 @@ public class DataBaseSQL implements Connection {
         try{
             Statement query = (Statement) connection.createStatement();
             String comando = "SELECT " + column + " FROM " + table + " WHERE ID = " + String.valueOf(index);
-            
+            System.out.println("getValueOf: " + comando);
             ResultSet rs = query.executeQuery(comando);
             rs.first();
             String cadena = rs.getString(1);
@@ -241,7 +241,7 @@ public class DataBaseSQL implements Connection {
             ResultSet rs;
             String q1;
             q1 = "select * from desc_venta where id_venta = " + idV ;
-            System.out.println("-" + q1 + "-");
+            System.out.println("getProductos: " + q1);
             rs = query.executeQuery(q1);
             while(rs.next()){
                 String[] a = new String[2];

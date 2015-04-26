@@ -14,8 +14,8 @@ public class Java2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       VentasInterface.main(null);
-       //TicketVenta.main(1);
+       //VentasInterface.main(null);
+       TicketVenta.main(4);
        //System.out.println(System.getProperty("java.home"));
     }
     
