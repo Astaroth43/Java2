@@ -33,6 +33,18 @@ public final class TicketVenta extends VentasInterface {
         setIDs();
         addDataP();
         super.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        if(!String.valueOf(tipoPago.getSelectedItem()).equals("Otro")){
+            System.out.println("SI");
+            otroPagoLbl.setVisible(false);
+            otroPago.setVisible(false);
+        }else{
+            System.out.println(String.valueOf(tipoPago.getSelectedItem()));
+            otroPagoLbl.setVisible(true);
+            otroPago.setVisible(true);
+            otroPago.setEnabled(false);
+        }
+        
         setLocationRelativeTo(null);
     }
 

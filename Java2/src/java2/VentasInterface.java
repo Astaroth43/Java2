@@ -629,7 +629,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jMenu1.add(jMenuItem8);
         jMenu1.add(jSeparator1);
 
-        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem11.setText("Buscar Cliente");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1262,7 +1262,7 @@ public class VentasInterface extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JTable jTable2;
     protected javax.swing.JTextField otroPago;
-    private javax.swing.JLabel otroPagoLbl;
+    protected javax.swing.JLabel otroPagoLbl;
     protected javax.swing.JLabel precioP;
     protected javax.swing.JTextField productoID;
     protected javax.swing.JLabel stockP;

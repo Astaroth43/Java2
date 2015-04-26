@@ -73,7 +73,7 @@ public class Presupuesto extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel22.setText("ID");
 
-        productoID.setText("0");
+        productoID.setText("-");
         productoID.setToolTipText("");
         productoID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
