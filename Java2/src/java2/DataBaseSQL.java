@@ -171,6 +171,11 @@ public class DataBaseSQL implements Connection {
             String comando = "SELECT * FROM " + table + " WHERE ID = " + index;
 
             ResultSet rs = query.executeQuery(comando);
+            
+            if( !rs.next() ){
+                System.out.println("VACIO");
+                return null;
+            }
             ResultSetMetaData rsmd = rs.getMetaData();
             rs.first();
             String valor, key;
