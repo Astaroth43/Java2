@@ -375,7 +375,7 @@ public class Empleado extends javax.swing.JFrame{
                 }
                 
                 if(i == 0 || i == 1){
-                    if( !cadenas[i].matches("[a-zA-Z]*") ){
+                    if( !cadenas[i].matches("[^0-9]*") ){
                         errorType = true;
                         indexType = i;
                         break;
