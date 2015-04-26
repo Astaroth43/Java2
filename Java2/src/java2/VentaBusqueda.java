@@ -42,8 +42,6 @@ public class VentaBusqueda extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Busqueda de Ventas");
-        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
-        setEnabled(false);
         setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
@@ -117,8 +115,11 @@ public class VentaBusqueda extends javax.swing.JFrame {
         datos = db.fetchArray("venta", Integer.parseInt(id.getText()));
         if( datos == null)
             JOptionPane.showMessageDialog(null, "Error, Ingrese un ID de venta valido");
-        else
+        else{
             TicketVenta.main(Integer.parseInt(id.getText()));
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
