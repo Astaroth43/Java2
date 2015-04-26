@@ -207,6 +207,21 @@ public class DataBaseSQL implements Connection {
             return 0;
         }
     }
+    
+    public String getValueOf(String table, String column, int index){
+        try{
+            Statement query = (Statement) connection.createStatement();
+            String comando = "SELECT " + column + " FROM " + table + " WHERE ID = " + String.valueOf(index);
+            
+            ResultSet rs = query.executeQuery(comando);
+            rs.first();
+            String cadena = rs.getString(1);
+            return cadena;
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }     
+    }
         
     
     public Connection getConnection(){
