@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import javax.swing.JOptionPane;
 
 public class DataBaseSQL implements Connection {
     private final String server;
@@ -33,15 +34,13 @@ public class DataBaseSQL implements Connection {
                 connection = DriverManager.getConnection(server,user,pass);
                 System.out.println("Conexion realizada con exito");
             }catch(ClassNotFoundException | SQLException e){
-                System.out.println("Conexion NO realizada");
+                JOptionPane.showMessageDialog(null, "Conexcion no realizada a la base de datos.");
+                System.exit(0);
             }
     }
 
     public static void main(String[] args){
         DataBaseSQL db = new DataBaseSQL();
-        //db.selectProducto(1);
-        //db.free("insert into prueba values(null, \"Hola\")");
-     //   System.out.println("a1bC zxY23s-.".toUpperCase());
     }
 
     public void free(String q){
@@ -55,63 +54,6 @@ public class DataBaseSQL implements Connection {
             System.out.println("FAIL");
         }
     }
-    
-    /*public String[] selectPersona(String tabla, int id){
-        try {
-            Statement query = (Statement) connection.createStatement();
-            ResultSet rs;
-            String q1;
-            q1 = "select * from " + tabla + " where id = " + id ;
-            System.out.println("-" + q1 + "-");
-            rs = query.executeQuery(q1);
-            
-            if(rs.next()){
-                System.out.println("Exito select");
-                String[] result = new String[2];
-                result[0] = rs.getString("NOMBRE");
-                result[1] = rs.getString("APELLIDO");
-                query.close();
-                return result;
-            }else{
-                System.out.println("Sin datos");
-                query.close();
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("Error en el select");
-            return null;
-        } finally {
-            
-        }
-    }*/
-    
-    /*public String[] selectProducto(int id){
-        try {
-            Statement query = (Statement) connection.createStatement();
-            ResultSet rs;
-            String q1;
-            q1 = "select * from producto where id = " + id ;
-            System.out.println("-" + q1 + "-");
-            rs = query.executeQuery(q1);
-            if(rs.next()){
-                System.out.println("Exito select");
-                String[] result = new String[3];
-                result[0] = rs.getString("NOMBRE");
-                result[1] = rs.getString("PRECIO");
-                result[2] = rs.getString("CANTIDAD");
-                query.close();
-                return result;
-            }else{
-                query.close();
-                return null;
-            }
-        } catch (SQLException e) {
-             System.out.println("Error en el select");
-            return null;
-        } finally {
-            
-        }
-    }*/
     
     public boolean insert(String tabla, String[] values){
         

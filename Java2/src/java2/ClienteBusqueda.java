@@ -24,64 +24,16 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         db = new DataBaseSQL();
         setLocationRelativeTo(null);
         
-        lista.setVisibleRowCount(3);
-        
-        busqueda.getDocument().addDocumentListener(
-                new DocumentListener(){
-                    
-                    @Override
-                    public void changedUpdate(DocumentEvent e) {
-                    }
+        int tam = db.selectID("cliente");
+        String valor;
+        DefaultListModel model = new DefaultListModel();
 
-                    @Override
-                    public void insertUpdate(DocumentEvent e) {
-                        int tam = db.selectID("cliente");
-                        String valor;
-                        DefaultListModel model = new DefaultListModel();
-                        
-                        for(int i = 1; i <= tam; i++){
-                            valor = db.getValueOf("cliente", "NOMBRE", i);
-                            if( valor.startsWith( busqueda.getText() ) )
-                                model.addElement(valor);      
-                        }
-                        lista.setModel(model);
-                    }
-
-                    @Override
-                    public void removeUpdate(DocumentEvent e) {
-                        if( busqueda.getText().matches("") ){
-                            DefaultListModel model = new DefaultListModel();
-                            model.removeAllElements();
-                            lista.setModel(model);
-                        }
-                        
-                        int tam = db.selectID("cliente");
-                        String valor;
-                        DefaultListModel model = new DefaultListModel();
-                        
-                        for(int i = 1; i <= tam; i++){
-                            valor = db.getValueOf("cliente", "NOMBRE", i);
-                            if( valor.startsWith( busqueda.getText() ) )
-                                model.addElement(valor);      
-                        }
-                        lista.setModel(model);
-                    }
-        });
-        //////Nuevos elementos
-        
-        lista.addListSelectionListener(new ListSelectionListener() {
-            
-            public void valueChanged(ListSelectionEvent evt) {
-                try{
-                    int indice = lista.getSelectedIndex();;
-                    String cadena = (String) lista.getModel().getElementAt(indice);
-                    busqueda.setText(cadena);
-                }catch(Exception e){
-                    
-                }
-            }
-            
-        });
+        for(int i = 1; i <= tam; i++){
+            valor = db.getValueOf("cliente", "NOMBRE", i);
+            if( valor.startsWith( busqueda.getText().toUpperCase() ) )
+                model.addElement(valor);      
+        }
+        lista.setModel(model);
     }
 
     /**
@@ -112,7 +64,6 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         telefono = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         direccion = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lista = new javax.swing.JList();
 
@@ -124,6 +75,8 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         jScrollPane1.setViewportView(jList1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(445, 390));
+        setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
 
@@ -172,13 +125,11 @@ public class ClienteBusqueda extends javax.swing.JFrame{
         direccion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         direccion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        lista.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaValueChanged(evt);
             }
         });
-
         jScrollPane2.setViewportView(lista);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,12 +171,9 @@ public class ClienteBusqueda extends javax.swing.JFrame{
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(busqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
-                                .addGap(34, 34, 34)
-                                .addComponent(jButton1)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(busqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -236,10 +184,8 @@ public class ClienteBusqueda extends javax.swing.JFrame{
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
-                        .addGap(9, 9, 9)
+                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -272,39 +218,71 @@ public class ClienteBusqueda extends javax.swing.JFrame{
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
+        busqueda.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                actualiza();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                actualiza();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                /*if( busqueda.getText().matches("") ){
+                    DefaultListModel model = new DefaultListModel();
+                    model.removeAllElements();
+                    lista.setModel(model);
+                }*/
+                actualiza();
+            }
+
+            public void actualiza(){
+                int tam = db.selectID("cliente");
+                String valor;
+                DefaultListModel model = new DefaultListModel();
+
+                for(int i = 1; i <= tam; i++){
+                    valor = db.getValueOf("cliente", "NOMBRE", i);
+                    if( valor.startsWith( busqueda.getText().toUpperCase() ) )
+                    model.addElement(valor);
+                }
+                lista.setModel(model);
+            }
+        });
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String key = busqueda.getText();
-        
-        int indice = db.getIndexOf("cliente", "NOMBRE", key);
-        if(indice == 0){
-            id.setText( "----------" );
-            nombre.setText( "----------" );
-            apellido.setText( "----------" );
-            sexo.setText( "----------" );
-            direccion.setText( "----------" );
-            telefono.setText( "----------" );
-            rfc.setText( "----------" );
-            JOptionPane.showMessageDialog(null, "No existe un cliente registrado con ese nombre");
+    private void listaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaValueChanged
+        if(lista.isSelectionEmpty()){
+            id.setText("");
+            nombre.setText("");
+            apellido.setText("");
+            direccion.setText("");
+            sexo.setText("");
+            telefono.setText("");
+            rfc.setText("");
             return;
         }
- 
-        try{
-            HashMap<String, String> mapa = db.fetchArray("cliente", indice);
-            id.setText( String.valueOf(indice) );
-            nombre.setText( mapa.get("NOMBRE") );
-            apellido.setText( mapa.get("APELLIDO") );
-            sexo.setText( mapa.get("SEXO") );
-            direccion.setText( mapa.get("DIRECCION") );
-            telefono.setText( mapa.get("TELEFONO") );
-            rfc.setText( mapa.get("RFC") );
             
+        int indice = lista.getSelectedIndex();    
+        String key = (String) lista.getModel().getElementAt(indice);
+        try{
+            HashMap<String, String> mapa = db.fetchArray("cliente", indice+1);
+            id.setText( mapa.get("ID") );
+            nombre.setText(mapa.get("NOMBRE"));
+            apellido.setText(mapa.get("APELLIDO"));
+            direccion.setText(mapa.get("DIRECCION"));
+            sexo.setText(mapa.get("SEXO"));
+            telefono.setText(mapa.get("TELEFONO"));
+            rfc.setText(mapa.get("RFC"));
         }catch(Exception e){
             System.out.println(e);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_listaValueChanged
 
     /**
      * @param args the command line arguments
@@ -346,7 +324,6 @@ public class ClienteBusqueda extends javax.swing.JFrame{
     private javax.swing.JTextField busqueda;
     private javax.swing.JLabel direccion;
     private javax.swing.JLabel id;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
