@@ -127,13 +127,19 @@ public class VentasInterface extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel34 = new javax.swing.JLabel();
-        total = new javax.swing.JLabel();
+        subtotal = new javax.swing.JLabel();
         btnGenerarVenta = new javax.swing.JLabel();
         btnBorrarTodo = new javax.swing.JLabel();
         tipoPago = new javax.swing.JComboBox();
         otroPago = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         otroPagoLbl = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        descuento = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        iva = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        total = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -157,7 +163,7 @@ public class VentasInterface extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ventas JMasters");
         setBounds(new java.awt.Rectangle(10, 10, 900, 620));
-        setPreferredSize(new java.awt.Dimension(900, 620));
+        setPreferredSize(new java.awt.Dimension(900, 650));
         setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
@@ -526,11 +532,11 @@ public class VentasInterface extends javax.swing.JFrame {
         jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jTable2);
 
-        jLabel34.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        jLabel34.setText("TOTAL:  $");
+        jLabel34.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel34.setText("Subtotal:  $");
 
-        total.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        total.setText("0");
+        subtotal.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        subtotal.setText("0");
 
         btnGenerarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cobrar.png"))); // NOI18N
         btnGenerarVenta.setToolTipText("Generar Venta");
@@ -549,7 +555,7 @@ public class VentasInterface extends javax.swing.JFrame {
         });
 
         tipoPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tipoPago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Tarjeta", "Anticipo (50%)", "30 dias", "Otro" }));
+        tipoPago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Anticipo (50%)", "30 dias", "Otro" }));
         tipoPago.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 tipoPagoItemStateChanged(evt);
@@ -562,6 +568,7 @@ public class VentasInterface extends javax.swing.JFrame {
         });
 
         otroPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        otroPago.setText("NULL");
         otroPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 otroPagoActionPerformed(evt);
@@ -594,6 +601,24 @@ public class VentasInterface extends javax.swing.JFrame {
 
         otroPagoLbl.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         otroPagoLbl.setText("Especifica");
+
+        jLabel35.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel35.setText("Tipo pago:  $");
+
+        descuento.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        descuento.setText("0");
+
+        jLabel36.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel36.setText("IVA:  $");
+
+        iva.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        iva.setText("0");
+
+        jLabel37.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        jLabel37.setText("Total:  $");
+
+        total.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        total.setText("0");
 
         jMenu1.setText("Archivo");
 
@@ -830,22 +855,34 @@ public class VentasInterface extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 854, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel24))
-                                .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(otroPagoLbl)
-                                    .addComponent(otroPago, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnGenerarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53)
-                                .addComponent(btnBorrarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(jLabel34)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel37)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(26, 26, 26)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel24))
+                                        .addGap(34, 34, 34)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(otroPagoLbl)
+                                            .addComponent(otroPago, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnGenerarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(53, 53, 53)
+                                        .addComponent(btnBorrarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(40, 40, 40)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(iva, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(7, 7, 7)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -951,11 +988,20 @@ public class VentasInterface extends javax.swing.JFrame {
                                 .addGap(44, 44, 44)))))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel34)
-                        .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel34)
+                            .addComponent(subtotal))
+                        .addGap(1, 1, 1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel35)
+                            .addComponent(descuento))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iva)
+                            .addComponent(jLabel36)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnGenerarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBorrarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -967,7 +1013,11 @@ public class VentasInterface extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(otroPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel37)
+                    .addComponent(total))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
@@ -1058,7 +1108,7 @@ public class VentasInterface extends javax.swing.JFrame {
         q += empID.getText() + "', '";
         q += fecha.getText() + "', '";
         q += hora.getText() + "', '";
-        q += total.getText() + "', ";
+        q += subtotal.getText() + "', ";
         q += String.valueOf(tipoPago.getSelectedIndex() + 1 ) + ", '";
         q += otroPago.getText();
         q+= "')";
@@ -1111,6 +1161,7 @@ public class VentasInterface extends javax.swing.JFrame {
             otroPagoLbl.setVisible(true);
             otroPago.setVisible(true);
         }
+        actualizaTotal();
     }//GEN-LAST:event_tipoPagoItemStateChanged
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -1167,9 +1218,7 @@ public class VentasInterface extends javax.swing.JFrame {
     }
     
     protected void actualizaTabla(){
-        int row = 0;
         int cant = dataP.size();
-        float totalAux = 0;
         String dat[][];
         if(cant < 6)
             dat = new String[6][5];
@@ -1224,11 +1273,7 @@ public class VentasInterface extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        for(int i = 0; i < dataP.size(); i++, row++){
-           totalAux += Float.parseFloat(dataP.get(i)[4]);
-        }
-        total.setText(String.valueOf(totalAux));
-        jScrollPane2.setViewportView(jTable2);
+        actualizaTotal();
     }
     
     public void eliminaTabla(){
@@ -1245,6 +1290,38 @@ public class VentasInterface extends javax.swing.JFrame {
             productoID.setText("0");
             actualizaTabla();
         }
+    }
+    
+    public void actualizaTotal(){
+        float totalAux = 0;
+        
+        for (String[] dataP1 : dataP) {
+            totalAux += Float.parseFloat(dataP1[4]);
+        }
+        
+        subtotal.setText(String.format("%.02f", totalAux));
+        float totalAux2 = 0;
+        switch((String)tipoPago.getSelectedItem()){
+            case "Contado":
+                totalAux2 = totalAux * 0.95f - totalAux;
+                break;
+            case "Anticipo (50%)":
+                totalAux2 = totalAux * 0.98f - totalAux;
+                break;
+            case "30 dias":
+                totalAux2 = totalAux * 1.03f - totalAux;
+                break;
+            case "Otro":
+                totalAux2 = totalAux - totalAux;
+        }
+        descuento.setText(String.format("%.02f", totalAux2));
+        float ivaT;
+        ivaT = totalAux * 1.16f - totalAux;
+        iva.setText(String.format("%.02f", ivaT));
+        float total3;
+        total3 = totalAux + totalAux2 + ivaT;
+        total.setText(String.format("%.02f", total3));
+        jScrollPane2.setViewportView(jTable2);
     }
     
     
@@ -1287,12 +1364,14 @@ public class VentasInterface extends javax.swing.JFrame {
     protected javax.swing.JTextField cliID;
     private javax.swing.JLabel cliNom;
     protected javax.swing.JLabel desP;
+    protected javax.swing.JLabel descuento;
     private javax.swing.JLabel empAp;
     protected javax.swing.JTextField empID;
     private javax.swing.JLabel empNom;
     protected javax.swing.JLabel fecha;
     protected javax.swing.JLabel folio;
     protected javax.swing.JLabel hora;
+    protected javax.swing.JLabel iva;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1312,6 +1391,9 @@ public class VentasInterface extends javax.swing.JFrame {
     protected javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -1341,6 +1423,7 @@ public class VentasInterface extends javax.swing.JFrame {
     protected javax.swing.JLabel precioP;
     protected javax.swing.JTextField productoID;
     protected javax.swing.JLabel stockP;
+    protected javax.swing.JLabel subtotal;
     protected javax.swing.JComboBox tipoPago;
     protected javax.swing.JLabel titulo;
     protected javax.swing.JLabel total;
