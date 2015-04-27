@@ -34,8 +34,8 @@ public class DataBaseSQL implements Connection {
                 connection = DriverManager.getConnection(server,user,pass);
                 System.out.println("Conexion realizada con exito");
             }catch(ClassNotFoundException | SQLException e){
-                JOptionPane.showMessageDialog(null, "Conexcion no realizada a la base de datos.");
-                System.exit(0);
+                System.out.println(e.getMessage());
+                JOptionPane.showMessageDialog(null, "Conexion no realizada a la base de datos.");
             }
     }
 
