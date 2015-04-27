@@ -248,7 +248,7 @@ public class Cliente extends javax.swing.JFrame{
                 }
                 
                 if(i == 0 || i == 1){
-                    if( !cadenas[i].matches("[a-zA-Z íáéóúü]*") ){
+                    if( !cadenas[i].matches("[a-zA-Z íáéóúüñ]*") ){
                         errorType = true;
                         indexType = i;
                         break;
