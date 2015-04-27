@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-04-2015 a las 06:23:38
+-- Tiempo de generación: 27-04-2015 a las 05:08:21
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.9
 
@@ -68,7 +68,8 @@ INSERT INTO `desc_venta` (`ID_VENTA`, `ID_PRODUCTO`, `CANTIDAD`) VALUES
 (2, 3, 1),
 (3, 1, 2),
 (3, 3, 3),
-(3, 2, 4);
+(3, 2, 4),
+(4, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -108,19 +109,20 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `TIPO` enum('Computadoras','Accesorios','Consumibles','Servicios') NOT NULL,
   `NOMBRE` varchar(100) NOT NULL,
   `PRECIO` float(10,2) NOT NULL,
-  `CANTIDAD` int(11) NOT NULL,
+  `CANTIDAD` int(11) DEFAULT NULL,
   `DESCRIPCION` text NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `producto`
 --
 
 INSERT INTO `producto` (`ID`, `TIPO`, `NOMBRE`, `PRECIO`, `CANTIDAD`, `DESCRIPCION`) VALUES
-(1, 'Computadoras', 'ALIENWARE Z32', 32532.45, 13, 'INTEL CORE I7\n8GB RAM\n5GB DDR5'),
-(2, 'Accesorios', 'BEATS STUDIO', 8404.32, 28, 'AUDIFONOS BEATS BY DR. DRE MOD BEATS STUDIO'),
-(3, 'Servicios', 'FORMATEO', 250.67, 96, 'FORMATEO COMPLETO DE PC O LAPTOP');
+(1, 'Computadoras', 'ALIENWARE Z32', 32532.45, 36, 'INTEL CORE I7\n8GB RAM\n5GB DDR5'),
+(2, 'Accesorios', 'BEATS STUDIO', 8404.32, 31, 'AUDIFONOS BEATS BY DR. DRE MOD BEATS STUDIO'),
+(3, 'Servicios', 'FORMATEO', 250.67, NULL, 'FORMATEO COMPLETO DE PC O LAPTOP'),
+(4, 'Servicios', 'MANTENIMIENTO PC', 500.00, NULL, 'MANTENIMIENTO PREVENTIVO Y CORRECTIVO\nPARA PC');
 
 -- --------------------------------------------------------
 
@@ -140,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `venta` (
   PRIMARY KEY (`ID`),
   KEY `ID_CLIENTE` (`ID_CLIENTE`,`ID_EMPLEADO`),
   KEY `ID_EMPLEADO` (`ID_EMPLEADO`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `venta`
@@ -149,7 +151,8 @@ CREATE TABLE IF NOT EXISTS `venta` (
 INSERT INTO `venta` (`ID`, `ID_CLIENTE`, `ID_EMPLEADO`, `FECHA`, `HORA`, `TOTAL`, `TIPO_PAGO`, `DESC_PAGO`) VALUES
 (1, 2, 1, '25/04/2015', '23:14:14', 40936.8, 'Tarjeta', 'NULL'),
 (2, 1, 3, '25/04/2015', '23:15:02', 250.67, 'Contado', ''),
-(3, 3, 2, '25/04/2015', '23:16:18', 99434.2, '30 dias', 'NULL');
+(3, 3, 2, '25/04/2015', '23:16:18', 99434.2, '30 dias', 'NULL'),
+(4, 3, 3, '26/04/2015', '01:40:26', 501.34, 'Otro', 'A cuenta de los 1000 que se deben');
 
 --
 -- Restricciones para tablas volcadas
