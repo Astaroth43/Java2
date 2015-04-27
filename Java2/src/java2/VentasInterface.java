@@ -6,6 +6,7 @@
 package java2;
 
 
+import java.awt.Desktop;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -19,6 +20,10 @@ import javax.swing.SwingUtilities;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Agustin
@@ -30,6 +35,7 @@ public class VentasInterface extends javax.swing.JFrame {
     private DateFormat dateFormat;
     private Date date;
     List<String[]> dataP;
+    private File pdf;
     
     /**
      * Creates new form VentasInterface
@@ -37,6 +43,11 @@ public class VentasInterface extends javax.swing.JFrame {
     public VentasInterface() {
         db = new DataBaseSQL();
         dataP = new ArrayList<>();
+        
+        String pathPDF = String.valueOf(getClass().getResource("/files/Manual.pdf"));
+        pathPDF = pathPDF.substring(6, pathPDF.length());
+        pdf = new File(pathPDF);
+        
         isSetClient = isSetEmpleado = isSetProducto = areProducts = false;
         isSetTipoPago = true;
         initComponents();
@@ -257,7 +268,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel15.setText("Apellidos");
 
         cliAp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cliAp.setText("No registrado");
+        cliAp.setText("-");
         cliAp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         cliAp.setFocusable(false);
         cliAp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -294,12 +305,6 @@ public class VentasInterface extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Error, El id debe ser un número entero y positivo");
                     return;
                 }
-                if(cliID.getText().equals("0")){
-                    isSetClient = true;
-                    cliNom.setText("No registrado");
-                    cliAp.setText("No registrado");
-                    return;
-                }
 
                 int a = Integer.parseInt(cliID.getText().trim());
                 //String[] rs;
@@ -323,7 +328,7 @@ public class VentasInterface extends javax.swing.JFrame {
         jLabel19.setText("Nombre(s)");
 
         cliNom.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cliNom.setText("No registrado");
+        cliNom.setText("-");
         cliNom.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         cliNom.setFocusable(false);
         cliNom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -699,6 +704,11 @@ public class VentasInterface extends javax.swing.JFrame {
         jMenu2.setText("Ayuda");
 
         jMenuItem4.setText("Ayuda");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuItem5.setText("Acerca de...");
@@ -1063,7 +1073,10 @@ public class VentasInterface extends javax.swing.JFrame {
             //System.out.println(q2);
             db.free(q2);
         }
+        VentasInterface.main(null);
         TicketVenta.main(Integer.parseInt(folio.getText()));
+        dispose();
+        
     }//GEN-LAST:event_btnGenerarVentaMouseClicked
 
     private void btnBorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarTodoMouseClicked
@@ -1128,6 +1141,16 @@ public class VentasInterface extends javax.swing.JFrame {
         AcercaDe.main(null);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    if (Desktop.isDesktopSupported()) {
+        try {
+            Desktop.getDesktop().open(pdf);
+        } catch (IOException ex) {
+            // no application registered for PDFs
+        }
+    }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     private void changeHour(){
        
             new Thread(() -> {
@@ -1147,17 +1170,27 @@ public class VentasInterface extends javax.swing.JFrame {
         int row = 0;
         int cant = dataP.size();
         float totalAux = 0;
-        String dat[][] = new String[cant][5];
+        String dat[][];
+        if(cant < 6)
+            dat = new String[6][5];
+        else
+            dat = new String[cant][5];
         
-        if(cant <= 0){
+        if(cant <= 0)
             areProducts = false;
-           // return;
-        }
+        else
+            areProducts = true;
         
-        areProducts = true;
+        
         for(int i = 0; i < cant; i++){
             for(int j = 0; j < 5; j++){
                 dat[i][j] = dataP.get(i)[j];
+            }
+        }
+        if(cant < 6){
+            for(int i = cant; i < 6 - cant; i++){
+                for(int j = 0; j < 5; j++)
+                    dat[i][j] = null;
             }
         }
         
