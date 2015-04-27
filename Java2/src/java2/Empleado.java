@@ -2,15 +2,6 @@ package java2;
 
 import javax.swing.JOptionPane;
 
-import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import com.mysql.jdbc.Statement;
-import java.util.InputMismatchException;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.Executor;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

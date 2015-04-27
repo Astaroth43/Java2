@@ -129,7 +129,10 @@ public class DataBaseSQL implements Connection {
             q1 = "insert into " + tabla + " values( null, ";
             
             for(String txt : values){
-                q1 += "'" + txt.toUpperCase() + "', ";
+                if(txt.equals("NULL"))
+                    q1 += txt + ", ";
+                else
+                    q1 += "'" + txt.toUpperCase() + "', ";
             }
             q1 = q1.substring(0, q1.length()-2);
             q1 += ")";
@@ -138,7 +141,7 @@ public class DataBaseSQL implements Connection {
             System.out.println("Exito");
             query.close();
         } catch (SQLException e) {
-           // System.out.println("FAIL \n error: " + e.getCause() + "\ncause " + e.getCause() + "\nin" + e.getClass());
+            System.out.println("FAIL \n error: " + e.getMessage());
         }
         return true;
     }

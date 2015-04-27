@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -151,6 +151,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="id.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        if( id.getText().matches(&quot;&quot;) ){&#xa;            nombre.setText(&quot;&quot;);&#xa;            descripcion.setText(&quot;&quot;);&#xa;            return;&#xa;        }&#xa;        actualiza();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        actualiza();&#xa;    }&#xa;&#xa;    public void actualiza(){&#xa;        HashMap&lt;String, String&gt; mapa = db.fetchArray(&quot;producto&quot;, Integer.valueOf( id.getText() ));&#xa;&#xa;        if( mapa == null){&#xa;            nombre.setText(&quot;&quot;);&#xa;            descripcion.setText(&quot;&quot;);&#xa;        }&#xa;        else{&#xa;            nombre.setText( mapa.get(&quot;NOMBRE&quot;) );&#xa;            descripcion.setText( mapa.get(&quot;DESCRIPCION&quot;) );&#xa;        }&#xa;    }&#xa;&#xa;});"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>

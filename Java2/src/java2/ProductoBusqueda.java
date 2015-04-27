@@ -25,62 +25,16 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         lista.setVisibleRowCount(5);
         setLocationRelativeTo(null);
         
-        busqueda.getDocument().addDocumentListener(
-                new DocumentListener(){
-                    
-                    @Override
-                    public void changedUpdate(DocumentEvent e) {
-                    }
+        int tam = db.selectID("producto");
+        String valor;
+        DefaultListModel model = new DefaultListModel();
 
-                    @Override
-                    public void insertUpdate(DocumentEvent e) {
-                        int tam = db.selectID("producto");
-                        String valor;
-                        DefaultListModel model = new DefaultListModel();
-                        
-                        for(int i = 1; i <= tam; i++){
-                            valor = db.getValueOf("producto", "NOMBRE", i);
-                            if( valor.startsWith( busqueda.getText() ) )
-                                model.addElement(valor);      
-                        }
-                        lista.setModel(model);
-                    }
-
-                    @Override
-                    public void removeUpdate(DocumentEvent e) {
-                        if( busqueda.getText().matches("") ){
-                            DefaultListModel model = new DefaultListModel();
-                            model.removeAllElements();
-                            lista.setModel(model);
-                        }
-                        
-                        int tam = db.selectID("producto");
-                        String valor;
-                        DefaultListModel model = new DefaultListModel();
-                        
-                        for(int i = 1; i <= tam; i++){
-                            valor = db.getValueOf("producto", "NOMBRE", i);
-                            if( valor.startsWith( busqueda.getText() ) )
-                                model.addElement(valor);      
-                        }
-                        lista.setModel(model);
-                    }
-        });
-        //////Nuevos elementos
-        
-        lista.addListSelectionListener(new ListSelectionListener() {
-            
-            public void valueChanged(ListSelectionEvent evt) {
-                try{
-                    int indice = lista.getSelectedIndex();;
-                    String cadena = (String) lista.getModel().getElementAt(indice);
-                    busqueda.setText(cadena);
-                }catch(Exception e){
-                    
-                }
-            }
-            
-        });
+        for(int i = 1; i <= tam; i++){
+            valor = db.getValueOf("producto", "NOMBRE", i);
+            if( valor.startsWith( busqueda.getText().toUpperCase() ) )
+                model.addElement(valor);      
+        }
+        lista.setModel(model);
     }
 
     /**
@@ -110,7 +64,6 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         cantidad = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         descripcion = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lista = new javax.swing.JList();
 
@@ -124,6 +77,8 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(445, 445));
+        setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
 
@@ -133,6 +88,40 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         busqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 busquedaActionPerformed(evt);
+            }
+        });
+        busqueda.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                actualiza();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                actualiza();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                /*if( busqueda.getText().matches("") ){
+                    DefaultListModel model = new DefaultListModel();
+                    model.removeAllElements();
+                    lista.setModel(model);
+                }*/
+                actualiza();
+            }
+
+            public void actualiza(){
+                int tam = db.selectID("producto");
+                String valor;
+                DefaultListModel model = new DefaultListModel();
+
+                for(int i = 1; i <= tam; i++){
+                    valor = db.getValueOf("producto", "NOMBRE", i);
+                    if( valor.startsWith( busqueda.getText().toUpperCase() ) )
+                    model.addElement(valor);
+                }
+                lista.setModel(model);
             }
         });
 
@@ -173,13 +162,11 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         descripcion.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         descripcion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton2.setText("Buscar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        lista.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaValueChanged(evt);
             }
         });
-
         jScrollPane2.setViewportView(lista);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,7 +199,7 @@ public class ProductoBusqueda extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(158, 158, 158))
             .addGroup(layout.createSequentialGroup()
@@ -225,8 +212,6 @@ public class ProductoBusqueda extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(busqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addGap(40, 40, 40)
-                .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -239,10 +224,8 @@ public class ProductoBusqueda extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))
+                        .addGap(26, 26, 26)
+                        .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(31, 31, 31)
@@ -273,24 +256,28 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String key = busqueda.getText();
-        
-        int indice = db.getIndexOf("producto", "NOMBRE", key);
-        if(indice == 0){
-            id.setText( "----------" );
-            tipo.setText( "----------" );
-            nombre.setText( "----------" );
-            precio.setText( "----------" );
-            cantidad.setText( "----------" );
-            descripcion.setText( "----------" );
-            JOptionPane.showMessageDialog(null, "No existe un empleado registrado con ese nombre");
+    private void busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_busquedaActionPerformed
+
+    private void listaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaValueChanged
+    
+        if(lista.isSelectionEmpty()){
+            id.setText("");
+            tipo.setText("");
+            nombre.setText("");
+            precio.setText("");
+            cantidad.setText("");
+            descripcion.setText("");
             return;
         }
- 
+            
+            
+        int indice = lista.getSelectedIndex();    
+        String key = (String) lista.getModel().getElementAt(indice);
         try{
-            HashMap<String, String> mapa = db.fetchArray("producto", indice);
-            id.setText( String.valueOf(indice) );
+            HashMap<String, String> mapa = db.fetchArray("producto", indice+1);
+            id.setText( mapa.get("ID") );
             tipo.setText( mapa.get("TIPO") );
             nombre.setText( mapa.get("NOMBRE") );
             precio.setText( mapa.get("PRECIO") );
@@ -299,11 +286,8 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         }catch(Exception e){
             System.out.println(e);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_busquedaActionPerformed
+    }//GEN-LAST:event_listaValueChanged
 
     /**
      * @param args the command line arguments
@@ -346,7 +330,6 @@ public class ProductoBusqueda extends javax.swing.JFrame {
     private javax.swing.JLabel descripcion;
     private javax.swing.JLabel id;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -2,15 +2,6 @@ package java2;
 
 import javax.swing.JOptionPane;
 
-import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import com.mysql.jdbc.Statement;
-import java.util.InputMismatchException;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.Executor;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -57,7 +48,7 @@ public class Producto extends javax.swing.JFrame{
         descripcion = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         precio = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
+        cantLbl = new javax.swing.JLabel();
         cantidad = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
@@ -80,6 +71,11 @@ public class Producto extends javax.swing.JFrame{
 
         tipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Computadoras", "Accesorios", "Consumibles", "Servicios" }));
+        tipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                tipoItemStateChanged(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel4.setText("ID");
@@ -97,8 +93,8 @@ public class Producto extends javax.swing.JFrame{
         jLabel7.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel7.setText("Precio");
 
-        jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel8.setText("Cantidad");
+        cantLbl.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        cantLbl.setText("Cantidad");
 
         id.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         id.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -154,7 +150,7 @@ public class Producto extends javax.swing.JFrame{
                                     .addComponent(jSeparator2)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel8)
+                                            .addComponent(cantLbl)
                                             .addComponent(jLabel7))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +204,7 @@ public class Producto extends javax.swing.JFrame{
                             .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
+                            .addComponent(cantLbl)
                             .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(193, Short.MAX_VALUE))
@@ -240,18 +236,20 @@ public class Producto extends javax.swing.JFrame{
                 
                 if(i == 2){
                     if( !cadenas[i].matches("[0-9]*\\.?[0-9]*") ){
-                            errorType = true;
-                            indexType = i;
-                            break;
+                        errorType = true;
+                        indexType = i;
+                        break;
                     }
                 }
                 
                 if(i == 3){
-                    if( !cadenas[i].matches("[0-9]*") ){
-                        errorType = true;
-                        indexType = i;
-                        break;
-                    }   
+                    if(!cadenas[i].equals("NULL")){
+                        if( !cadenas[i].matches("[0-9]*") ){
+                            errorType = true;
+                            indexType = i;
+                            break;
+                        }
+                    }
                 }
             }
             
@@ -280,6 +278,18 @@ public class Producto extends javax.swing.JFrame{
             }
         }
     }//GEN-LAST:event_enviarActionPerformed
+
+    private void tipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoItemStateChanged
+        if(tipo.getSelectedItem().equals("Servicios")){
+            cantLbl.setVisible(false);
+            cantidad.setText("NULL");
+            cantidad.setVisible(false);
+        }else{
+            cantLbl.setVisible(true);
+            cantidad.setVisible(true);
+            cantidad.setText("");
+        }
+    }//GEN-LAST:event_tipoItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -318,6 +328,7 @@ public class Producto extends javax.swing.JFrame{
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cantLbl;
     private javax.swing.JTextField cantidad;
     private javax.swing.JTextArea descripcion;
     private javax.swing.JButton enviar;
@@ -329,7 +340,6 @@ public class Producto extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;

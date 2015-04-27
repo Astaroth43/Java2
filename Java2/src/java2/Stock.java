@@ -9,13 +9,6 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import javax.swing.event.*;
-import javax.swing.*;
-
-import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import com.mysql.jdbc.Statement;
 
 public class Stock extends javax.swing.JFrame {
 
@@ -29,68 +22,6 @@ public class Stock extends javax.swing.JFrame {
         initComponents();
         db = new DataBaseSQL();
         setLocationRelativeTo(null);
-        
-        id.getDocument().addDocumentListener(new DocumentListener() {
-            public void changedUpdate(DocumentEvent e) {
-                HashMap<String, String> mapa = db.fetchArray("producto", Integer.valueOf( id.getText() ));
-                
-                if( mapa == null){
-                    nombre.setText("");
-                    descripcion.setText("");
-                }
-                else{
-                    nombre.setText( mapa.get("NOMBRE") );
-                    descripcion.setText( mapa.get("DESCRIPCION") );
-                }
-            }
-            public void removeUpdate(DocumentEvent e) {
-                if( id.getText().matches("") ){
-                    nombre.setText("");
-                    descripcion.setText("");
-                    return;
-                }
-                
-                HashMap<String, String> mapa = db.fetchArray("producto", Integer.valueOf( id.getText() ));
-                
-                if( mapa == null){
-                    nombre.setText("");
-                    descripcion.setText("");
-                }
-                else{
-                    nombre.setText( mapa.get("NOMBRE") );
-                    descripcion.setText( mapa.get("DESCRIPCION") );
-                }
-            }
-            public void insertUpdate(DocumentEvent e) {
-                HashMap<String, String> mapa = db.fetchArray("producto", Integer.valueOf( id.getText() ));
-                
-                if( mapa == null){
-                    nombre.setText("");
-                    descripcion.setText("");
-                }
-                else{
-                    nombre.setText( mapa.get("NOMBRE") );
-                    descripcion.setText( mapa.get("DESCRIPCION") );
-                }
-            }
-
-        });
-        
-        id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                HashMap<String, String> mapa = db.fetchArray("producto", Integer.valueOf( id.getText() ));
-                
-                if( mapa == null){
-                    nombre.setText("");
-                    descripcion.setText("");
-                }
-                else{
-                    nombre.setText( mapa.get("NOMBRE") );
-                    descripcion.setText( mapa.get("DESCRIPCION") );
-                }
-                
-            }
-        });
     }
 
     /**
@@ -136,6 +67,36 @@ public class Stock extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idActionPerformed(evt);
             }
+        });
+        id.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                actualiza();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                if( id.getText().matches("") ){
+                    nombre.setText("");
+                    descripcion.setText("");
+                    return;
+                }
+                actualiza();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                actualiza();
+            }
+
+            public void actualiza(){
+                HashMap<String, String> mapa = db.fetchArray("producto", Integer.valueOf( id.getText() ));
+
+                if( mapa == null){
+                    nombre.setText("");
+                    descripcion.setText("");
+                }
+                else{
+                    nombre.setText( mapa.get("NOMBRE") );
+                    descripcion.setText( mapa.get("DESCRIPCION") );
+                }
+            }
+
         });
 
         jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
@@ -251,6 +212,7 @@ public class Stock extends javax.swing.JFrame {
     }//GEN-LAST:event_cantidadActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
         if( cantidad.getText().matches("") || id.getText().matches("") ){
             JOptionPane.showMessageDialog(null, "Error, Faltan campos por llenar");
             return;
@@ -261,10 +223,6 @@ public class Stock extends javax.swing.JFrame {
             return;
         }
         
-        if( !cantidad.getText().matches("[0-9]*") ){
-            JOptionPane.showMessageDialog(null, "Error, La cantidad debe ser un número entero y positivo");
-            return;
-        }
         HashMap<String, String> mapa = db.fetchArray("producto", Integer.valueOf( id.getText() ) );
         if( mapa == null ){
             JOptionPane.showMessageDialog(null, "Error, No existe un producto que contenga ese ID");
@@ -276,21 +234,19 @@ public class Stock extends javax.swing.JFrame {
             return;
         }
         
+        if( !cantidad.getText().matches("[0-9]*") ){
+            JOptionPane.showMessageDialog(null, "Error, La cantidad debe ser un número entero y positivo");
+            return;
+        }
+        
         int res = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer agregar " + cantidad.getText() + " articulos a " + mapa.get("NOMBRE") +"?" );
         if( res != 0)
             return;
         
-        try{
-            int suma = Integer.valueOf( cantidad.getText() ) + Integer.valueOf( mapa.get("CANTIDAD") );
-            Connection connection = db.getConnection();
-            Statement query = (Statement) connection.createStatement();
-            String comando = "UPDATE producto SET CANTIDAD = '" + String.valueOf(suma) + "' WHERE ID = " + id.getText();
-            System.out.println(suma + "-" + comando);
+        int suma = Integer.valueOf( cantidad.getText() ) + Integer.valueOf( mapa.get("CANTIDAD") );
+        String comando = "UPDATE producto SET CANTIDAD = '" + String.valueOf(suma) + "' WHERE ID = " + id.getText();
+        db.free(comando);
             
-            query.executeUpdate(comando);
-        }catch(Exception e){
-            System.out.println(e);
-        }
         JOptionPane.showMessageDialog(null, "Se ha actualizado la cantidad de artículos corretamente");
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -437,7 +437,7 @@ public class VentasInterface extends javax.swing.JFrame {
                 actualiza();
             }
             private void actualiza(){
-                if(stockP.getText().equals("-")){
+                if(stockP.getText() != null && stockP.getText().equals("-")){
                     isSetProducto = false;
                     totalP.setText("0");
                     return;
@@ -449,11 +449,13 @@ public class VentasInterface extends javax.swing.JFrame {
                     return;
                 }
 
-                if(Integer.parseInt(cantP.getText()) > Integer.parseInt(stockP.getText())){
-                    JOptionPane.showMessageDialog(null, "No hay tantos en existencia.");
-                    totalP.setText("0");
-                    isSetProducto = false;
-                    return;
+                if(stockP.getText() != null){
+                    if(Integer.parseInt(cantP.getText()) > Integer.parseInt(stockP.getText())){
+                        JOptionPane.showMessageDialog(null, "No hay tantos en existencia.");
+                        totalP.setText("0");
+                        isSetProducto = false;
+                        return;
+                    }
                 }
                 float a = Float.parseFloat(cantP.getText());
                 totalP.setText(String.valueOf(Float.parseFloat(precioP.getText().trim()) * a));
@@ -926,7 +928,7 @@ public class VentasInterface extends javax.swing.JFrame {
                                             .addComponent(jLabel30))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(stockP)
+                                            .addComponent(stockP, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(totalP)))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(273, 273, 273)
@@ -995,9 +997,11 @@ public class VentasInterface extends javax.swing.JFrame {
         //String a[];
         HashMap<String, String> a;
         a = db.fetchArray("producto", Integer.parseInt(productoID.getText()));
-        int aux = Integer.parseInt(a.get("CANTIDAD")) - Integer.parseInt(cantP.getText());
-        db.free("update producto set CANTIDAD = " + String.valueOf(aux) + " where id = " + productoID.getText());
-        stockP.setText(String.valueOf(aux));
+        if(!a.get("TIPO").equals("Servicios")){
+            int aux = Integer.parseInt(a.get("CANTIDAD")) - Integer.parseInt(cantP.getText());
+            db.free("update producto set CANTIDAD = " + String.valueOf(aux) + " where id = " + productoID.getText());
+            stockP.setText(String.valueOf(aux));
+        }
         productoID.setText("0");
         actualizaTabla();
         
@@ -1010,9 +1014,11 @@ public class VentasInterface extends javax.swing.JFrame {
         //String a[];
         HashMap<String, String> a;
         a = db.fetchArray("producto", Integer.parseInt(dataP.get(jTable2.getSelectedRow())[0]));
-        int aux = Integer.parseInt(a.get("CANTIDAD")) + Integer.parseInt(dataP.get(jTable2.getSelectedRow())[3]);
-        db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(jTable2.getSelectedRow())[0]);
-        stockP.setText(String.valueOf(aux));
+        if(!a.get("TIPO").equals("Servicios")){
+            int aux = Integer.parseInt(a.get("CANTIDAD")) + Integer.parseInt(dataP.get(jTable2.getSelectedRow())[3]);
+            db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(jTable2.getSelectedRow())[0]);
+            stockP.setText(String.valueOf(aux));
+        }
         dataP.remove(jTable2.getSelectedRow());
         productoID.setText("0");
         actualizaTabla();
@@ -1197,9 +1203,11 @@ public class VentasInterface extends javax.swing.JFrame {
             //String a[];
             HashMap<String, String> a;
             a = db.fetchArray("producto", Integer.parseInt(dataP.get(0)[0]));
-            int aux = Integer.parseInt(a.get("CANTIDAD")) + Integer.parseInt(dataP.get(0)[3]);
-            db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(0)[0]);
-            stockP.setText(String.valueOf(aux));
+            if(!a.get("TIPO").equals("Servicios")){
+                int aux = Integer.parseInt(a.get("CANTIDAD")) + Integer.parseInt(dataP.get(0)[3]);
+                db.free("update producto set CANTIDAD = " + String.valueOf( aux ) + " where id = " + dataP.get(0)[0]);
+                stockP.setText(String.valueOf(aux));
+            }
             dataP.remove(0);
             productoID.setText("0");
             actualizaTabla();
