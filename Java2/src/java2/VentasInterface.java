@@ -33,22 +33,13 @@ public class VentasInterface extends javax.swing.JFrame {
     private DateFormat dateFormat;
     private Date date;
     List<String[]> dataP;
-    private final File pdf;
-    
+
     /**
      * Creates new form VentasInterface
      */
     public VentasInterface() {
         db = new DataBaseSQL();
         dataP = new ArrayList<>();
-        
-        String pathPDF = String.valueOf(getClass().getResource("/files/Manual.pdf"));
-        pathPDF = pathPDF.substring(6, pathPDF.length());
-        pdf = new File(pathPDF);
-        
-        System.out.println(pdf.getPath());
-        if(!pdf.exists())
-            System.out.println("No existe");
         
         isSetClient = isSetEmpleado = isSetProducto = areProducts = false;
         isSetTipoPago = true;
@@ -1195,13 +1186,14 @@ public class VentasInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-    if (Desktop.isDesktopSupported()) {
-        try {
-            Desktop.getDesktop().open(pdf);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File("src\\files\\Manual.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+            }
         }
-    }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void changeHour(){
