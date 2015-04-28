@@ -268,10 +268,10 @@ public class ClienteBusqueda extends javax.swing.JFrame{
             return;
         }
             
-        int indice = lista.getSelectedIndex();    
-        String key = (String) lista.getModel().getElementAt(indice);
+        int indice = db.getIndexOf("cliente", "NOMBRE", lista.getSelectedValue().toString());    
+        //String key = (String) lista.getModel().getElementAt(indice);
         try{
-            HashMap<String, String> mapa = db.fetchArray("cliente", indice+1);
+            HashMap<String, String> mapa = db.fetchArray("cliente", indice);
             id.setText( mapa.get("ID") );
             nombre.setText(mapa.get("NOMBRE"));
             apellido.setText(mapa.get("APELLIDO"));

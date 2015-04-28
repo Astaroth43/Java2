@@ -279,10 +279,10 @@ public class EmpleadoBusqueda extends javax.swing.JFrame {
             return;
         }
 
-        int indice = lista.getSelectedIndex();
-        String key = (String) lista.getModel().getElementAt(indice);
+        int indice = db.getIndexOf("empleado", "NOMBRE", lista.getSelectedValue().toString());  
+        
         try{
-            HashMap<String, String> mapa = db.fetchArray("empleado", indice+1);
+            HashMap<String, String> mapa = db.fetchArray("empleado", indice);
             id.setText( mapa.get("ID") );
             nombre.setText(mapa.get("NOMBRE"));
             apellido.setText(mapa.get("APELLIDO"));

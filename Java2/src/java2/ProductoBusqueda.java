@@ -273,10 +273,10 @@ public class ProductoBusqueda extends javax.swing.JFrame {
         }
             
             
-        int indice = lista.getSelectedIndex();    
-        String key = (String) lista.getModel().getElementAt(indice);
+        int indice = db.getIndexOf("producto", "NOMBRE", lista.getSelectedValue().toString());  
+
         try{
-            HashMap<String, String> mapa = db.fetchArray("producto", indice+1);
+            HashMap<String, String> mapa = db.fetchArray("producto", indice);
             id.setText( mapa.get("ID") );
             tipo.setText( mapa.get("TIPO") );
             nombre.setText( mapa.get("NOMBRE") );

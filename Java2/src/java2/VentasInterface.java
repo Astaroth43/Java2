@@ -22,20 +22,18 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Agustin
  */
 public class VentasInterface extends javax.swing.JFrame {
     
-    private DataBaseSQL db;
+    private final DataBaseSQL db;
     private boolean isSetClient, isSetEmpleado, isSetProducto, areProducts, isSetTipoPago;
     private DateFormat dateFormat;
     private Date date;
     List<String[]> dataP;
-    private File pdf;
+    private final File pdf;
     
     /**
      * Creates new form VentasInterface
@@ -587,7 +585,7 @@ public class VentasInterface extends javax.swing.JFrame {
                 actualiza();
             }
             private void actualiza(){
-                if( otroPago.getText().matches( "-" ) ){
+                if( otroPago.getText().matches( "" ) ){
                     isSetTipoPago = false;
                     //JOptionPane.showMessageDialog(null, "Especifica un tipo de pago");
                     return;
@@ -1108,7 +1106,7 @@ public class VentasInterface extends javax.swing.JFrame {
         q += empID.getText() + "', '";
         q += fecha.getText() + "', '";
         q += hora.getText() + "', '";
-        q += subtotal.getText() + "', ";
+        q += total.getText() + "', ";
         q += String.valueOf(tipoPago.getSelectedIndex() + 1 ) + ", '";
         q += otroPago.getText();
         q+= "')";
@@ -1157,7 +1155,7 @@ public class VentasInterface extends javax.swing.JFrame {
             otroPago.setVisible(false);
         }else{
             isSetTipoPago = false;
-            otroPago.setText("-");
+            otroPago.setText("");
             otroPagoLbl.setVisible(true);
             otroPago.setVisible(true);
         }
