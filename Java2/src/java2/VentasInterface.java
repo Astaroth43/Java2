@@ -46,6 +46,10 @@ public class VentasInterface extends javax.swing.JFrame {
         pathPDF = pathPDF.substring(6, pathPDF.length());
         pdf = new File(pathPDF);
         
+        System.out.println(pdf.getPath());
+        if(!pdf.exists())
+            System.out.println("No existe");
+        
         isSetClient = isSetEmpleado = isSetProducto = areProducts = false;
         isSetTipoPago = true;
         initComponents();
@@ -1194,8 +1198,8 @@ public class VentasInterface extends javax.swing.JFrame {
     if (Desktop.isDesktopSupported()) {
         try {
             Desktop.getDesktop().open(pdf);
-        } catch (IOException ex) {
-            // no application registered for PDFs
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
